@@ -52,7 +52,7 @@ list.index.cross <- cross.val(x = data,
                               method = 'kfoldcv',
                               params.cv = list(niter = 10, k = 3)
                               
-#
+# feature selection for one method in cross-validation
 list.selected.var <- feature.selection.cv(x = data,
                                           y = class,
                                           method = 'fs.mdfs.2D',
