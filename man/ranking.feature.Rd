@@ -25,12 +25,16 @@ Ranking is calculated based on selected variables that are more common in cross-
 class <- data$class
 data$class <- NULL
 
-list.index.cross <- cross.validation(x = data, y = class, method= 'cv.kfold', k = 3, niter = 10)
+list.index.cross <- cross.val(x = data,
+                             y = decisions,
+                             method = 'kfoldcv',
+                             params.cv = list(niter = 10, k = 3))
+
 
 list.selected.var <- feature.selection(x = data,
                              y = class,
                              method = 'fs.utest',
-                             list.index.cross = indexes,
+                             list.index.cross = list.index.cross,
                              params = list(adjust = 'holm'))
 
 ranking.var <- ranking.feature(list.selected.var = list.selected.var)

@@ -22,3 +22,25 @@ Get the best genes
 \details{
 Get the best genes out obtained in \code{ensembleFS}
 }
+\examples{
+\dontrun {
+
+decisions <- data$class
+data$class <- NULL
+
+result <- ensembleFS(data,
+            decisions,
+            methods = c('fs.utest', 'fs.mrmr'),
+            method.cv = 'kfoldcv',
+            params.cv = list(k = 3, iter = 10),
+            level.cor = 0.75,
+            params = list(adjust = 'SGoF', feature.number = 10, alpha = 0.05),
+            asm = c('fs.utest', 'fs.mrmr'),
+            model = c('fs.utest', 'fs.mrmr')
+            )
+
+gene.top <- get.top.gene(result$selected.feature, 15 , 20)
+
+}
+
+}

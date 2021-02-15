@@ -18,7 +18,7 @@
 get.info.gprofiler = function(rel.var){
   df = list()
   for (i in 1:length(rel.var)){
-    if(try(is.null(gost(query = rel.var[i]))))next
+    if(try(is.null(gost(query = rel.var[i])))){next}
     all.info = gost(query = rel.var[i])
     df.res = all.info$result
     df[[i]] = data.frame(term = rel.var[i], source = df.res$source, term.ID = df.res$term_id, term.name = df.res$term_name)
@@ -115,7 +115,7 @@ get.top.gene <- function(list.imp.var.cv, level.freq, number.gene){
 #' }
 #'
 #' @export
-gene.info.top.gene <- function(gene.top, condition.methods = 'union'){
+get.info.top.gene <- function(gene.top, condition.methods = 'union'){
   if(condition.methods == 'intersect'){
     var.imp <- Reduce(intersect, gene.for.analysis)
   }

@@ -38,9 +38,9 @@ graph.result(result$model, "auc")
 
 # getting information about genes from gprogiler2
 gene.top <- get.top.gene(result$selected.feature, 15 , 20)
-info.gene <- gene.info.top.gene(gene.top, condition.methods = 'union')
+info.gene <- get.info.top.gene(gene.top, condition.methods = 'union')
 
-# feature sekection U-test
+# feature selection U-test
 var.utest <- fs.utest(x = data, y = class, params = list(adjust = "holm", alpha = 0.05))
 
 # feature selection MCFS-ID
