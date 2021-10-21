@@ -1,15 +1,15 @@
-# ensembleFS: Ensemble feature selection methods for analysis of molecular data
+# EnsembleFS: Ensemble feature selection methods for analysis of molecular data
 
 
 ### Install the development version from GitHub:
 
 ```r
 # install.packages("devtools")
-devtools::install_github("biocsuwb/ensembleFS")
+devtools::install_github("biocsuwb/EnsembleFS-package")
 ```
 ## Examples 
 
-ensembleFS makes it trivial to run many algorithms and use the best one or an ensemble.
+EnsembleFS makes it trivial to run many algorithms and use the best one or an ensemble.
 
 ```r
 
