@@ -19,7 +19,7 @@ Getting information about genes from gprogiler2
 Getting information about genes from gprogiler2, requires internet connection
 }
 \examples{
-\dontrun {
+\dontrun{
 
 gene <- c('TMC8')
 get.info.gprofiler(gene)
