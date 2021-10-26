@@ -22,7 +22,7 @@ Getting information about top genes from gprofiler2 obtained from ensembleFS.
 Requires internet connection.
 }
 \examples{
-\dontrun {
+\dontrun{
 
 decisions <- data$class
 data$class <- NULL
