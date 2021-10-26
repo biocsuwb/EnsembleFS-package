@@ -20,7 +20,7 @@ Depends:
     poibin (>= 1.5),
     plyr (>= 1.8.6),
     dplyr (>= 1.0.3),
-    gprofiler2 (>= 0.2.0)
+    gprofiler2 (>= 0.2.0),
     randomForest
 Imports:
     stats
