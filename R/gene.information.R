@@ -7,7 +7,7 @@
 #' @return A \code{\link{data.frame}} with gene information
 #'
 #' @examples
-#' \dontrun {
+#' \dontrun{
 #'
 #' gene <- c('TMC8')
 #' get.info.gprofiler(gene)
@@ -39,7 +39,7 @@ get.info.gprofiler = function(rel.var){
 #' @return A \code{\link{list}} with top genes for each method specified in \code{ensembleFS}
 #'
 #' @examples
-#' \dontrun {
+#' \dontrun{
 #'
 #' decisions <- data$class
 #' data$class <- NULL
@@ -93,7 +93,7 @@ get.top.gene <- function(list.imp.var.cv, level.freq, number.gene){
 #' @return A \code{\link{data.frame}} with gene information
 #'
 #' @examples
-#' \dontrun {
+#' \dontrun{
 #'
 #' decisions <- data$class
 #' data$class <- NULL
