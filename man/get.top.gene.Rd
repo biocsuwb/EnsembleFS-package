@@ -23,7 +23,7 @@ Get the best genes
 Get the best genes out obtained in \code{ensembleFS}
 }
 \examples{
-\dontrun {
+\dontrun{
 
 decisions <- data$class
 data$class <- NULL
