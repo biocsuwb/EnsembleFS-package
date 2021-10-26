@@ -21,7 +21,7 @@ Depends:
     plyr (>= 1.8.6),
     dplyr (>= 1.0.3),
     gprofiler2 (>= 0.2.0),
-    randomForest (>= 4.6-14)
+    randomForest (>= 4.6.14)
 Imports:
     stats
 License: MIT + file LICENSE
