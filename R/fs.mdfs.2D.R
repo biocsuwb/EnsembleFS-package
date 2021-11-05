@@ -5,8 +5,12 @@
 #'
 #' @param x input data where columns are variables and rows are observations (all numeric)
 #' @param y decision variable as a boolean vector of length equal to number of observations
-#' @param params method as accepted by \code{\link[stats]{p.adjust}} (\code{"BY"}
-#' is recommended for FDR, see Details) or SGoF \code{\link[sgof]{SGoF}}
+#' @param params A \code{\link{list}} with the following fields:
+#' \itemize{
+#'   \item \code{adjust} -- method as accepted by \code{\link[stats]{p.adjust}} (\code{"BY"} is recommended for FDR, see Details) or \code{\link[sgof]{SGoF}} for MDFS1D, MDFS2D and U-test
+#'   \item \code{alpha} -- significance level for MDFS1D, MDFS2D and U-test
+#'   \item \code{use.cuda} -- whether to use CUDA acceleration (must be compiled with CUDA) for MDFS2D method
+#' }
 #' @return A \code{\link{data.frame}} with selected features and p.value
 #'
 #' @examples
@@ -23,14 +27,13 @@
 #' @importFrom stats p.adjust
 #'
 #' @export
-fs.mdfs.2D <- function(x, y, params = list(adjust = 'holm', alpha = 0.05)){
+fs.mdfs.2D <- function(x, y, params = list(adjust = 'holm', alpha = 0.05, use.cuda = FALSE)){
   if (!is.data.frame(x)) data = as.data.frame(x)
   dim0 = 2
   div0 = 1
-  acceleration.type = TRUE
   adjust = params$adjust
   if (adjust == 'SGoF'){
-    result = MDFS(data = x, decision = y, dimensions = dim0, divisions = div0, use.CUDA = acceleration.type,
+    result = MDFS(data = x, decision = y, dimensions = dim0, divisions = div0, use.CUDA = use.cuda,
                   p.adjust.method = 'none')
     var.names = names(x)
     index.imp = result$relevant.variables

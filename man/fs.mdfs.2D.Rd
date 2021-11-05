@@ -4,15 +4,23 @@
 \alias{fs.mdfs.2D}
 \title{Build MultiDimensional Feature Selector from IGs uses GPU,  is a parallel computing platform CUDA}
 \usage{
-fs.mdfs.2D(x, y, params = list(adjust = "holm", alpha = 0.05))
+fs.mdfs.2D(
+  x,
+  y,
+  params = list(adjust = "holm", alpha = 0.05, use.cuda = FALSE)
+)
 }
 \arguments{
 \item{x}{input data where columns are variables and rows are observations (all numeric)}
 
 \item{y}{decision variable as a boolean vector of length equal to number of observations}
 
-\item{params}{method as accepted by \code{\link[stats]{p.adjust}} (\code{"BY"}
-is recommended for FDR, see Details) or SGoF \code{\link[sgof]{SGoF}}}
+\item{params}{A \code{\link{list}} with the following fields:
+\itemize{
+\item \code{adjust} -- method as accepted by \code{\link[stats]{p.adjust}} (\code{"BY"} is recommended for FDR, see Details) or \code{\link[sgof]{SGoF}} for MDFS1D, MDFS2D and U-test
+\item \code{alpha} -- significance level for MDFS1D, MDFS2D and U-test
+\item \code{use.cuda} -- whether to use CUDA acceleration (must be compiled with CUDA) for MDFS2D method
+}}
 }
 \value{
 A \code{\link{data.frame}} with selected features and p.value

@@ -11,7 +11,7 @@ ensembleFS(
   method.cv = "kfoldcv",
   params.cv = list(k = 3, niter = 5),
   level.cor = 1,
-  params = list(adjust = "holm", feature.number = 10, alpha = 0.05),
+  params = list(adjust = "holm", feature.number = 10, alpha = 0.05, use.cuda = FALSE),
   asm = c("fs.utest"),
   model = c("fs.utest")
 )
@@ -39,6 +39,7 @@ ensembleFS(
 \item \code{adjust} -- method as accepted by \code{\link[stats]{p.adjust}} (\code{"BY"} is recommended for FDR, see Details) or \code{\link[sgof]{SGoF}} for MDFS1D, MDFS2D and U-test
 \item \code{feature.number} -- number of attributes to select. Must not exceed \code{ncol(x)}
 \item \code{alpha} -- significance level for MDFS1D, MDFS2D and U-test
+\item \code{use.cuda} -- whether to use CUDA acceleration (must be compiled with CUDA) for MDFS2D method
 }}
 
 \item{asm}{A \code{\link{vector}} with enumeration method for which to calculate Lustgarten’s stability measure}
