@@ -32,6 +32,8 @@ fs.mdfs.2D <- function(x, y, params = list(adjust = 'holm', alpha = 0.05, use.cu
   dim0 = 2
   div0 = 1
   adjust = params$adjust
+  use.cuda = params$use.cuda
+  alpha = params$alpha
   if (adjust == 'SGoF'){
     result = MDFS(data = x, decision = y, dimensions = dim0, divisions = div0, use.CUDA = use.cuda,
                   p.adjust.method = 'none')
@@ -42,15 +44,15 @@ fs.mdfs.2D <- function(x, y, params = list(adjust = 'holm', alpha = 0.05, use.cu
     SGoF.p.value = SGoF(var.imp.frame.sort$Pvalue, alpha = 0.05, gamma = 0.05)
     var.imp.frame.sort$adjustPvalue = SGoF.p.value$Adjusted.pvalues
     row.names(var.imp.frame.sort) = NULL
-    var.imp = var.imp.frame.sort[which(var.imp.frame.sort$adjustPvalue < params$alpha),]
+    var.imp = var.imp.frame.sort[which(var.imp.frame.sort$adjustPvalue < alpha),]
     return(var.imp)
   } else {
-    result = MDFS(data = x, decision = y, dimensions = dim0, divisions = div0, use.CUDA = acceleration.type,
+    result = MDFS(data = x, decision = y, dimensions = dim0, divisions = div0, use.CUDA = use.cuda,
                   p.adjust.method = adjust)
     var.names = names(x)
     index.imp = RelevantVariables(result$MDFS,
-                                  level = params$alpha,
-                                  p.adjust.method = params$adjust)
+                                  level = alpha,
+                                  p.adjust.method = adjust)
     var.imp.frame = data.frame(name = var.names, Pvalue = result$p.value, adjustPvalue = result$adjusted.p.value)[index.imp,]
     var.imp = var.imp.frame[order(var.imp.frame$adjustPvalue, decreasing = F),]
     return(var.imp)

@@ -2,7 +2,7 @@
 corelation <- function(data, level.cor, start.var){
   .cor = function(m, data, level.cor, start.var){
     if (!is.data.frame(data)) data = as.data.frame(data)
-    core = abs(cor(as.numeric(data[,start.var]), as.numeric(data[,m]), method = "pearson"))
+    core = abs(cor(as.numeric(data[,start.var]), as.numeric(data[,m]), method = "spearman"))
     if(core > level.cor  & m != start.var){
       return(m)
     }

@@ -32,7 +32,7 @@ fs.mcfs <- function(x, y, ...){
                  splits = 5,
                  splitSetSize = 1000,
                  balance = 'auto',
-                 cutoffMethod = c("mean", "kmeans"),
+                 cutoffMethod = c("permutations", "criticalAngle", "kmeans",  "contrast", "mean"),
                  cutoffPermutations = 20,
                  buildID = TRUE,
                  finalRuleset = TRUE,
