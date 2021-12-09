@@ -34,11 +34,11 @@ fs.mdfs.1D <- function(x, y, params = list(adjust = 'holm', alpha = 0.05, use.cu
                 p.adjust.method = adjust)
   var.names = names(x)
   index.imp = RelevantVariables(result$MDFS,
-                                  level = alpha,
-                                  p.adjust.method = adjust)
+                                level = alpha,
+                                p.adjust.method = adjust)
   var.imp.frame = data.frame(name = var.names,
-                               Pvalue = result$p.value,
-                               adjustPvalue = result$adjusted.p.value)[index.imp,]
+                             Pvalue = result$p.value,
+                             adjustPvalue = result$adjusted.p.value)[index.imp,]
   var.imp = var.imp.frame[order(var.imp.frame$adjustPvalue, decreasing = F),]
   return(var.imp)
 }
