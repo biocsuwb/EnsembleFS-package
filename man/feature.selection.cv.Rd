@@ -4,7 +4,13 @@
 \alias{feature.selection.cv}
 \title{Selection of features in cross-validation}
 \usage{
-feature.selection.cv(x, y, method, list.index.cross, params = list())
+feature.selection.cv(
+  x,
+  y,
+  method,
+  list.index.cross,
+  params = list(adjust = "holm", alpha = 0.05)
+)
 }
 \arguments{
 \item{x}{input data where columns are variables and rows are observations (all numeric)}

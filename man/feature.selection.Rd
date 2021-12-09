@@ -9,7 +9,7 @@ feature.selection(
   y,
   methods,
   connection.method = "sum",
-  params = list(adjust = "SGoF", feature.number = 10, alpha = 0.05)
+  params = list(adjust = "holm", feature.number = 10, alpha = 0.05)
 )
 }
 \arguments{

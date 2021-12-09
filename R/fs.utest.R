@@ -7,7 +7,7 @@
 #' @param x input data where columns are variables and rows are observations (all numeric)
 #' @param y decision variable as a boolean vector of length equal to number of observations
 #' @param params method as accepted by \code{\link[stats]{p.adjust}} (\code{"BY"}
-#' is recommended for FDR, see Details) or SGoF \code{\link[sgof]{SGoF}}
+#' is recommended for FDR, see Details)
 #' @return A \code{\link{data.frame}} with selected features and p.value
 #'
 #' @examples
@@ -17,17 +17,13 @@
 #' decisions <- data$class
 #' data$class <- NULL
 #'
-#' fs.utest(data, decisions, params = list(adjust = 'SGoF'))
+#' fs.utest(data, decisions, params = list(adjust = 'holm', alpha = 0.05))
 #' }
 #'
 #' @importFrom stats wilcox.test p.adjust
-#' @import sgof
-#'
+#' 
 #' @export
-fs.utest <- function(x,
-                     y,
-                     params = list(adjust = 'holm', alpha = 0.05)
-){
+fs.utest <- function(x, y, params = list(adjust = 'holm', alpha = 0.05)){
   if(!is.data.frame(x)){ x <- as.data.frame(x)}
   x$class <- y
   data.class1 <- x[x$class == 0,1:ncol(x)]
@@ -49,12 +45,7 @@ fs.utest <- function(x,
   var.p.value$Pvalue = as.numeric(as.character((var.p.value$Pvalue)))
   var.p.value.sort = var.p.value[order(var.p.value$Pvalue, decreasing=F),]
   adjust = params$adjust
-  if (adjust == 'SGoF'){
-    SGoF.p.value = SGoF(var.p.value.sort$Pvalue,alpha = 0.05,gamma = 0.05)
-    adjust.p.value = SGoF.p.value$Adjusted.pvalues
-  } else {
-    adjust.p.value = p.adjust(var.p.value.sort$Pvalue, method = adjust)
-  }
+  adjust.p.value = p.adjust(var.p.value.sort$Pvalue, method = adjust)
   var.imp.all = as.data.frame(cbind(var.p.value.sort, adjust.p.value))
   names(var.imp.all) = c("name","Pvalue","adjustPvalue")
   row.names(var.imp.all) = NULL

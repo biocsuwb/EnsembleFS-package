@@ -4,7 +4,11 @@
 \alias{fs.mdfs.1D}
 \title{Build MultiDimensional Feature Selector from IGs}
 \usage{
-fs.mdfs.1D(x, y, params = list(adjust = "holm", alpha = 0.05))
+fs.mdfs.1D(
+  x,
+  y,
+  params = list(adjust = "holm", alpha = 0.05, use.cuda = FALSE)
+)
 }
 \arguments{
 \item{x}{input data where columns are variables and rows are observations (all numeric)}
@@ -12,7 +16,7 @@ fs.mdfs.1D(x, y, params = list(adjust = "holm", alpha = 0.05))
 \item{y}{decision variable as a boolean vector of length equal to number of observations}
 
 \item{params}{method as accepted by \code{\link[stats]{p.adjust}} (\code{"BY"}
-is recommended for FDR, see Details) or SGoF \code{\link[sgof]{SGoF}}}
+is recommended for FDR, see Details)}
 }
 \value{
 A \code{\link{data.frame}} with selected features and p.value
@@ -29,7 +33,7 @@ Build MultiDimensional Feature Selector from IGs
 decisions <- data$class
 data$class <- NULL
 
-fs.mdfs.1D(data, decisions, params = list(adjust = 'SGoF', alpha = 0.05))
+fs.mdfs.1D(data, decisions, params = list(adjust = 'holm', alpha = 0.05))
 }
 
 

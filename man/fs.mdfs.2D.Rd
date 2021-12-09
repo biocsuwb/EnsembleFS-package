@@ -17,7 +17,7 @@ fs.mdfs.2D(
 
 \item{params}{A \code{\link{list}} with the following fields:
 \itemize{
-\item \code{adjust} -- method as accepted by \code{\link[stats]{p.adjust}} (\code{"BY"} is recommended for FDR, see Details) or \code{\link[sgof]{SGoF}} for MDFS1D, MDFS2D and U-test
+\item \code{adjust} -- method as accepted by \code{\link[stats]{p.adjust}} (\code{"BY"} is recommended for FDR, see Details)
 \item \code{alpha} -- significance level for MDFS1D, MDFS2D and U-test
 \item \code{use.cuda} -- whether to use CUDA acceleration (must be compiled with CUDA) for MDFS2D method
 }}
@@ -37,7 +37,7 @@ Build MultiDimensional Feature Selector from IGs, requires mandatory installatio
 decisions <- data$class
 data$class <- NULL
 
-fs.mdfs.2D(data, decisions, params = list(adjust = 'SGoF'))
+fs.mdfs.2D(data, decisions, params = list(adjust = 'holm'))
 }
 
 }

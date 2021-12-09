@@ -12,7 +12,7 @@ fs.utest(x, y, params = list(adjust = "holm", alpha = 0.05))
 \item{y}{decision variable as a boolean vector of length equal to number of observations}
 
 \item{params}{method as accepted by \code{\link[stats]{p.adjust}} (\code{"BY"}
-is recommended for FDR, see Details) or SGoF \code{\link[sgof]{SGoF}}}
+is recommended for FDR, see Details)}
 }
 \value{
 A \code{\link{data.frame}} with selected features and p.value
@@ -31,7 +31,7 @@ p-value adjustment or SGoF
 decisions <- data$class
 data$class <- NULL
 
-fs.utest(data, decisions, params = list(adjust = 'SGoF'))
+fs.utest(data, decisions, params = list(adjust = 'holm', alpha = 0.05))
 }
 
 }

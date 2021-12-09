@@ -28,7 +28,7 @@
 #'
 #' }
 #' @export
-feature.selection.cv = function(x, y, method, list.index.cross, params = list()){
+feature.selection.cv = function(x, y, method, list.index.cross, params = list(adjust = 'holm', alpha = 0.05)){
   if (!is.data.frame(data)) x = as.data.frame(x)
   niter = length(list.index.cross)
   ncross = length(list.index.cross[[1]]$training)
@@ -88,7 +88,7 @@ feature.selection <- function(x,
                               y,
                               methods,
                               connection.method = 'sum',
-                              params = list(adjust='SGoF',
+                              params = list(adjust='holm',
                                             feature.number=10,
                                             alpha=0.05)){
   if(!is.data.frame(x)){x <- as.data.frame(x)}
