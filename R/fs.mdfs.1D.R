@@ -23,14 +23,14 @@
 #' @import MDFS
 #' @importFrom stats p.adjust
 #' @export
-fs.mdfs.1D <- function(x, y, params = list(adjust = 'holm', alpha = 0.05, use.cuda = FALSE)){
+fs.mdfs.1D <- function(x, y, params = list(adjust = 'holm', alpha = 0.05)){
   if (!is.data.frame(x)) data = as.data.frame(x)
   dim0 = 1
   div0 = 3
   use.cuda = params$use.cuda
   adjust = params$adjust
   alpha = params$alpha 
-  result = MDFS(data = x, decision = y, dimensions = dim0, divisions = div0, use.CUDA = use.cuda,
+  result = MDFS(data = x, decision = y, dimensions = dim0, divisions = div0, use.CUDA = FALSE,
                 p.adjust.method = adjust)
   var.names = names(x)
   index.imp = RelevantVariables(result$MDFS,
