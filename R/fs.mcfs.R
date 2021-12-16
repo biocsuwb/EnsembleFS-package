@@ -1,11 +1,14 @@
-#' Monte Carlo Feature Selection And Interdependency Discovery
+#' Monte Carlo Feature Selection
 #'
 #' @details
-#' Performs Monte Carlo Feature Selection (MCFS-ID) on a given data set.
+#' Performs Monte Carlo Feature Selection (MCFS) on a given data set.
 #'
 #' @param x input data where columns are variables and rows are observations (all numeric)
 #' @param y decision variable as a boolean vector of length equal to number of observations
-#' @param ... unused arguments
+#' @param params A \code{\link{list}} with the following fields:
+#' \itemize{
+#'   \item \code{cutoff.method} -- cutoff method MCFS: "permutations", "criticalAngle", "kmeans"
+#' }
 #' @return A \code{\link{data.frame}} with selected features
 #'
 #' @examples
@@ -20,7 +23,7 @@
 #' @import rmcfs
 #'
 #' @export
-fs.mcfs <- function(x, y, ...){
+fs.mcfs <- function(x, y, params = list(cutoff.method = c("kmeans"))){
   if (!is.data.frame(x)) x = as.data.frame(x)
   old.names <- colnames(x)
   colnames(x) <- 1:ncol(x)
@@ -32,7 +35,7 @@ fs.mcfs <- function(x, y, ...){
                  splits = 5,
                  splitSetSize = 1000,
                  balance = 'auto',
-                 cutoffMethod = c("permutations", "criticalAngle", "kmeans",  "contrast", "mean"),
+                 cutoffMethod = params$cutoff.method,
                  cutoffPermutations = 20,
                  buildID = TRUE,
                  finalRuleset = TRUE,
