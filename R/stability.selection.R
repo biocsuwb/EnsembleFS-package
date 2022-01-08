@@ -37,10 +37,10 @@ stabilty.selection <- function(list.selected.var, list.index.cross, nvar){
   for(i in 1:length(list.selected.var)){
     var.list <- append(var.list, list(as.character(list.selected.var[[i]]$name)))
   }
-
   sim = list()
   niter = length(list.index.cross)
   ncross = length(list.index.cross[[1]]$training)
+  if(ncross == 1 && niter == 1){return(0)}
   id.combine = combn(ncross*niter,2, FUN = NULL, simplify = F)
   N = ncross*niter
   n = length(unique(unlist(var.list)))
