@@ -7,7 +7,7 @@
 # install.packages("devtools")
 devtools::install_github("biocsuwb/EnsembleFS-package")
 ```
-### System Requirements: Java (>= 7)
+#### Note that system require Java (>= 7)
 ## Examples 
 
 EnsembleFS makes it trivial to run many algorithms and use the best one or an ensemble.
