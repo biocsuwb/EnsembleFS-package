@@ -11,7 +11,7 @@ EnsembleFS allows the user to:
 - establish the selected parameters for predictive models, such as the number of top N informative features;
 - remove redundant features by building a the Spearman correlation matrix that identifies highly correlated features;
 - evaluate the stability of feature subsets and performance of predictive models;
-- find information about selected biomarkers (gene ontology, pathways, tissue specificity, miRNA targets, regulatory motif, protein complexes, disease phenotypes) in several biological databases.
+- find information about selected biomarkers (gene ontology, pathways, tissue specificity, miRNA targets, regulatory motif, protein complexes, disease phenotypes) in nine biological databases.
 
 
 ## Install the development version from GitHub:
