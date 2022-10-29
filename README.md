@@ -21,7 +21,7 @@ EnsembleFS allows the user to:
 # install.packages("devtools")
 devtools::install_github("biocsuwb/EnsembleFS-package")
 ```
-#### Note: system require Java (>= 7)
+#### Note: To install EnsembleFS package in your R environment make sure you have Java installed (rJava R package).
 ## Examples 
 
 EnsembleFS makes it trivial to run many algorithms and use the best one or an ensemble.
