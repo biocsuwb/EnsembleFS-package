@@ -1,17 +1,18 @@
 # EnsembleFS: Ensemble feature selection methods for analysis of molecular data
 ## Description
-EnsembleFS is a R package for single and ensemble feature selection of molecular data or clinical data (numeric data formats).
+EnsembleFS is a R package for single and ensemble feature selection (FS) of molecular data or clinical data (numeric data formats).
 This tool is based on several feature filters, such as the test Manna-Whitneya (U-test), the Monte Carlo Feature Selection (MCFS), the MultiDimensional Feature Selection (two variants: MDFS-1D and MDFS-2D), and the Minimum Redundancy Maximum Relevance (MRMR) for discovering the most important biomarkers and used the machine learning algorithms to evaluate the quality of feature sets. Predictive models are built using the Random Forest algorithm. It can be applied to two-class problems.
 
 Moreover, EnsembleFS support users in analysis and interpretation of molecular data. The information about each of top biomarkers is extracted from diverse biological databases, namely the Gene Ontology, the Kyoto Encyclopedia of Genes and Genomes, the Reactome, the WikiPathways, the Transfac, the miRNA targets, the Human Protein Atlas, the CORUM, and the Human Phenotype Ontology.
 The proposed tool accept molecular data includes different types of gene identifiers, such as Ensembl, NCBI Entrez gene ID, Refseq, Illumina, and Uniprot.
 
 EnsembleFS allows the user to:
-- filter the most informative features (biomarkers) by using ensemble feature selection approach from molecular data generated from high-throughput molecular biology experiments;
+- filter the most informative features (biomarkers) by using single FS method or ensemble feature selection method from molecular data generated from high-throughput molecular biology experiments;
+- filter the most informative features by using single FS method or ensemble feature selection method from clinical data (numeric data);
 - establish the selected parameters for predictive models, such as the number of top N informative features;
 - remove redundant features by building a the Spearman correlation matrix that identifies highly correlated features;
 - evaluate the stability of feature subsets and performance of predictive models;
-- find information about selected biomarkers (gene ontology, pathways, tissue specificity, miRNA targets, regulatory motif, protein complexes, disease phenotypes) in nine biological databases.
+- find information about selected molecular markers (gene ontology, pathways, tissue specificity, miRNA targets, regulatory motif, protein complexes, disease phenotypes) in nine biological databases.
 
 
 ## Install the development version from GitHub:
