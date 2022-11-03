@@ -33,10 +33,10 @@ data <- read.csv2('examplesDataTest.csv')
 class <- data$class
 data$class <- NULL
 
-# showing list methods
+# showing  list available feature selection methods
 list.methods()
 
-# run end-to-end ensembleFS() for ensemble feature selection and comparison of feature filters (U-test, MCFS, MDFS-1D, MDFS-2D, and MRMR).
+# run end-to-end EnsembleFS for ensemble feature selection and comparison of feature filters (U-test, MCFS, MDFS-1D, MDFS-2D, and MRMR).
 result <- ensembleFS(x = data,
                      y = class,
                      methods = c("fs.utest", "fs.mcfs", "fs.mrmr", "fs.mdfs.1D", "fs.mdfs.2D"),
