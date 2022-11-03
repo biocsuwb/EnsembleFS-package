@@ -41,7 +41,7 @@ data$class <- NULL
 list.methods()
 ```
 
-### Model configuration parameters
+#### Model configuration parameters
 EnsembleFS allows user to set some parameter values, such as:
 - feature selection methods: ***methods = c("fs.utest", "fs.mcfs", "fs.mrmr", "fs.mdfs.1D", "fs.mdfs.2D")***;
 - U-test and MDFS parameter, ***multitest correction: adjust = c("holm", "hochberg", "hommel", "bonferroni", "BH", "BY", "fdr", "none")***;
