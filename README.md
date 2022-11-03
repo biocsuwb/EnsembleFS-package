@@ -29,11 +29,11 @@ EnsembleFS makes it trivial to run many algorithms and use the best one or an en
 
 ```r
 
-data <- read.csv2('examplesDataTest.csv')
+data <- read.csv2('exampleData.csv')
 class <- data$class
 data$class <- NULL
 
-# showing  list available feature selection methods
+# showing the list of available feature selection methods
 list.methods()
 
 # run end-to-end EnsembleFS for ensemble feature selection and comparison of feature filters (U-test, MCFS, MDFS-1D, MDFS-2D, and MRMR).
@@ -48,7 +48,7 @@ result <- ensembleFS(x = data,
                      model = c("fs.utest", "fs.mcfs", "fs.mrmr", "fs.mdfs.1D", "fs.mdfs.2D"))
                      
 
-# showing result ensemble
+# showing result
 graph.result(result$stability, "stability")
 graph.result(result$model, "auc")
 
