@@ -36,12 +36,12 @@ class <- data$class
 data$class <- NULL
 ```
 
-### Showing the list of available feature selection methods
+#### Showing the list of available feature selection methods
 ```r
 list.methods()
 ```
 
-### Run end-to-end EnsembleFS for ensemble feature selection and comparison of feature filters (U-test, MCFS, MDFS-1D, MDFS-2D, and MRMR).
+#### Run end-to-end EnsembleFS for ensemble feature selection and comparison of feature filters (U-test, MCFS, MDFS-1D, MDFS-2D, and MRMR).
 ```r
 result <- ensembleFS(x = data,
                      y = class,
@@ -54,36 +54,36 @@ result <- ensembleFS(x = data,
                      model = c("fs.utest", "fs.mcfs", "fs.mrmr", "fs.mdfs.1D", "fs.mdfs.2D"))
  ```
                      
-### Showing result
+#### Showing result
 ```r
 graph.result(result$stability, "stability")
 graph.result(result$model, "auc")
 ```
 
-### Getting information about biomarkers from databases:
-### the GO, the KEGG, the Reactome, the WikiPathways, the Transfac, the miRTarBase, the Human Protein Atlas, the CORUM, and the Human Phenotype Ontology.
+#### Getting information about biomarkers from databases:
+#### the GO, the KEGG, the Reactome, the WikiPathways, the Transfac, the miRTarBase, the Human Protein Atlas, the CORUM, and the Human Phenotype Ontology.
 ```r
 gene.top <- get.top.gene(result$selected.feature, 15 , 20)
 info.gene <- get.info.top.gene(gene.top, condition.methods = 'union')
 ```
-### Feature selection U-test
+#### Feature selection U-test
 ```r
 var.utest <- fs.utest(x = data, y = class, params = list(adjust = "holm", alpha = 0.05))
 ```
 
-### Feature selection MCFS
+#### Feature selection MCFS
 ```r
 var.mcfs <- fs.mcfs(x = data, y = class)
 ```
 
-### Create subset indexes cross-validation
+#### Create subset indexes cross-validation
 ```r
 list.index.cross <- cross.val(x = data,
                               y = class,
                               method = 'kfoldcv',
                               params.cv = list(niter = 10, k = 3)
 ```                              
-### Feature selection for one method in cross-validation
+#### Feature selection for one method in cross-validation
 ```r
 list.selected.var <- feature.selection.cv(x = data,
                                           y = class,
@@ -91,12 +91,12 @@ list.selected.var <- feature.selection.cv(x = data,
                                           list.index.cross = list.index.cross,
                                           params = list(adjust = 'holm', alpha = 0.05)
  ```
-### Compute Lustgarten’s stability measure for one method
+#### Compute Lustgarten’s stability measure for one method
 ```r
 asm <- stabilty.selection(list.selected.var, list.index.cross, 100)
 ```
 
-### Train model Random Forest for one method
+#### Train model Random Forest for one method
 ```r
 model.result <- build.model.crossval(x = data,
                                      y = class,
