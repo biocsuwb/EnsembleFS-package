@@ -16,6 +16,9 @@ and also clinical data (numeric data);
 - evaluate the stability of feature subsets and the performance of predictive models;
 - find information about selected molecular markers (gene ontology, pathways, tissue specificity, miRNA targets, regulatory motif, protein complexes, disease phenotypes) in nine biological databases.
 
+## Test data
+
+
 ## Install the development version from GitHub:
 
 ```r
@@ -29,7 +32,7 @@ EnsembleFS makes it trivial to run many algorithms and use the best one or an en
 
 ```r
 
-data <- read.csv2('exampleData.csv')
+data <- read.csv2('exampleData_2000.csv')
 class <- data$class
 data$class <- NULL
 
