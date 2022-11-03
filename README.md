@@ -8,12 +8,12 @@ Moreover, EnsembleFS support users in analysis and interpretation of molecular d
 The proposed tool accept molecular data includes different types of gene identifiers, such as Ensembl, NCBI Entrez gene ID, Refseq, Illumina, and Uniprot.
 
 EnsembleFS allows the user to:
-- filter the most informative features by using up to five FS methods from molecular data generated from high-throughput molecular biology experiments,
-and clinical data (numeric data);
+- filter the most informative features by using up to five FS methods from molecular data generated from high-throughput molecular biology experiments
+and also clinical data (numeric data);
 - add any other FS methods to default list of basic filters (U-test, MCFS, MRMR, MDFS-1D, and MDFS-2D);
 - establish the selected parameters for predictive models, such as the number of top N informative features;
 - remove redundant features by building a the Spearman correlation matrix that identifies highly correlated features;
-- evaluate the stability of feature subsets and performance of predictive models;
+- evaluate the stability of feature subsets and the performance of predictive models;
 - find information about selected molecular markers (gene ontology, pathways, tissue specificity, miRNA targets, regulatory motif, protein complexes, disease phenotypes) in nine biological databases.
 
 ## Install the development version from GitHub:
