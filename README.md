@@ -28,7 +28,7 @@ devtools::install_github("biocsuwb/EnsembleFS-package")
 #### Note: To install EnsembleFS package in your R environment make sure you have Java installed (rJava R package).
 ## Examples 
 
-### EnsembleFS makes it trivial to run many algorithms and use the best one or an ensemble.
+#### EnsembleFS makes it trivial to run many algorithms and use the best one or an ensemble.
 
 ```r
 data <- read.csv2('exampleData.csv')
