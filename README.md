@@ -4,7 +4,7 @@ EnsembleFS is a R package for single and ensemble feature selection (FS) of mole
 This tool is based on several feature filters, such as the test Manna-Whitneya (U-test), the Monte Carlo Feature Selection (MCFS) ([Dramiński & Koronacki 2018](https://www.jstatsoft.org/article/view/v085i12)) , the MultiDimensional Feature Selection (two variants: MDFS-1D and MDFS-2D) ([Mnich & Rudnicki 2020](https://www.sciencedirect.com/science/article/abs/pii/S0020025520302048)), and the Minimum Redundancy Maximum Relevance (MRMR) 
 ([Ding 2005](https://pubmed.ncbi.nlm.nih.gov/15852500/)) for discovering the most important biomarkers and used the machine learning algorithms to evaluate the quality of feature sets. Predictive models are built using the Random Forest algorithm. It can be applied to two-class problems.
 
-Moreover, EnsembleFS support users in analysis and interpretation of molecular data. The information about each of top biomarkers is extracted from diverse biological databases, namely the [Gene Ontology](https://pubmed.ncbi.nlm.nih.gov/33290552/), the [Kyoto Encyclopedia of Genes and Genomes](https://pubmed.ncbi.nlm.nih.gov/18477636/), the [Reactome](https://pubmed.ncbi.nlm.nih.gov/32907876/), the [WikiPathways](https://pubmed.ncbi.nlm.nih.gov/33211851/), the [Transfac](https://pubmed.ncbi.nlm.nih.gov/8594589/), the [miRTarBase](https://academic.oup.com/nar/article/48/D1/D148/5606625), the [Human Protein Atlas](https://pubmed.ncbi.nlm.nih.gov/25613900/), the [CORUM](https://pubmed.ncbi.nlm.nih.gov/30357367/), and the [Human Phenotype Ontology](https://pubmed.ncbi.nlm.nih.gov/33264411/).
+Moreover, EnsembleFS support users in analysis and interpretation of molecular data. The information about each of top biomarkers is extracted from diverse biological databases, namely the Gene Ontology [GO](https://pubmed.ncbi.nlm.nih.gov/33290552/), the Kyoto Encyclopedia of Genes and Genomes ([KEGG](https://pubmed.ncbi.nlm.nih.gov/18477636/)), the Reactome ([React](https://pubmed.ncbi.nlm.nih.gov/32907876/)), the WikiPathways ([WP](https://pubmed.ncbi.nlm.nih.gov/33211851/)), the Transfac ([TF](https://pubmed.ncbi.nlm.nih.gov/8594589/)), the miRTarBase ([MIRNA](https://academic.oup.com/nar/article/48/D1/D148/5606625)), the Human Protein Atlas ([HPA](https://pubmed.ncbi.nlm.nih.gov/25613900/)), the [CORUM](https://pubmed.ncbi.nlm.nih.gov/30357367/), and the Human Phenotype Ontology ([HPO](https://pubmed.ncbi.nlm.nih.gov/33264411/)).
 The proposed tool accept molecular data includes different types of gene identifiers, such as Ensembl, NCBI Entrez gene ID, Refseq, Illumina, and Uniprot.
 
 EnsembleFS allows the user to:
@@ -36,7 +36,7 @@ data$class <- NULL
 # showing list methods
 list.methods()
 
-# run end-to-end Ensemble for comparison of feature selection methods.
+# run end-to-end ensembleFS() for comparison of feature selection methods: U-test, MCFS, MDFS, and MRMR.
 result <- ensembleFS(x = data,
                      y = class,
                      methods = c("fs.utest", "fs.mcfs", "fs.mrmr", "fs.mdfs.1D", "fs.mdfs.2D"),
@@ -52,14 +52,15 @@ result <- ensembleFS(x = data,
 graph.result(result$stability, "stability")
 graph.result(result$model, "auc")
 
-# getting information about genes from gprogiler2
+# getting information about biomarkers from databases:
+# the Gene Ontology, the KEGG, the Reactome, the WikiPathways, the Transfac, the miRTarBase, the Human Protein Atlas, the CORUM, and the Human Phenotype Ontology.
 gene.top <- get.top.gene(result$selected.feature, 15 , 20)
 info.gene <- get.info.top.gene(gene.top, condition.methods = 'union')
 
 # feature selection U-test
 var.utest <- fs.utest(x = data, y = class, params = list(adjust = "holm", alpha = 0.05))
 
-# feature selection MCFS-ID
+# feature selection MCFS
 var.mcfs <- fs.mcfs(x = data, y = class)
 
 #create subset indexes cross-validation
