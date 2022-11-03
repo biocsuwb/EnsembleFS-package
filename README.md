@@ -16,19 +16,6 @@ and also clinical data (numeric data);
 - evaluate the stability of feature subsets and the performance of predictive models;
 - find information about selected molecular markers (gene ontology, pathways, tissue specificity, miRNA targets, regulatory motif, protein complexes, disease phenotypes) in nine biological databases.
 
-## Model configuration parameters
-EnsembleFS allows user to set some parameter values, such as:
-- feature selection methods: ***methods = c("fs.utest", "fs.mcfs", "fs.mrmr", "fs.mdfs.1D", "fs.mdfs.2D")***;
-- U-test and MDFS parameter, ***multitest correction: adjust = c("holm", "hochberg", "hommel", "bonferroni", "BH", "BY", "fdr", "none")***;
-- U-test and MDFS parameter, significance level: ***alpha = 0.05***;
-- MRMR parameter, number of significant features: ***feature.number = 10***;
-- MCFS parameter, cut-off method: ***cutoff.method = c("permutations", "criticalAngle", "kmeans")***;
-- correlation coefficient: ***level.cor = 0.75***;
-- validation methods: ***method.cv = c('kfoldcv','rsampling')***;
-- number of repetitions: ***niter = 5***;
-- train-test-split the data: ***k = 3***.
-
-
 ## Example data sets
 The RNA-sequencing data of tumor-adjacent normal tissues of lung adenocarcinoma cancer patients from The Cancer Genome Atlas database ([TCGA](https://www.cancer.gov/tcga)) was used. The preprocessing of data involved standard steps for RNA-Seq data. The log2 transformation was performed. Features with zero and near-zero (1%) variance across patients were removed. After the preprocessing procedure the primary dataset contains 574 samples (59 normal and 515 tumor) described with 20172 differentially expressed genes (DEGs). This dataset includes highly correlated features and the number of cancer samples is roughly ten times more than normal samples. For testing purposes, the number of probes was limited to random 2000 DEGs ([exampleData.csv](https://github.com/biocsuwb/EnsembleFS-package/tree/main/data)) and 500 DEGs with the
 highest difference in the gene expression level between tumor and normal tissues ([exampleData_500.csv](https://github.com/biocsuwb/EnsembleFS-package/tree/main/data)). 
@@ -53,6 +40,20 @@ data$class <- NULL
 ```r
 list.methods()
 ```
+
+### Model configuration parameters
+EnsembleFS allows user to set some parameter values, such as:
+- feature selection methods: ***methods = c("fs.utest", "fs.mcfs", "fs.mrmr", "fs.mdfs.1D", "fs.mdfs.2D")***;
+- U-test and MDFS parameter, ***multitest correction: adjust = c("holm", "hochberg", "hommel", "bonferroni", "BH", "BY", "fdr", "none")***;
+- U-test and MDFS parameter, significance level: ***alpha = 0.05***;
+- MRMR parameter, number of significant features: ***feature.number = 10***;
+- MCFS parameter, cut-off method: ***cutoff.method = c("permutations", "criticalAngle", "kmeans")***;
+- correlation coefficient: ***level.cor = 0.75***;
+- validation methods: ***method.cv = c('kfoldcv','rsampling')***;
+- number of repetitions: ***niter = 5***;
+- train-test-split the data: ***k = 3***.
+
+
 
 #### Run end-to-end EnsembleFS for ensemble feature selection and comparison of feature filters (U-test, MCFS, MDFS-1D, MDFS-2D, and MRMR).
 ```r
