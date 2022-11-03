@@ -46,7 +46,7 @@ EnsembleFS allows user to set some parameter values, such as:
 - feature selection methods: ***methods = c("fs.utest", "fs.mcfs", "fs.mrmr", "fs.mdfs.1D", "fs.mdfs.2D")***;
 - U-test and MDFS parameter, ***multitest correction: adjust = c("holm", "hochberg", "hommel", "bonferroni", "BH", "BY", "fdr", "none")***;
 - U-test and MDFS parameter, significance level: ***alpha = 0.05***;
-- MRMR parameter, number of significant features: ***feature.number = 10***;
+- MRMR parameter, number of significant features: ***feature.number = 100***;
 - MCFS parameter, cut-off method: ***cutoff.method = c("permutations", "criticalAngle", "kmeans")***;
 - correlation coefficient: ***level.cor = 0.75***;
 - validation methods: ***method.cv = c('kfoldcv','rsampling')***;
@@ -62,8 +62,8 @@ result <- ensembleFS(x = data,
                      methods = c("fs.utest", "fs.mcfs", "fs.mrmr", "fs.mdfs.1D", "fs.mdfs.2D"),
                      method.cv = "kfoldcv",
                      params.cv = list(k = 3, niter = 5),
-                     level.cor = 1,
-                     params = list(adjust = "holm", feature.number = 10, alpha = 0.05),
+                     level.cor = 0.75,
+                     params = list(adjust = "fdr", feature.number = 100, alpha = 0.05),
                      asm = c("fs.utest", "fs.mcfs", "fs.mrmr", "fs.mdfs.1D", "fs.mdfs.2D"),
                      model = c("fs.utest", "fs.mcfs", "fs.mrmr", "fs.mdfs.1D", "fs.mdfs.2D"))
  ```
