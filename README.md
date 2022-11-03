@@ -16,10 +16,7 @@ and also clinical data (numeric data);
 - evaluate the stability of feature subsets and the performance of predictive models;
 - find information about selected molecular markers (gene ontology, pathways, tissue specificity, miRNA targets, regulatory motif, protein complexes, disease phenotypes) in nine biological databases.
 
-## Test data
-The RNA-sequencing data of tumor-adjacent normal tissues of lung adenocarcinoma cancer patients from The Cancer Genome Atlas database ([TCGA](https://www.cancer.gov/tcga)) was used. The preprocessing of data involved standard steps for RNA-Seq data. The log2 transformation was performed. Features with zero and near-zero (1%) variance across patients were removed. After the preprocessing procedure the primary dataset contains 574 samples (59 normal and 515 tumor) described with 20172 differentially expressed genes (DEGs). This dataset includes highly correlated features and the number of cancer samples is roughly ten times more than normal samples. For testing purposes, the number of probes was limited to random 2000 DEGs (exampleData.csv) or 500 DEGs (exampleData_500.csv) with the highest difference in the gene expression level between tumor and normal tissues.
-
-## Install the development version from GitHub
+## Install the development version from GitHub:
 
 ```r
 # install.packages("devtools")
@@ -31,15 +28,18 @@ devtools::install_github("biocsuwb/EnsembleFS-package")
 EnsembleFS makes it trivial to run many algorithms and use the best one or an ensemble.
 
 ```r
-
 data <- read.csv2('exampleData.csv')
 class <- data$class
 data$class <- NULL
+```
 
 # showing the list of available feature selection methods
+```r
 list.methods()
+```
 
 # run end-to-end EnsembleFS for ensemble feature selection and comparison of feature filters (U-test, MCFS, MDFS-1D, MDFS-2D, and MRMR).
+```r
 result <- ensembleFS(x = data,
                      y = class,
                      methods = c("fs.utest", "fs.mcfs", "fs.mrmr", "fs.mdfs.1D", "fs.mdfs.2D"),
@@ -49,17 +49,20 @@ result <- ensembleFS(x = data,
                      params = list(adjust = "holm", feature.number = 10, alpha = 0.05),
                      asm = c("fs.utest", "fs.mcfs", "fs.mrmr", "fs.mdfs.1D", "fs.mdfs.2D"),
                      model = c("fs.utest", "fs.mcfs", "fs.mrmr", "fs.mdfs.1D", "fs.mdfs.2D"))
+ ```
                      
-
 # showing result
+```r
 graph.result(result$stability, "stability")
 graph.result(result$model, "auc")
+```
 
 # getting information about biomarkers from databases:
 # the GO, the KEGG, the Reactome, the WikiPathways, the Transfac, the miRTarBase, the Human Protein Atlas, the CORUM, and the Human Phenotype Ontology.
+```r
 gene.top <- get.top.gene(result$selected.feature, 15 , 20)
 info.gene <- get.info.top.gene(gene.top, condition.methods = 'union')
-
+```
 # feature selection U-test
 var.utest <- fs.utest(x = data, y = class, params = list(adjust = "holm", alpha = 0.05))
 
@@ -82,6 +85,7 @@ list.selected.var <- feature.selection.cv(x = data,
 # Compute Lustgarten’s stability measure for one method
 asm <- stabilty.selection(list.selected.var, list.index.cross, 100)
 
+```r
 # Train model Random Forest for one method
 model.result <- build.model.crossval(x = data,
                                      y = class,
