@@ -16,10 +16,18 @@ and also clinical data (numeric data);
 - evaluate the stability of feature subsets and the performance of predictive models;
 - find information about selected molecular markers (gene ontology, pathways, tissue specificity, miRNA targets, regulatory motif, protein complexes, disease phenotypes) in nine biological databases.
 
+#### Model configuration parameters
+EnsembleFS allows user to set some parameter values.
+
+
+Negative Correlation Value (Default : -0.6)
+Positive Correlation Value (Default : +1.0)
+Number of Iterations (Default : 100)
 
 ## Example data sets
 The RNA-sequencing data of tumor-adjacent normal tissues of lung adenocarcinoma cancer patients from The Cancer Genome Atlas database ([TCGA](https://www.cancer.gov/tcga)) was used. The preprocessing of data involved standard steps for RNA-Seq data. The log2 transformation was performed. Features with zero and near-zero (1%) variance across patients were removed. After the preprocessing procedure the primary dataset contains 574 samples (59 normal and 515 tumor) described with 20172 differentially expressed genes (DEGs). This dataset includes highly correlated features and the number of cancer samples is roughly ten times more than normal samples. For testing purposes, the number of probes was limited to random 2000 DEGs ([exampleData.csv](https://github.com/biocsuwb/EnsembleFS-package/tree/main/data)) and 500 DEGs with the
 highest difference in the gene expression level between tumor and normal tissues ([exampleData_500.csv](https://github.com/biocsuwb/EnsembleFS-package/tree/main/data)). 
+
 ## Install the development version from GitHub:
 
 ```r
@@ -29,7 +37,7 @@ devtools::install_github("biocsuwb/EnsembleFS-package")
 #### Note: To install EnsembleFS package in your R environment make sure you have Java installed (rJava R package).
 ## Examples 
 
-#### Load data 
+#### Loading data
 ```r
 data <- read.csv2('exampleData.csv')
 class <- data$class
