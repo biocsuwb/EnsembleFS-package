@@ -32,7 +32,7 @@ EnsembleFS makes it trivial to run many algorithms and use the best one or an en
 
 ```r
 
-data <- read.csv2('exampleData_2000.csv')
+data <- read.csv2('exampleData.csv')
 class <- data$class
 data$class <- NULL
 
