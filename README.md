@@ -36,7 +36,7 @@ data$class <- NULL
 # showing list methods
 list.methods()
 
-# run end-to-end ensembleFS() for comparison of feature selection methods: U-test, MCFS, MDFS, and MRMR.
+# run end-to-end ensembleFS() for ensemble feature selection and comparison of feature filters (U-test, MCFS, MDFS-1D, MDFS-2D, and MRMR).
 result <- ensembleFS(x = data,
                      y = class,
                      methods = c("fs.utest", "fs.mcfs", "fs.mrmr", "fs.mdfs.1D", "fs.mdfs.2D"),
@@ -53,7 +53,7 @@ graph.result(result$stability, "stability")
 graph.result(result$model, "auc")
 
 # getting information about biomarkers from databases:
-# the Gene Ontology, the KEGG, the Reactome, the WikiPathways, the Transfac, the miRTarBase, the Human Protein Atlas, the CORUM, and the Human Phenotype Ontology.
+# the GO, the KEGG, the Reactome, the WikiPathways, the Transfac, the miRTarBase, the Human Protein Atlas, the CORUM, and the Human Phenotype Ontology.
 gene.top <- get.top.gene(result$selected.feature, 15 , 20)
 info.gene <- get.info.top.gene(gene.top, condition.methods = 'union')
 
