@@ -18,7 +18,7 @@ and also clinical data (numeric data);
 
 ## Model configuration parameters
 EnsembleFS allows user to set some parameter values, such as:
-- feature selection methods: *methods = c("fs.utest", "fs.mcfs", "fs.mrmr", "fs.mdfs.1D", "fs.mdfs.2D")*;
+- feature selection methods: ***methods = c("fs.utest", "fs.mcfs", "fs.mrmr", "fs.mdfs.1D", "fs.mdfs.2D")***;
 - U-test and MDFS parameter, *multitest correction: adjust = c("holm", "hochberg", "hommel", "bonferroni", "BH", "BY", "fdr", "none")*;
 - U-test and MDFS parameter, *significance level: alpha = 0.05*;
 - MRMR parameter, number of significant features: *feature.number = 10*;
