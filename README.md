@@ -75,7 +75,7 @@ graph.result(result$model, "auc")
 ```
 
 #### Getting information about biomarkers from databases:
-#### the GO, the KEGG, the Reactome, the WikiPathways, the Transfac, the miRTarBase, the Human Protein Atlas, the CORUM, and the Human Phenotype Ontology.
+#### the Gene Ontology, the KEGG, the Reactome, the WikiPathways, the Transfac, the miRTarBase, the Human Protein Atlas, the CORUM, and the Human Phenotype Ontology.
 ```r
 gene.top <- get.top.gene(result$selected.feature, 15 , 20)
 info.gene <- get.info.top.gene(gene.top, condition.methods = 'union')
