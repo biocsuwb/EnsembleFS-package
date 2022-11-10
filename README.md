@@ -67,7 +67,7 @@ EnsembleFS allows user to set some parameter values, such as:
 
 
 #### Run end-to-end EnsembleFS for ensemble feature selection and comparison of feature filters
-(U-test, MCFS, MDFS-1D, MDFS-2D, and MRMR).
+Selected filters: U-test, MCFS, MRMR, MDFS-1D, and MDFS-2D.
 ```r
 result <- ensembleFS(x = data,
                      y = class,
@@ -80,12 +80,15 @@ result <- ensembleFS(x = data,
                      model = c("fs.utest", "fs.mcfs", "fs.mrmr", "fs.mdfs.1D", "fs.mdfs.2D"))
  ```
                      
-#### Showing result
+#### Visualizing the model results;
 ```r
 graph.result(result$stability, "stability")
 graph.result(result$model, "auc")
 ```
-
+```r
+![Fig.3](https://github.com/biocsuwb/Images/blob/main/Scheme3.png?raw=true)
+Fig.3 The scheme for biological information collection and integration about biomarkers.
+```
 #### Getting information about biomarkers from databases:
 #### the Gene Ontology, the KEGG, the Reactome, the WikiPathways, the Transfac, the miRTarBase, the Human Protein Atlas, the CORUM, and the Human Phenotype Ontology.
 ```r
