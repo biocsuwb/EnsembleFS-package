@@ -85,8 +85,7 @@ result <- ensembleFS(x = data,
 graph.result(result$stability, "stability")
 graph.result(result$model, "auc")
 ```
-![](https://github.com/biocsuwb/Images/blob/main/ACC.png?raw=true)
-![](https://github.com/biocsuwb/Images/blob/main/ASM.png?raw=true)
+![]([https://github.com/biocsuwb/Images/blob/main/ACC.png?raw=true](https://github.com/biocsuwb/Images/blob/main/ASM&ACC.png?raw=true))
 Fig.4 The average values for accurancy (ACC) vs N top features for various features filters and the ASM similarity measure between 15 feature subsets vs N top features.
 #### Getting information about biomarkers from databases:
 #### the Gene Ontology, the KEGG, the Reactome, the WikiPathways, the Transfac, the miRTarBase, the Human Protein Atlas, the CORUM, and the Human Phenotype Ontology.
