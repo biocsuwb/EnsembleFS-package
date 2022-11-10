@@ -19,7 +19,7 @@ and also clinical data (numeric formats);
 - 
 - find information about selected molecular markers (gene ontology, pathways, tissue specificity, miRNA targets, regulatory motif, protein complexes, disease phenotypes) in nine biological databases (GO, KEGG, React, WP, TF, MIRNA, HPA, CORUM, and HPO).
 
-
+![Fig.1](https://github.com/biocsuwb/Images/blob/main/Scheme1.png?raw=true)
 
 
 ## Example data sets
