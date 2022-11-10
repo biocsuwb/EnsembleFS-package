@@ -92,11 +92,12 @@ Fig.4 The average values for accurancy (ACC) vs N top features (N = 5, 10, 20, .
 #### Showing list of top biomarkers.
 
 How many times a biomarker has occurred in m feature subsets: level.freq = 7
+
 Number of top N biomarkers for each of filter FS methods: number.gene = 20
 
 ```r
 gene.top <- get.top.gene(list.imp.var.cv = result$selected.feature, level.freq = 7, number.gene = 20)
-'''
+```
 
 #### Getting information about biomarkers from databases: the Gene Ontology, the KEGG, the Reactome, the WikiPathways, the Transfac, the miRTarBase, the Human Protein Atlas, the CORUM, and the Human Phenotype Ontology.
 Combination of a set of biomarkers: union
