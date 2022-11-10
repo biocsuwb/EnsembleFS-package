@@ -175,3 +175,31 @@ model.result <- build.model.crossval(x = data,
 ```r
 asm <- stabilty.selection(list.selected.var, list.index.cross, 100)
 ```
+## Example 3 - create and add their own feature filters to default list of basic feature filters (U-test, MCFS, MRMR, MDFS-1D, and MDFS-2D)
+#### Loading data
+```r
+data <- read.csv2('exampleData.csv')
+class <- data$class
+data$class <- NULL
+
+####  Creating new feature filter eg. RelieF ([Kononenko 1994](https://link.springer.com/chapter/10.1007/3-540-57868-4_57))
+```r
+feature.number = 10
+```
+#### Run end-to-end EnsembleFS for ensemble feature selection and comparison of feature filters 
+Selected feature filters: U-test, MCFS, MRMR, and MDFS-1D.
+```r
+result <- ensembleFS(x = data,
+                     y = class,
+                     methods = c("fs.utest", "fs.mcfs", "fs.mrmr", "fs.mdfs.1D", "fs.relief"),
+                     method.cv = "kfoldcv",
+                     params.cv = list(k = 3, niter = 5),
+                     level.cor = 1,
+                     params = list(adjust = "holm", cutoff.method = "kmeans", feature.number = 10, alpha = 0.05),
+                     asm = c("fs.utest", "fs.mcfs", "fs.mrmr", "fs.mdfs.1D"),
+                     model = c("fs.utest", "fs.mcfs", "fs.mrmr", "fs.mdfs.1D"))
+ ```
+ #### Visualizing the model results
+```r
+graph.result(result$model, "acc")
+```
