@@ -181,14 +181,14 @@ data <- read.csv2('exampleData.csv')
 class <- data$class
 data$class <- NULL
 ```
-####  Creating new feature filter eg. RelieF ([Kononenko 1994](https://link.springer.com/chapter/10.1007/3-540-57868-4_57))
+####  Creating new feature filter eg. ReliefF ([Kononenko 1994](https://link.springer.com/chapter/10.1007/3-540-57868-4_57))
 ```r
 feature.number = 10
 ```
 #### Run end-to-end EnsembleFS for ensemble feature selection and comparison of feature filters 
-Selected feature filters: U-test, MCFS, MRMR, and MDFS-1D.
+Feature filters: U-test, MCFS, MRMR, MDFS-1D, and ReliefF.
 ```r
-result <- ensembleFS(x = data,
+result2 <- ensembleFS(x = data,
                      y = class,
                      methods = c("fs.utest", "fs.mcfs", "fs.mrmr", "fs.mdfs.1D", "fs.relief"),
                      method.cv = "kfoldcv",
@@ -200,5 +200,5 @@ result <- ensembleFS(x = data,
  ```
  #### Visualizing the model results
 ```r
-graph.result(result$model, "acc")
+graph.result2(result2$model, "acc")
 ```
