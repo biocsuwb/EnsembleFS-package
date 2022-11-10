@@ -180,7 +180,7 @@ asm <- stabilty.selection(list.selected.var, list.index.cross, 100)
 data <- read.csv2('exampleData.csv')
 class <- data$class
 data$class <- NULL
-
+```
 ####  Creating new feature filter eg. RelieF ([Kononenko 1994](https://link.springer.com/chapter/10.1007/3-540-57868-4_57))
 ```r
 feature.number = 10
