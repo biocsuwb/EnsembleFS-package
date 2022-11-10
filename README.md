@@ -85,10 +85,8 @@ result <- ensembleFS(x = data,
 graph.result(result$stability, "stability")
 graph.result(result$model, "auc")
 ```
-```r
 ![Fig.3](https://github.com/biocsuwb/Images/blob/main/Scheme3.png?raw=true)
 Fig.3 The scheme for biological information collection and integration about biomarkers.
-```
 #### Getting information about biomarkers from databases:
 #### the Gene Ontology, the KEGG, the Reactome, the WikiPathways, the Transfac, the miRTarBase, the Human Protein Atlas, the CORUM, and the Human Phenotype Ontology.
 ```r
