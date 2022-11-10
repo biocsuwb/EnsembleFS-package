@@ -75,7 +75,7 @@ result <- ensembleFS(x = data,
                      method.cv = "kfoldcv",
                      params.cv = list(k = 3, niter = 5),
                      level.cor = 1,
-                     params = list(adjust = "holm", cutoff.method = "kmeans", feature.number = 10, alpha = 0.05),
+                     params = list(adjust = "holm", cutoff.method = "kmeans", feature.number = 100, alpha = 0.05),
                      asm = c("fs.utest", "fs.mcfs", "fs.mrmr", "fs.mdfs.1D"),
                      model = c("fs.utest", "fs.mcfs", "fs.mrmr", "fs.mdfs.1D"))
  ```
@@ -97,9 +97,9 @@ result$selected.feature
 #### Showing the combined list of top biomarkers.
 How many times a biomarker has occurred in m feature subsets: level.freq = 7
 
-Number of top N biomarkers for each of filter FS methods: number.gene = 20
+Number of top N biomarkers for each of filter FS methods: number.gene = 100
 ```r
-gene.top <- get.top.gene(list.imp.var.cv = result$selected.feature, level.freq = 7, number.gene = 20)
+gene.top <- get.top.gene(list.imp.var.cv = result$selected.feature, level.freq = 7, number.gene = 100)
 ```
 
 #### Getting information about biomarkers from nine biological databases
