@@ -10,7 +10,7 @@ The proposed tool accept molecular data includes different types of gene identif
 EnsembleFS allows the user to:
 - filter the most informative features by using up to five FS methods (U-test, MCFS, MRMR, MDFS-1D, and MDFS-2D) from molecular data generated from high-throughput molecular biology experiments
 and also clinical data (numeric formats);
-- build a Random Forest classifiers using selected top N features; 
+- build a Random Forest classifiers using selected top N features (Fig.1); 
 - evaluate the stability of feature subsets and the performance of predictive models;
 - compare the predictive performance of models and the stability of selected feature sets for selected FS algorithms; 
 - establish the selected parameters for predictive models, such as the number of top N informative features;
@@ -18,6 +18,9 @@ and also clinical data (numeric formats);
 - create and add their own feature filters to default list of basic feature filters (U-test, MCFS, MRMR, MDFS-1D, and MDFS-2D) for more complex FS task;
 - 
 - find information about selected molecular markers (gene ontology, pathways, tissue specificity, miRNA targets, regulatory motif, protein complexes, disease phenotypes) in nine biological databases (GO, KEGG, React, WP, TF, MIRNA, HPA, CORUM, and HPO).
+
+
+
 
 ## Example data sets
 The RNA-sequencing data of tumor-adjacent normal tissues of lung adenocarcinoma cancer patients from The Cancer Genome Atlas database ([TCGA](https://www.cancer.gov/tcga)) was used. The preprocessing of data involved standard steps for RNA-Seq data. The log2 transformation was performed. Features with zero and near-zero (1%) variance across patients were removed. After the preprocessing procedure the primary dataset contains 574 samples (59 normal and 515 tumor) described with 20172 differentially expressed genes (DEGs). This dataset includes highly correlated features and the number of cancer samples is roughly ten times more than normal samples. For testing purposes, the number of molecular markers was limited to random 2000 DEGs ([exampleData.csv](https://github.com/biocsuwb/EnsembleFS-package/tree/main/data)) and 500 DEGs with the
