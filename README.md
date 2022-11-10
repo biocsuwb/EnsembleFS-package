@@ -12,7 +12,7 @@ EnsembleFS allows the user to:
 and also clinical data (numeric formats);
 - create and add their own feature filters to default list of basic feature filters (U-test, MCFS, MRMR, MDFS-1D, and MDFS-2D) for more complex FS task;
 - build a Random Forest classifiers using selected top N features (Fig.1); 
-- evaluate the stability of feature subsets and the performance of predictive models;
+- evaluate the stability of feature subsets (the Lustgarten adjusted stability measure ([ASM](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2815476/)) ) and the performance of predictive models (the area under receiver operator curve  (AUC), accuracy (ACC), and the Matthews correlation coefficient(MCC);
 - compare the predictive performance of models and the stability of selected feature sets for selected FS algorithms; 
 - establish the selected parameters for predictive models, such as the number of top N informative features;
 - remove redundant features by building a the Spearman correlation matrix that identifies highly correlated features;
@@ -67,17 +67,17 @@ EnsembleFS allows user to set some parameter values, such as:
 
 
 #### Run end-to-end EnsembleFS for ensemble feature selection and comparison of feature filters
-Selected filters: U-test, MCFS, MRMR, MDFS-1D, and MDFS-2D.
+Selected feature filters: U-test, MCFS, MRMR, and MDFS-1D.
 ```r
 result <- ensembleFS(x = data,
                      y = class,
-                     methods = c("fs.utest", "fs.mcfs", "fs.mrmr", "fs.mdfs.1D", "fs.mdfs.2D"),
+                     methods = c("fs.utest", "fs.mcfs", "fs.mrmr", "fs.mdfs.1D"),
                      method.cv = "kfoldcv",
                      params.cv = list(k = 3, niter = 5),
-                     level.cor = 0.75,
-                     params = list(adjust = "fdr", feature.number = 100, alpha = 0.05),
-                     asm = c("fs.utest", "fs.mcfs", "fs.mrmr", "fs.mdfs.1D", "fs.mdfs.2D"),
-                     model = c("fs.utest", "fs.mcfs", "fs.mrmr", "fs.mdfs.1D", "fs.mdfs.2D"))
+                     level.cor = 1,
+                     params = list(adjust = "holm", cutoff.method = "kmeans", feature.number = 10, alpha = 0.05),
+                     asm = c("fs.utest", "fs.mcfs", "fs.mrmr", "fs.mdfs.1D"),
+                     model = c("fs.utest", "fs.mcfs", "fs.mrmr", "fs.mdfs.1D"))
  ```
                      
 #### Visualizing the model results;
@@ -85,8 +85,8 @@ result <- ensembleFS(x = data,
 graph.result(result$stability, "stability")
 graph.result(result$model, "auc")
 ```
-![Fig.3](https://github.com/biocsuwb/Images/blob/main/Scheme3.png?raw=true)
-Fig.3 The scheme for biological information collection and integration about biomarkers.
+![Fig.4](https://github.com/biocsuwb/Images/blob/main/AUC.png?raw=true)
+Fig.4 The average values for accurancy (ACC) vs N top features for various features filters. The ASM similarity measure between 10 feature subsets vs N top features.
 #### Getting information about biomarkers from databases:
 #### the Gene Ontology, the KEGG, the Reactome, the WikiPathways, the Transfac, the miRTarBase, the Human Protein Atlas, the CORUM, and the Human Phenotype Ontology.
 ```r
