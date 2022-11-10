@@ -86,7 +86,7 @@ graph.result(result$stability, "stability")
 graph.result(result$model, "auc")
 ```
 ![Fig.4](https://github.com/biocsuwb/Images/blob/main/ASM&ACC.png?raw=true)
-Fig.4 The average values for accurancy (ACC) vs N top features for various features filters and the ASM similarity measure between 15 feature subsets vs N top features.
+Fig.4 The average values for accurancy (ACC) vs N top features (N = 5, 10, 20, ..., 50, 75, 100) for various features filters and the ASM similarity measure between 15 feature subsets vs N top features.
 #### Getting information about biomarkers from databases:
 #### the Gene Ontology, the KEGG, the Reactome, the WikiPathways, the Transfac, the miRTarBase, the Human Protein Atlas, the CORUM, and the Human Phenotype Ontology.
 ```r
