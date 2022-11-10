@@ -23,7 +23,7 @@ and also clinical data (numeric formats);
 Fig.1 The scheme of ensemble feature selection and supervised classification.
 ![Fig.2](https://github.com/biocsuwb/Images/blob/main/Scheme2.png?raw=true)
 Fig.2 The scheme of construction of the combined set of N-top relevant features.
-![Fig.3](https://github.com/biocsuwb/Images/blob/main/Scheme2.png?raw=true)
+![Fig.3](https://github.com/biocsuwb/Images/blob/main/Scheme3.png?raw=true)
 Fig.3 The scheme for biological information collection and integration about biomarkers.
 
 ## Example data sets
