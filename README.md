@@ -10,14 +10,15 @@ The proposed tool accept molecular data includes different types of gene identif
 EnsembleFS allows the user to:
 - filter the most informative features by using up to five FS methods (U-test, MCFS, MRMR, MDFS-1D, and MDFS-2D) from molecular data generated from high-throughput molecular biology experiments
 and also clinical data (numeric formats);
+- create and add their own feature filters to default list of basic feature filters (U-test, MCFS, MRMR, MDFS-1D, and MDFS-2D) for more complex FS task;
 - build a Random Forest classifiers using selected top N features (Fig.1); 
 - evaluate the stability of feature subsets and the performance of predictive models;
 - compare the predictive performance of models and the stability of selected feature sets for selected FS algorithms; 
 - establish the selected parameters for predictive models, such as the number of top N informative features;
 - remove redundant features by building a the Spearman correlation matrix that identifies highly correlated features;
-- create and add their own feature filters to default list of basic feature filters (U-test, MCFS, MRMR, MDFS-1D, and MDFS-2D) for more complex FS task;
-- 
-- find information about selected molecular markers (gene ontology, pathways, tissue specificity, miRNA targets, regulatory motif, protein complexes, disease phenotypes) in nine biological databases (GO, KEGG, React, WP, TF, MIRNA, HPA, CORUM, and HPO).
+- product plots to visualize the model results;
+- create detailed raport with feature selection and modeling results;
+- find information about selected top molecular markers (gene ontology, pathways, tissue specificity, miRNA targets, regulatory motif, protein complexes, disease phenotypes) in nine biological databases (GO, KEGG, React, WP, TF, MIRNA, HPA, CORUM, and HPO).
 
 ![Fig.1](https://github.com/biocsuwb/Images/blob/main/Scheme1.png?raw=true)
 Fig.1 The scheme of ensemble feature selection and supervised classification.
