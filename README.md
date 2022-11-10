@@ -175,8 +175,7 @@ model.result <- build.model.crossval(x = data,
 ```r
 asm <- stabilty.selection(list.selected.var, list.index.cross, 100)
 ```
-## Example 3 - create and add their own feature filters to default list of basic feature filters (U-test, MCFS, MRMR, MDFS-1D, and MDFS-2D)
-#### Loading data
+## Example 3 - create and add their own feature filters to default list of basic feature filters 
 ```r
 data <- read.csv2('exampleData.csv')
 class <- data$class
