@@ -20,8 +20,9 @@ and also clinical data (numeric formats);
 - find information about selected molecular markers (gene ontology, pathways, tissue specificity, miRNA targets, regulatory motif, protein complexes, disease phenotypes) in nine biological databases (GO, KEGG, React, WP, TF, MIRNA, HPA, CORUM, and HPO).
 
 ![Fig.1](https://github.com/biocsuwb/Images/blob/main/Scheme1.png?raw=true)
-Fig.1 Scheme of feature selection and machine learning to identify key biomarkers.
-
+Fig.1 The scheme of ensemble feature selection and supervised classification.
+![Fig.2](https://github.com/biocsuwb/Images/blob/main/Scheme2.png?raw=true)
+Fig.1 The scheme of construction of the combined set of N-top relevant features.
 
 ## Example data sets
 The RNA-sequencing data of tumor-adjacent normal tissues of lung adenocarcinoma cancer patients from The Cancer Genome Atlas database ([TCGA](https://www.cancer.gov/tcga)) was used. The preprocessing of data involved standard steps for RNA-Seq data. The log2 transformation was performed. Features with zero and near-zero (1%) variance across patients were removed. After the preprocessing procedure the primary dataset contains 574 samples (59 normal and 515 tumor) described with 20172 differentially expressed genes (DEGs). This dataset includes highly correlated features and the number of cancer samples is roughly ten times more than normal samples. For testing purposes, the number of molecular markers was limited to random 2000 DEGs ([exampleData.csv](https://github.com/biocsuwb/EnsembleFS-package/tree/main/data)) and 500 DEGs with the
