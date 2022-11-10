@@ -90,8 +90,10 @@ graph.result(result$stability, "stability")
 ![Fig.4](https://github.com/biocsuwb/Images/blob/main/ASM&ACC.png?raw=true)
 Fig.4 The average values for accurancy (ACC) vs N top features (N = 5, 10, 20, ..., 50, 75, 100) for various features filters and the ASM similarity measure between m = 15 feature subsets vs N top features.
 #### Showing list of top biomarkers.
-How many times a gene has occurred in m feature subsets: level.freq = 7
-Selected number of top N biomarkers for each of filter FS methods: number.gene = 20
+
+How many times a biomarker has occurred in m feature subsets: level.freq = 7
+
+Number of top N biomarkers for each of filter FS methods: number.gene = 20
 
 number.gene	
 top number of main genes
