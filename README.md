@@ -82,13 +82,24 @@ result <- ensembleFS(x = data,
                      
 #### Visualizing the model results;
 ```r
+graph.result(result$model, "acc")
 graph.result(result$stability, "stability")
-graph.result(result$model, "auc")
+# graph.result(result$model, "auc")
+# graph.result(result$model, "mcc")
 ```
 ![Fig.4](https://github.com/biocsuwb/Images/blob/main/ASM&ACC.png?raw=true)
-Fig.4 The average values for accurancy (ACC) vs N top features (N = 5, 10, 20, ..., 50, 75, 100) for various features filters and the ASM similarity measure between 15 feature subsets vs N top features.
-#### Getting information about biomarkers from databases:
-#### the Gene Ontology, the KEGG, the Reactome, the WikiPathways, the Transfac, the miRTarBase, the Human Protein Atlas, the CORUM, and the Human Phenotype Ontology.
+Fig.4 The average values for accurancy (ACC) vs N top features (N = 5, 10, 20, ..., 50, 75, 100) for various features filters and the ASM similarity measure between m = 15 feature subsets vs N top features.
+#### Showing list of top biomarkers.
+How many times a gene has occurred in m feature subsets: level.freq = 7
+Selected number of top N biomarkers for each of filter FS methods: number.gene = 20
+
+number.gene	
+top number of main genes
+```r
+gene.top <- get.top.gene(list.imp.var.cv = result$selected.feature, level.freq = 7, number.gene = 20)
+'''
+#### Getting information about biomarkers from databases: the Gene Ontology, the KEGG, the Reactome, the WikiPathways, the Transfac, the miRTarBase, the Human Protein Atlas, the CORUM, and the Human Phenotype Ontology.
+Combination of a set of biomarkers: union
 ```r
 gene.top <- get.top.gene(result$selected.feature, 15 , 20)
 info.gene <- get.info.top.gene(gene.top, condition.methods = 'union')
