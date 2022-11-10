@@ -183,7 +183,7 @@ data$class <- NULL
 ```
 ####  Creating new feature filter eg. ReliefF ([Kononenko 1994](https://link.springer.com/chapter/10.1007/3-540-57868-4_57))
 ```r
-feature.number = 10
+feature.number = 100
 ```
 #### Run end-to-end EnsembleFS for ensemble feature selection and comparison of feature filters 
 Feature filters: U-test, MCFS, MRMR, MDFS-1D, and ReliefF.
