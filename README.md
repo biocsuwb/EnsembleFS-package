@@ -38,7 +38,7 @@ highest difference in the gene expression level between tumor and normal tissues
 devtools::install_github("biocsuwb/EnsembleFS-package")
 ```
 #### Note: To install EnsembleFS package in your R environment make sure you have Java installed (rJava R package).
-## Examples 
+## Example 1 - ensemble feature selection
 
 #### Loading data
 ```r
@@ -94,7 +94,7 @@ Fig.4 The average values for accurancy (ACC) vs N top features (N = 5, 10, 20, .
 result$selected.feature
 ```
 
-#### Showing combined list of top biomarkers.
+#### Showing the combined list of top biomarkers.
 How many times a biomarker has occurred in m feature subsets: level.freq = 7
 
 Number of top N biomarkers for each of filter FS methods: number.gene = 20
@@ -108,41 +108,70 @@ Combination of a set of biomarkers: union
 ```r
 info.gene <- get.info.top.gene(gene.top, condition.methods = 'union')
 ```
+## Example 2 - individual feature selection
+
+#### Loading data
+```r
+data <- read.csv2('exampleData.csv')
+class <- data$class
+data$class <- NULL
+```
+
+#### Model configuration parameters
+- U-test and MDFS parameter, ***multitest correction: adjust = c("holm", "hochberg", "hommel", "bonferroni", "BH", "BY", "fdr", "none")***;
+- U-test and MDFS parameter, significance level: ***alpha = 0.05***;
+- MRMR parameter, number of significant features: ***feature.number = 100***;
+- MCFS parameter, cut-off method: ***cutoff.method = c("permutations", "criticalAngle", "kmeans")***;
+- correlation coefficient: ***level.cor = 0.75***;
+- validation methods: ***method.cv = c('kfoldcv','rsampling')***;
+- number of repetitions: ***niter = 5***;
+- train-test-split the data: ***k = 3***.
+
+
 #### Feature selection U-test
 ```r
 var.utest <- fs.utest(x = data, y = class, params = list(adjust = "holm", alpha = 0.05))
 ```
+#### Feature selection MDFS-1D
+```r
+var.utest <- fs.mdfs.1D(x = data, y = class, params = list(adjust = "holm", alpha = 0.05))
+```
 
 #### Feature selection MCFS
 ```r
-var.mcfs <- fs.mcfs(x = data, y = class)
+var.mcfs <- fs.mcfs(x = data, y = class,  params = list(cutoff.method = "kmeans"))
 ```
 
-#### Create subset indexes cross-validation
+#### Feature selection MRMR
+```r
+var.mrmr <- fs.mrmr(x = data, y = class,  params = list(feature.number = 100))
+```
+
+#### Creating the cross-validation index array 
 ```r
 list.index.cross <- cross.val(x = data,
                               y = class,
                               method = 'kfoldcv',
                               params.cv = list(niter = 10, k = 3)
 ```                              
-#### Feature selection for one method in cross-validation
+#### Feature selection in a cross-validation scenario for individual FS method (eg. MDFS-2D feature selection)
 ```r
 list.selected.var <- feature.selection.cv(x = data,
                                           y = class,
-                                          method = 'fs.mdfs.2D',
+                                          method = 'fs.mdfs.1D',
                                           list.index.cross = list.index.cross,
                                           params = list(adjust = 'holm', alpha = 0.05)
  ```
-#### Compute Lustgarten’s stability measure for one method
-```r
-asm <- stabilty.selection(list.selected.var, list.index.cross, 100)
-```
 
-#### Train model Random Forest for one method
+#### Building a machine learning model (Random Forest binary classification) on feature sets obtained from the individual FS algorithm 
 ```r
 model.result <- build.model.crossval(x = data,
                                      y = class,
                                      list.selected.var = list.selected.var,
                                      list.index.cross = list.index.cross,
                                      nvar = 100)
+```
+#### Computing ASM, AUC, ACC, and MCC values for top N = 100
+```r
+asm <- stabilty.selection(list.selected.var, list.index.cross, 100)
 ```
