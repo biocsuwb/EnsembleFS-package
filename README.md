@@ -66,7 +66,7 @@ EnsembleFS allows user to set some parameter values, such as:
 
 
 
-#### Run end-to-end EnsembleFS for ensemble feature selection and comparison of feature filters
+#### Runing end-to-end EnsembleFS for ensemble feature selection and comparison of feature filters
 Selected feature filters: U-test, MCFS, MRMR, and MDFS-1D.
 ```r
 result <- ensembleFS(x = data,
