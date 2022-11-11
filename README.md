@@ -88,7 +88,7 @@ graph.result(result$stability, "stability")
 # graph.result(result$model, "mcc")
 ```
 ![Fig.4](https://github.com/biocsuwb/Images/blob/main/ASM&ACC.png?raw=true)
-Fig.4 The average values for accurancy (ACC) vs N top features (N = 5, 10, 20, ..., 50, 75, 100) for various features filters and the ASM similarity measure between m = 15 feature subsets vs N top features.
+Fig.4 The average values for accurancy (ACC) vs N top features (5, 10, 15, 20, ..., 50, 75, 100) for various features filters and the ASM similarity measure between m = 15 feature subsets vs N top features.
 #### Showing m-list of top biomarkers for each of filter FS methods
 ```r
 result$selected.feature
