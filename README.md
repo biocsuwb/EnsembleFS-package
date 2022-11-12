@@ -190,18 +190,40 @@ library(mt)
 ```r
 feature.number = 100
 ```
+#### Rules for adding a new FS method to the benchmark procedure:
+1. the function name of the new FS method should have the prefix 'fs.';
+2. the created function should take as input arguments:
+- x tabular input, numeric type, where columns are variables, and the lines are observations;
+- y decision variable as a binary vector of length equal to a number observation;
+- params is a list of hyperparameters of the new FS method added, if such are required, and in their absence, the params argument of the above-mentioned
+  functions should be omitted;
+3. function should return a data frame that consists of two columns : name (names of relevant biomarkers) and score (validity metric
+variables for an individual FS method, e.g. p-value for U-test); 
+Example:
+```r
+fs.relieff <- function(x, y, params = list(feature.number = 100)){
+  result <- fs.relief(x, y)
+  stats <- as.data.frame(result$stats)
+  var.names <- row.names(stats)
+  scores <- stats[,1]
+  var.imp <- as.data.frame(cbind(var.names, scores))
+  names(var.imp) <- c('name', 'score')
+  var.imp <- var.imp[order(var.imp$score, decreasing=T),][1:params$feature.number,]
+  return(var.imp)
+}
+```
 #### Run end-to-end EnsembleFS for ensemble feature selection and comparison of feature filters 
 Feature filters: U-test, MCFS, MRMR, MDFS-1D, and ReliefF.
 ```r
 result2 <- ensembleFS(x = data,
                      y = class,
-                     methods = c("fs.utest", "fs.mcfs", "fs.mrmr", "fs.mdfs.1D", "fs.relief"),
+                     methods = c("fs.utest", 'fs.mrmr', 'fs.mcfs' , 'fs.mdfs.1D' ,'fs.relieff'),
                      method.cv = "kfoldcv",
                      params.cv = list(k = 3, niter = 5),
-                     level.cor = 1,
-                     params = list(adjust = "holm", cutoff.method = "kmeans", feature.number = 10, alpha = 0.05),
-                     asm = c("fs.utest", "fs.mcfs", "fs.mrmr", "fs.mdfs.1D"),
-                     model = c("fs.utest", "fs.mcfs", "fs.mrmr", "fs.mdfs.1D"))
+                     level.cor = 0.75,
+                     params = list(adjust = "fdr", feature.number = 100, alpha = 0.05, use.cuda = FALSE, cutoff.method = 'kmeans'),
+                     asm = c("fs.utest", 'fs.mrmr' , 'fs.mcfs' , 'fs.mdfs.1D' ,'fs.relieff'),
+                     model = c("fs.utest",  'fs.mrmr',  'fs.mcfs' , 'fs.mdfs.1D' ,'fs.relieff'))
  ```
  #### Visualizing the model results
 ```r
