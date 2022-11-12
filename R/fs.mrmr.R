@@ -26,13 +26,13 @@ fs.mrmr <- function(x, y, params = list(feature.number = 100)){
   if (params$feature.number > ncol(x)){
     stop('fs.mrmr :feature.number there cannot be more than the number of columns')
   }
+  x <- sapply(x, as.double)
   x <- cbind(class = y, x)
   old.names.x = colnames(x)
   x = transform(x, class = as.numeric(class))
   new.names.x = as.character(sprintf("a%d", 1:ncol(x)))
   names(x) = new.names.x
   x <- as.data.frame(x)
-  x <- sapply(x, as.double)
   feature.data <- mRMR.data(data = x)
   results <- mRMR.ensemble(data = feature.data,
                            target_indices = 1,
