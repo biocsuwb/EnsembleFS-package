@@ -91,7 +91,7 @@ list.index.cross <- cross.val(x = data,
                               method = 'kfoldcv',
                               params.cv = list(niter = 10, k = 3)
 ```                              
-#### Feature selection in a cross-validation scenario for individual FS method (eg. MDFS-1D feature selection)
+#### Feature selection in a cross-validation scenario for individual FS method (eg. MDFS-1D)
 ```r
 list.selected.var <- feature.selection.cv(x = data,
                                           y = class,
@@ -116,13 +116,18 @@ list.selected.var[[1]][1:10,]
 
 ```
 
-#### Building a machine learning model (Random Forest binary classification) on feature sets obtained from the individual FS algorithm 
+#### Building machine learning model (Random Forest binary classification) on 100 top features with the individual FS algorithm (eg. MDFS-1D); 30 models in total.
 ```r
 model.result <- build.model.crossval(x = data,
                                      y = class,
                                      list.selected.var = list.selected.var,
                                      list.index.cross = list.index.cross,
                                      nvar = 100)
+# show model results (list 1 of 30)
+model.result[[1]] 
+
+ Accuracy       AUC       MCC 
+0.9807692 0.9736842 0.9589080 
 ```
 #### Computing ASM, AUC, ACC, and MCC values for top N = 100
 ```r
