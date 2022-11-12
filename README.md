@@ -2,7 +2,7 @@
 ## Description
 EnsembleFS is a R package for single feature selection (FS) and ensemble feature selection of molecular data or clinical data (numeric data formats).
 This tool is based on several feature filters, such as the test Manna-Whitneya (U-test), the Monte Carlo Feature Selection (MCFS) ([Dramiński & Koronacki 2018](https://www.jstatsoft.org/article/view/v085i12)) , the MultiDimensional Feature Selection (two variants: MDFS-1D and MDFS-2D) ([Mnich & Rudnicki 2020](https://www.sciencedirect.com/science/article/abs/pii/S0020025520302048)), and the Minimum Redundancy Maximum Relevance (MRMR) 
-([Ding 2005](https://pubmed.ncbi.nlm.nih.gov/15852500/)) for discovering the most important biomarkers and used the machine learning algorithms to evaluate the quality of feature sets. Predictive models are built using the Random Forest algorithm ([Breiman 2001](https://link.springer.com/article/10.1023/A:1010933404324)). It can be applied to two-class problems.
+([Ding 2005](https://pubmed.ncbi.nlm.nih.gov/15852500/)) for discovering the most important biomarkers and used the machine learning algorithms (ML) to evaluate the quality of feature sets. Predictive models are built using the Random Forest algorithm ([Breiman 2001](https://link.springer.com/article/10.1023/A:1010933404324)). It can be applied to two-class problems.
 
 Moreover, EnsembleFS support users in analysis and interpretation of molecular data. The information about each of top biomarkers is extracted from diverse biological databases, namely the Gene Ontology ([GO](https://pubmed.ncbi.nlm.nih.gov/33290552/)), the Kyoto Encyclopedia of Genes and Genomes ([KEGG](https://pubmed.ncbi.nlm.nih.gov/18477636/)), the Reactome ([React](https://pubmed.ncbi.nlm.nih.gov/32907876/)), the WikiPathways ([WP](https://pubmed.ncbi.nlm.nih.gov/33211851/)), the Transfac ([TF](https://pubmed.ncbi.nlm.nih.gov/8594589/)), the miRTarBase ([MIRNA](https://academic.oup.com/nar/article/48/D1/D148/5606625)), the Human Protein Atlas ([HPA](https://pubmed.ncbi.nlm.nih.gov/25613900/)), the [CORUM](https://pubmed.ncbi.nlm.nih.gov/30357367/), and the Human Phenotype Ontology ([HPO](https://pubmed.ncbi.nlm.nih.gov/33264411/)).
 The proposed tool accept molecular data includes different types of gene identifiers, such as Ensembl, NCBI Entrez gene ID, Refseq, Illumina, and Uniprot.
@@ -100,7 +100,7 @@ list.selected.var <- feature.selection.cv(x = data,
                                           params = list(adjust = 'holm', alpha = 0.05)
  
 # show 10 top features from the first list of most informative features (list 1 of 30)
-list.selected.var[[1]][1:10,]
+print(list.selected.var[[1]][1:10,])
 
        name       Pvalue adjustPvalue
 834   ADPRH 2.780479e-26 5.560957e-23
@@ -116,22 +116,25 @@ list.selected.var[[1]][1:10,]
 
 ```
 
-#### Building machine learning model (Random Forest binary classification) on 100 top features with the individual FS algorithm (eg. MDFS-1D); 30 models in total.
+#### Building and testing ML models on 100 top features with the individual FS algorithm (eg. MDFS-1D); 30 models in total.
 ```r
 model.result <- build.model.crossval(x = data,
                                      y = class,
                                      list.selected.var = list.selected.var,
                                      list.index.cross = list.index.cross,
                                      nvar = 100)
-# show model results (list 1 of 30)
-model.result[[1]] 
+# show a predictive model result (list 1 of 30)
+print(model.result[[1]]) 
 
  Accuracy       AUC       MCC 
 0.9807692 0.9736842 0.9589080 
 ```
-#### Computing ASM, AUC, ACC, and MCC values for top N = 100
+#### Computing ASM value for top N = 100
 ```r
-asm <- stabilty.selection(list.selected.var, list.index.cross, 100)
+asm <- stabilty.selection(list.selected.var, list.index.cross,  nvar = 100)
+# show ASM value 
+print(asm)
+0.6915541
 ```
 ## Example 1 - ensemble feature selection
 
