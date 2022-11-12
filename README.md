@@ -116,7 +116,7 @@ print(list.selected.var[[1]][1:10,])
 
 ```
 
-#### Building and testing ML models on 100 top features with the individual FS algorithm (eg. MDFS-1D); 30 models in total.
+#### Building and testing ML models on top N = 100 features with the individual FS algorithm (eg. MDFS-1D); 30 models in total.
 ```r
 model.result <- build.model.crossval(x = data,
                                      y = class,
@@ -129,14 +129,14 @@ print(model.result[[1]])
  Accuracy       AUC       MCC 
 0.9807692 0.9736842 0.9589080 
 ```
-#### Computing ASM value for top N = 100
+#### Computing ASM value for top 100 features
 ```r
 asm <- stabilty.selection(list.selected.var, list.index.cross,  nvar = 100)
 # show ASM value 
 print(asm)
 0.6915541
 ```
-## Example 1 - ensemble feature selection
+## Example 2 - ensemble feature selection
 
 #### Loading data
 ```r
@@ -155,25 +155,25 @@ EnsembleFS allows user to set some parameter values, such as:
 - feature selection methods: ***methods = c("fs.utest", "fs.mcfs", "fs.mrmr", "fs.mdfs.1D", "fs.mdfs.2D")***;
 - U-test and MDFS parameter, ***multitest correction: adjust = c("holm", "hochberg", "hommel", "bonferroni", "BH", "BY", "fdr", "none")***;
 - U-test and MDFS parameter, significance level: ***alpha = 0.05***;
-- whether to use CUDA acceleration (must be compiled with CUDA) for MDFS-2D method;
 - MRMR parameter, number of significant features: ***feature.number = 100***;
 - MCFS parameter, cut-off method: ***cutoff.method = c("permutations", "criticalAngle", "kmeans")***;
-- correlation coefficient: ***level.cor = 0.75***;
+- correlation coefficient: ***level.cor = 1***;
 - validation methods: ***method.cv = c('kfoldcv','rsampling')***;
 - number of repetitions: ***niter = 5***;
 - train-test-split the data: ***k = 3***.
 
-
-
-#### Runing end-to-end EnsembleFS for ensemble feature selection and comparison of feature filters
+#### Runing end-to-end EnsembleFS for ensemble feature selection and classification model construction 
+Number of top features: N = 5, 10, 15, 20, ..., 50, 75, 100
+Model validation technique: 3-fold cross-validation repeated 10 times
 Selected feature filters: U-test, MCFS, MRMR, and MDFS-1D.
+The cut off value of the Spearman correlation coefficient: 0.75
 ```r
 result <- ensembleFS(x = data,
                      y = class,
                      methods = c("fs.utest", "fs.mcfs", "fs.mrmr", "fs.mdfs.1D"),
                      method.cv = "kfoldcv",
                      params.cv = list(k = 3, niter = 5),
-                     level.cor = 1,
+                     level.cor = 0.75,
                      params = list(adjust = "holm", cutoff.method = "kmeans", feature.number = 100, alpha = 0.05),
                      asm = c("fs.utest", "fs.mcfs", "fs.mrmr", "fs.mdfs.1D"),
                      model = c("fs.utest", "fs.mcfs", "fs.mrmr", "fs.mdfs.1D"))
