@@ -37,7 +37,96 @@ highest difference in the gene expression level between tumor and normal tissues
 # install.packages("devtools")
 devtools::install_github("biocsuwb/EnsembleFS-package")
 ```
-#### Note: To install EnsembleFS package in your R environment make sure you have Java installed (rJava R package).
+#### Notes: 
+#### To install EnsembleFS package in your R environment make sure you have Java installed (rJava R package).
+#### To accelerate processing by using a CUDA GPU the EnsembleFS package must be compiled with CUDA (set the MDFS-2D parameter: use.cuda = TRUE) 
+
+## Example 1 - individual feature selection
+
+#### Loading data
+```r
+data <- read.csv2('exampleData.csv')
+class <- data$class
+data$class <- NULL
+```
+
+#### Model configuration parameters
+- U-test and MDFS-1D, and MDFS-2D parameter, ***multitest correction: adjust = c("holm", "hochberg", "hommel", "bonferroni", "BH", "BY", "fdr", "none")***;
+- U-test and MDFS-1D, and MDFS-2D parameter, significance level: ***alpha = 0.05***;
+- MDFS-2D parameter: use.cuda = FALSE 
+- whether to use CUDA acceleration (must be compiled with CUDA) for MDFS-2D method
+- MCFS parameter, cut-off method: ***cutoff.method = c("permutations", "criticalAngle", "kmeans")***;
+- correlation coefficient: ***level.cor = 0.75***;
+- validation methods: ***method.cv = c('kfoldcv','rsampling')***;
+- number of repetitions: ***niter = 5***;
+- train-test-split the data: ***k = 3***.
+
+
+#### Feature selection U-test
+```r
+var.utest <- fs.utest(x = data, y = class, params = list(adjust = "holm", alpha = 0.05))
+```
+#### Feature selection MDFS-1D
+```r
+var.mdfs1D <- fs.mdfs.1D(x = data, y = class, params = list(adjust = "holm", alpha = 0.05))
+```
+#### Feature selection MDFS-2D
+```r
+var.mdfs2D <- fs.mdfs.2D(x = data, y = class, params = list(adjust = "holm", alpha = 0.05, use.cuda = FALSE))
+```
+#### Feature selection MCFS
+```r
+var.mcfs <- fs.mcfs(x = data, y = class,  params = list(cutoff.method = "kmeans"))
+```
+#### Feature selection MRMR
+```r
+var.mrmr <- fs.mrmr(x = data, y = class,  params = list(feature.number = 100))
+```
+
+#### Creating the cross-validation index array  (3-fold cross-validation repeated 10 times)
+```r
+list.index.cross <- cross.val(x = data,
+                              y = class,
+                              method = 'kfoldcv',
+                              params.cv = list(niter = 10, k = 3)
+```                              
+#### Feature selection in a cross-validation scenario for individual FS method (eg. MDFS-1D feature selection)
+```r
+list.selected.var <- feature.selection.cv(x = data,
+                                          y = class,
+                                          method = 'fs.mdfs.1D',
+                                          list.index.cross = list.index.cross,
+                                          params = list(adjust = 'holm', alpha = 0.05)
+ 
+# show 10 top features from the first list of most informative features (list 1 of 30)
+list.selected.var[[1]][1:10,]
+
+       name       Pvalue adjustPvalue
+834   ADPRH 2.780479e-26 5.560957e-23
+117   SRPK1 1.919463e-23 3.837007e-20
+680  RASIP1 4.470157e-23 8.931374e-20
+663   PDIA4 7.100476e-23 1.417965e-19
+353   PRKCE 8.564362e-23 1.709447e-19
+119  NCKAP5 1.785219e-22 3.561512e-19
+464    FGF2 3.127923e-22 6.237079e-19
+538   IL3RA 5.110742e-22 1.018571e-18
+636    EMP2 7.996179e-22 1.592839e-18
+1952  TRPV2 3.432695e-21 6.834496e-18
+
+```
+
+#### Building a machine learning model (Random Forest binary classification) on feature sets obtained from the individual FS algorithm 
+```r
+model.result <- build.model.crossval(x = data,
+                                     y = class,
+                                     list.selected.var = list.selected.var,
+                                     list.index.cross = list.index.cross,
+                                     nvar = 100)
+```
+#### Computing ASM, AUC, ACC, and MCC values for top N = 100
+```r
+asm <- stabilty.selection(list.selected.var, list.index.cross, 100)
+```
 ## Example 1 - ensemble feature selection
 
 #### Loading data
@@ -57,7 +146,7 @@ EnsembleFS allows user to set some parameter values, such as:
 - feature selection methods: ***methods = c("fs.utest", "fs.mcfs", "fs.mrmr", "fs.mdfs.1D", "fs.mdfs.2D")***;
 - U-test and MDFS parameter, ***multitest correction: adjust = c("holm", "hochberg", "hommel", "bonferroni", "BH", "BY", "fdr", "none")***;
 - U-test and MDFS parameter, significance level: ***alpha = 0.05***;
-- whether to use CUDA acceleration (must be compiled with CUDA) for MDFS2D method;
+- whether to use CUDA acceleration (must be compiled with CUDA) for MDFS-2D method;
 - MRMR parameter, number of significant features: ***feature.number = 100***;
 - MCFS parameter, cut-off method: ***cutoff.method = c("permutations", "criticalAngle", "kmeans")***;
 - correlation coefficient: ***level.cor = 0.75***;
@@ -108,74 +197,6 @@ gene.top <- get.top.gene(list.imp.var.cv = result$selected.feature, level.freq =
 Combination of a set of biomarkers: union
 ```r
 info.gene <- get.info.top.gene(gene.top, condition.methods = 'union')
-```
-## Example 2 - individual feature selection
-
-#### Loading data
-```r
-data <- read.csv2('exampleData.csv')
-class <- data$class
-data$class <- NULL
-```
-
-#### Model configuration parameters
-- U-test and MDFS parameter, ***multitest correction: adjust = c("holm", "hochberg", "hommel", "bonferroni", "BH", "BY", "fdr", "none")***;
-- U-test and MDFS parameter, significance level: ***alpha = 0.05***;
-- MRMR parameter, number of significant features: ***feature.number = 100***;
-- whether to use CUDA acceleration (must be compiled with CUDA) for MDFS2D method
-- MCFS parameter, cut-off method: ***cutoff.method = c("permutations", "criticalAngle", "kmeans")***;
-- correlation coefficient: ***level.cor = 0.75***;
-- validation methods: ***method.cv = c('kfoldcv','rsampling')***;
-- number of repetitions: ***niter = 5***;
-- train-test-split the data: ***k = 3***.
-
-
-#### Feature selection U-test
-```r
-var.utest <- fs.utest(x = data, y = class, params = list(adjust = "holm", alpha = 0.05))
-```
-#### Feature selection MDFS-1D
-```r
-var.utest <- fs.mdfs.1D(x = data, y = class, params = list(adjust = "holm", alpha = 0.05))
-```
-
-#### Feature selection MCFS
-```r
-var.mcfs <- fs.mcfs(x = data, y = class,  params = list(cutoff.method = "kmeans"))
-```
-
-#### Feature selection MRMR
-```r
-var.mrmr <- fs.mrmr(x = data, y = class,  params = list(feature.number = 100))
-```
-
-#### Creating the cross-validation index array 
-```r
-list.index.cross <- cross.val(x = data,
-                              y = class,
-                              method = 'kfoldcv',
-                              params.cv = list(niter = 10, k = 3)
-```                              
-#### Feature selection in a cross-validation scenario for individual FS method (eg. MDFS-1D feature selection)
-```r
-list.selected.var <- feature.selection.cv(x = data,
-                                          y = class,
-                                          method = 'fs.mdfs.1D',
-                                          list.index.cross = list.index.cross,
-                                          params = list(adjust = 'holm', alpha = 0.05)
- ```
-
-#### Building a machine learning model (Random Forest binary classification) on feature sets obtained from the individual FS algorithm 
-```r
-model.result <- build.model.crossval(x = data,
-                                     y = class,
-                                     list.selected.var = list.selected.var,
-                                     list.index.cross = list.index.cross,
-                                     nvar = 100)
-```
-#### Computing ASM, AUC, ACC, and MCC values for top N = 100
-```r
-asm <- stabilty.selection(list.selected.var, list.index.cross, 100)
 ```
 ## Example 3 - create and add their own feature filters to default list of basic feature filters 
 ```r
