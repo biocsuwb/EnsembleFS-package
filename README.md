@@ -207,3 +207,4 @@ result2 <- ensembleFS(x = data,
 ```r
 graph.result2(result2$model, "acc")
 ```
+![ensembleFS_relieff_auc](https://user-images.githubusercontent.com/36896714/201480835-8af6ba21-10a0-45ef-86c2-353711520d4b.png)
