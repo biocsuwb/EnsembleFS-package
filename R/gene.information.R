@@ -35,7 +35,7 @@ get.info.gprofiler = function(rel.var){
 #'
 #' @param list.imp.var.cv the main genes obtained in \code{ensembleFS}
 #' @param level.freq how many times a gene has occurred in of the feature subsets
-#' @param number.gene top number of main genes
+#' @param number.gene number of genes
 #' @return A \code{\link{list}} with top genes for each method specified in \code{ensembleFS}
 #'
 #' @examples
@@ -50,7 +50,7 @@ get.info.gprofiler = function(rel.var){
 #'             method.cv = 'kfoldcv',
 #'             params.cv = list(k = 3, iter = 10),
 #'             level.cor = 0.75,
-#'             params = list(adjust = 'SGoF', feature.number = 10, alpha = 0.05),
+#'             params = list(adjust = 'fdr', feature.number = 10, alpha = 0.05),
 #'             asm = c('fs.utest', 'fs.mrmr'),
 #'             model = c('fs.utest', 'fs.mrmr')
 #'             )
@@ -63,8 +63,8 @@ get.info.gprofiler = function(rel.var){
 get.top.gene <- function(list.imp.var.cv, level.freq, number.gene){
   result <- c()
   name.method <- c()
-  for(name in names(list.imp.var)){
-    var.one.method <- list.imp.var[[name]]
+  for(name in names(list.imp.var.cv)){
+    var.one.method <- list.imp.var.cv[[name]]
     var.imp <- list()
     for(i in var.one.method){
       if(length(i$name) < number.gene) {var.imp <- append(var.imp, i$name)}
@@ -104,7 +104,7 @@ get.top.gene <- function(list.imp.var.cv, level.freq, number.gene){
 #'             method.cv = 'kfoldcv',
 #'             params.cv = list(k = 3, iter = 10),
 #'             level.cor = 0.75,
-#'             params = list(adjust = 'SGoF', feature.number = 10, alpha = 0.05),
+#'             params = list(adjust = 'fdr', feature.number = 10, alpha = 0.05),
 #'             asm = c('fs.utest', 'fs.mrmr'),
 #'             model = c('fs.utest', 'fs.mrmr')
 #'             )
@@ -117,10 +117,10 @@ get.top.gene <- function(list.imp.var.cv, level.freq, number.gene){
 #' @export
 get.info.top.gene <- function(gene.top, condition.methods = 'union'){
   if(condition.methods == 'intersect'){
-    var.imp <- Reduce(intersect, gene.for.analysis)
+    var.imp <- Reduce(intersect, gene.top)
   }
   else if(condition.methods == 'union'){
-    var.imp <- unique(unlist(gene.for.analysis))
+    var.imp <- unique(unlist(gene.top))
   }
   result <-  get.info.gprofiler(var.imp)
 }

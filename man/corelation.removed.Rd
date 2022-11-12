@@ -36,11 +36,15 @@ list.index.cross <- cross.val(x = data,
                              params.cv = list(niter = 10, k = 3))
 
 list.selected.var <- feature.selection(x = data,
-                             y = class,
-                             method = 'fs.utest',
-                             list.index.cross = indexes,
-                             params = list(adjust = 'holm'))
-list.selected.var.uncor <- corelation.removed(data, list.selected.var, list.index.cross, 0.75)
+                                       y = class,
+                                       method = 'fs.utest',
+                                       list.index.cross = indexes,
+                                       params = list(adjust = 'fdr'))
+                             
+list.selected.var.uncor <- corelation.removed(data,
+                                              list.selected.var,
+                                              list.index.cross,
+                                              0.75)
 
 }
 

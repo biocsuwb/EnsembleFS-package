@@ -17,11 +17,11 @@
 #' @param level.cor cutoff level of correlated variables. If equal to 1 is not performed
 #' @param params A \code{\link{list}} with the following fields:
 #' \itemize{
-#'   \item \code{adjust} -- method as accepted by \code{\link[stats]{p.adjust}} (\code{"BY"} is recommended for FDR, see Details) or \code{\link[sgof]{SGoF}} for MDFS1D, MDFS2D and U-test
+#'   \item \code{adjust} -- method as accepted by \code{\link[stats]{p.adjust}} (\code{"BY"} is recommended for FDR, see Details) for MDFS1D, MDFS2D and U-test
 #'   \item \code{feature.number} -- number of attributes to select. Must not exceed \code{ncol(x)}
 #'   \item \code{alpha} -- significance level for MDFS1D, MDFS2D and U-test
 #'   \item \code{use.cuda} -- whether to use CUDA acceleration (must be compiled with CUDA) for MDFS2D method
-#'   \item \code{cutoff.method} -- cutoff method MCFS: "permutations", "criticalAngle", "kmeans"
+#'   \item \code{cutoff.method} -- cutoff method MCFS: "permutations", "criticalAngle", "kmeans", "mean", "contrast"
 #' }
 #' @param asm A \code{\link{vector}} with enumeration method for which to calculate Lustgarten’s stability measure
 #' @param model A \code{\link{vector}} with enumeration method for which to training and testing model \code{RandomForest}
@@ -46,7 +46,7 @@
 #'            method.cv = 'kfoldcv',
 #'            params.cv = list(k = 3, iter = 10),
 #'            level.cor = 0.75,
-#'            params = list(adjust = 'SGoF', feature.number = 10, alpha = 0.05),
+#'            params = list(adjust = 'fdr', feature.number = 10, alpha = 0.05),
 #'            asm = c('fs.utest', 'fs.mrmr'),
 #'            model = c('fs.utest', 'fs.mrmr')
 #'            )
@@ -70,12 +70,6 @@ ensembleFS <- function(x,
                         model = c('fs.utest')){
 
   if(!is.data.frame(x)){x <- as.data.frame(x)}
-
-  everything <- sort(getNamespaceExports("ensembleFS"))
-  all.methods <- everything[grepl(pattern="^[f]s", everything)]
-  if(length(intersect(all.methods, methods)) != length(methods)){
-    stop('Unknown method in methods argument, use list.methods() to see available methods')
-  }
 
   if (length(y) != nrow(x)) {
     stop('Length of decision is not equal to the number of rows in data.')

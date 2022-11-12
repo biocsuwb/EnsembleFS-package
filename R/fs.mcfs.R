@@ -7,7 +7,7 @@
 #' @param y decision variable as a boolean vector of length equal to number of observations
 #' @param params A \code{\link{list}} with the following fields:
 #' \itemize{
-#'   \item \code{cutoff.method} -- cutoff method MCFS: "permutations", "criticalAngle", "kmeans"
+#'   \item \code{cutoff.method} -- cutoff method MCFS: "permutations", "criticalAngle", "kmeans", "mean", "contrast"
 #' }
 #' @return A \code{\link{data.frame}} with selected features
 #'

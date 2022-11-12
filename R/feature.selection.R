@@ -93,12 +93,6 @@ feature.selection <- function(x,
                                             alpha=0.05)){
   if(!is.data.frame(x)){x <- as.data.frame(x)}
 
-  everything <- sort(getNamespaceExports("benchmarkFS"))
-  all.methods <- everything[grepl(pattern="^[f]s", everything)]
-  if(length(intersect(all.methods, methods)) != length(methods)){
-    stop('Unknown method in methods argument, use list.methods() to see available methods')
-  }
-
   if (!(connection.method %in% c('sum', 'intersect'))) {
     stop('Unknown  connection.method')
   }

@@ -32,6 +32,7 @@ fs.mrmr <- function(x, y, params = list(feature.number = 100)){
   new.names.x = as.character(sprintf("a%d", 1:ncol(x)))
   names(x) = new.names.x
   x <- as.data.frame(x)
+  x <- sapply(x, as.double)
   feature.data <- mRMR.data(data = x)
   results <- mRMR.ensemble(data = feature.data,
                            target_indices = 1,

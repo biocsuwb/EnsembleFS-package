@@ -13,7 +13,7 @@ fs.mcfs(x, y, params = list(cutoff.method = c("kmeans")))
 
 \item{params}{A \code{\link{list}} with the following fields:
 \itemize{
-\item \code{cutoff.method} -- cutoff method MCFS: "permutations", "criticalAngle", "kmeans"
+\item \code{cutoff.method} -- cutoff method MCFS: "permutations", "criticalAngle", "kmeans", "mean", "contrast"
 }}
 }
 \value{

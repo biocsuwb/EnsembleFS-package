@@ -37,7 +37,7 @@ Build MultiDimensional Feature Selector from IGs, requires mandatory installatio
 decisions <- data$class
 data$class <- NULL
 
-fs.mdfs.2D(data, decisions, params = list(adjust = 'holm'))
+fs.mdfs.2D(data, decisions, params = list(adjust = 'holm', use.cuda = FALSE))
 }
 
 }

@@ -37,11 +37,11 @@ ensembleFS(
 
 \item{params}{A \code{\link{list}} with the following fields:
 \itemize{
-\item \code{adjust} -- method as accepted by \code{\link[stats]{p.adjust}} (\code{"BY"} is recommended for FDR, see Details) or \code{\link[sgof]{SGoF}} for MDFS1D, MDFS2D and U-test
+\item \code{adjust} -- method as accepted by \code{\link[stats]{p.adjust}} (\code{"BY"} is recommended for FDR, see Details) for MDFS1D, MDFS2D and U-test
 \item \code{feature.number} -- number of attributes to select. Must not exceed \code{ncol(x)}
 \item \code{alpha} -- significance level for MDFS1D, MDFS2D and U-test
 \item \code{use.cuda} -- whether to use CUDA acceleration (must be compiled with CUDA) for MDFS2D method
-\item \code{cutoff.method} -- cutoff method MCFS: "permutations", "criticalAngle", "kmeans"
+\item \code{cutoff.method} -- cutoff method MCFS: "permutations", "criticalAngle", "kmeans", "mean", "contrast"
 }}
 
 \item{asm}{A \code{\link{vector}} with enumeration method for which to calculate Lustgarten’s stability measure}
@@ -75,7 +75,7 @@ ensembleFS(data,
            method.cv = 'kfoldcv',
            params.cv = list(k = 3, iter = 10),
            level.cor = 0.75,
-           params = list(adjust = 'SGoF', feature.number = 10, alpha = 0.05),
+           params = list(adjust = 'fdr', feature.number = 10, alpha = 0.05),
            asm = c('fs.utest', 'fs.mrmr'),
            model = c('fs.utest', 'fs.mrmr')
            )

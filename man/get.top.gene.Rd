@@ -11,7 +11,7 @@ get.top.gene(list.imp.var.cv, level.freq, number.gene)
 
 \item{level.freq}{how many times a gene has occurred in of the feature subsets}
 
-\item{number.gene}{top number of main genes}
+\item{number.gene}{number of genes}
 }
 \value{
 A \code{\link{list}} with top genes for each method specified in \code{ensembleFS}
@@ -34,7 +34,7 @@ result <- ensembleFS(data,
             method.cv = 'kfoldcv',
             params.cv = list(k = 3, iter = 10),
             level.cor = 0.75,
-            params = list(adjust = 'SGoF', feature.number = 10, alpha = 0.05),
+            params = list(adjust = 'fdr', feature.number = 10, alpha = 0.05),
             asm = c('fs.utest', 'fs.mrmr'),
             model = c('fs.utest', 'fs.mrmr')
             )

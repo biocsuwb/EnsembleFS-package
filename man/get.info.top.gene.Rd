@@ -33,7 +33,7 @@ result <- ensembleFS(data,
             method.cv = 'kfoldcv',
             params.cv = list(k = 3, iter = 10),
             level.cor = 0.75,
-            params = list(adjust = 'SGoF', feature.number = 10, alpha = 0.05),
+            params = list(adjust = 'fdr', feature.number = 10, alpha = 0.05),
             asm = c('fs.utest', 'fs.mrmr'),
             model = c('fs.utest', 'fs.mrmr')
             )

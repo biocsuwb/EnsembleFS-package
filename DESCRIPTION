@@ -15,7 +15,6 @@ Depends:
     MLmetrics (>= 1.1.1),
     caret (>= 6.0.86),
     ggplot2 (>= 3.3.2),
-    sgof (>= 2.3.2),
     lattice (>= 0.20.41),
     poibin (>= 1.5),
     plyr (>= 1.8.6),
@@ -28,4 +27,4 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.1
