@@ -181,6 +181,11 @@ data <- read.csv2('exampleData.csv')
 class <- data$class
 data$class <- NULL
 ```
+####   Installing the required package
+```r
+install.packages('mt')
+library(mt)
+```
 ####  Creating new feature filter eg. ReliefF ([Kononenko 1994](https://link.springer.com/chapter/10.1007/3-540-57868-4_57))
 ```r
 feature.number = 100
