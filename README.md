@@ -111,7 +111,7 @@ print(list.selected.var[[1]][1:10,])
 538   IL3RA 5.110742e-22 1.018571e-18
 636    EMP2 7.996179e-22 1.592839e-18
 1952  TRPV2 3.432695e-21 6.834496e-18 
-...
+... etc.
 ```
 
 #### Building and testing ML models on top N = 100 features with the individual FS algorithm (eg. MDFS-1D); 30 models in total.
@@ -202,7 +202,7 @@ $fs.utest[[1]]
 120      MGC42105 1.607918e-13 3.026102e-10
 123         LYPD1 1.689979e-13 3.173781e-10
 125           XDH 1.866637e-13 3.501812e-10  
-...
+... etc.
 ```
 
 #### Showing the combined list of top biomarkers.
@@ -266,9 +266,9 @@ print(info.gene)
 13   TNFSF11  GO:BP            GO:0051466             positive regulation of corticotropin-releasing hormone secretion
 14   TNFSF11     HP            HP:0004499                                  Chronic rhinitis due to narrow nasal airway
 15   TNFSF11     TF             TF:M05659                                          Factor: ZNF879; motif: NGGTTTATAAKM
-...
+... etc.
 ```
-## Example 3 - create and add other feature filter to default list of basic feature selection methods
+## Example 3 - creating and adding a new feature filter to default list of basic FS methods
 ```r
 data <- read.csv2('exampleData.csv')
 class <- data$class
@@ -280,16 +280,14 @@ install.packages('mt')
 library(mt)
 ```
 ####  Creating a new feature filter eg. ReliefF ([Kononenko 1994](https://link.springer.com/chapter/10.1007/3-540-57868-4_57))
-```r
-feature.number = 100
-```
+
 #### Rules for adding a new FS method to the benchmark procedure:
 1. the function name of the new FS method must have the prefix 'fs.';
 2. the created function should take as input arguments:
 - ***x*** tabular input data, numeric type, where columns are features, and the rows are observations;
 - ***y*** decision variable as a binary vector, y length equals the total number of observations;
 - ***params*** list of hyperparameters for a new FS method, if such are required, and in their absence, the params argument of the above-mentioned
-  function should be omitted;
+  function should be omitted: ***params = list(feature.number = 100)***
 3. function should return a data frame that includes two columns: ***name*** (names of relevant biomarkers) and ***score*** (value of variable importance metric, e.g. p-value for U-test); 
 **Code example:**
 ```r
