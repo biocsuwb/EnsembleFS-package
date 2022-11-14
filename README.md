@@ -38,8 +38,8 @@ highest difference in the gene expression level between tumor and normal tissues
 devtools::install_github("biocsuwb/EnsembleFS-package")
 ```
 ## Notes: 
-- to install EnsembleFS package in your R environment make sure you have Java installed (rJava R package);
-- to accelerate processing by using a CUDA GPU the EnsembleFS package must be compiled with CUDA (set the MDFS-2D parameter: use.cuda = TRUE). 
+- ***to install EnsembleFS package in your R environment make sure you have Java installed (rJava R package);***
+- ***to accelerate processing by using a CUDA GPU the EnsembleFS package must be compiled with CUDA (set the MDFS-2D parameter: use.cuda = TRUE).*** 
 
 ## Example 1 - individual feature selection
 
@@ -53,7 +53,7 @@ data$class <- NULL
 #### Model configuration parameters
 - U-test and MDFS-1D, and MDFS-2D parameter, ***multitest correction: adjust = c("holm", "hochberg", "hommel", "bonferroni", "BH", "BY", "fdr", "none")***;
 - U-test and MDFS-1D, and MDFS-2D parameter, significance level: ***alpha = 0.05***;
-- MDFS-2D parameter: use.cuda = FALSE 
+- MDFS-2D parameter: ***use.cuda = FALSE*** 
 - whether to use CUDA acceleration (must be compiled with CUDA) for MDFS-2D method
 - MCFS parameter, cut-off method: ***cutoff.method = c("permutations", "criticalAngle", "kmeans")***;
 - correlation coefficient: ***level.cor = 0.75***;
@@ -162,10 +162,10 @@ EnsembleFS allows user to set some parameter values, such as:
 - train-test-split the data: ***k = 3***.
 
 #### Runing end-to-end EnsembleFS for ensemble feature selection and classification model construction 
-- number of top features: N = 5, 10, 15, 20, ..., 50, 75, 100;
-- model validation technique: 3-fold cross-validation repeated 10 times;
-- selected feature filters: U-test, MCFS, MRMR, and MDFS-1D;
-- the cut off value of the Spearman correlation coefficient: 0.75.
+- number of top features: ***N = 5, 10, 15, 20, ..., 50, 75, 100;***
+- model validation technique: ***3-fold cross-validation repeated 10 times;***
+- selected feature filters: ***U-test, MCFS, MRMR, and MDFS-1D;***
+- the cut off value of the Spearman correlation coefficient: ***0.75.***
 ```r
 result <- ensembleFS(x = data,
                      y = class,
@@ -193,16 +193,16 @@ result$selected.feature
 ```
 
 #### Showing the combined list of top biomarkers.
-How many times a biomarker has occurred in m feature subsets: level.freq = 7
+How many times a biomarker has occurred in m feature subsets: ***level.freq = 7***
 
-Number of top N biomarkers for each of filter FS methods: number.gene = 100
+Number of top N biomarkers for each of filter FS methods: ***number.gene = 100***
 ```r
 gene.top <- get.top.gene(list.imp.var.cv = result$selected.feature, level.freq = 7, number.gene = 100)
 ```
 
 #### Getting information about biomarkers from nine biological databases
 
-Combination of a set of biomarkers: union
+Combination of a set of biomarkers: ***union***
 ```r
 info.gene <- get.info.top.gene(gene.top, condition.methods = 'union')
 ```
