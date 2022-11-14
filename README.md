@@ -206,10 +206,10 @@ $fs.utest[[1]]
 ```
 
 #### Showing the combined list of top biomarkers.
-- how many times a biomarker has occurred in m feature subsets: ***level.freq = 15***
 - number of top N biomarkers for each of feature filters: ***number.gene = 100***
+- how many times a biomarker has occurred in m feature subsets: ***level.freq = 7***
 ```r
-gene.top <- get.top.gene(list.imp.var.cv = result$selected.feature, level.freq = 15, number.gene = 100)
+gene.top <- get.top.gene(list.imp.var.cv = result$selected.feature, level.freq = 7, number.gene = 100)
 print(gene.top)
 
 $utest
@@ -245,10 +245,28 @@ $mdfs.1D
 
 #### Getting information about biomarkers from nine biological databases
 
-Combination of a set of biomarkers: ***union***
+- combination of a set of biomarkers: ***union***
 ```r
 info.gene <- get.info.top.gene(gene.top, condition.methods = 'union')
 print(info.gene)
+
+        term source               term.ID                                                                    term.name
+1     L2HGDH  GO:MF            GO:0047545                                    2-hydroxyglutarate dehydrogenase activity
+2     L2HGDH     HP            HP:0040147                                                 L-2-hydroxyglutaric acidemia
+3     L2HGDH   REAC     REAC:R-HSA-880009                     Interconversion of 2-oxoglutarate and 2-hydroxyglutarate
+4     L2HGDH     WP             WP:WP4519                               Cerebral organic acidurias, including diseases
+5      MCCC2  CORUM            CORUM:7190                                             3-methylcrotonyl-CoA carboxylase
+6      MCCC2  GO:CC            GO:0002169                      3-methylcrotonyl-CoA carboxylase complex, mitochondrial
+7      MCCC2  GO:CC            GO:1905202                                      methylcrotonoyl-CoA carboxylase complex
+8      MCCC2  GO:MF            GO:0004485                                     methylcrotonoyl-CoA carboxylase activity
+9      MCCC2     WP             WP:WP5031                                            Biotin metabolism, including IMDs
+10   ONECUT1  CORUM             CORUM:746                                                      C/EBPalpha-HNF6 complex
+11   ONECUT1   KEGG            KEGG:04950                                         Maturity onset diabetes of the young
+12      SIX4     WP             WP:WP3595          mir-124 predicted interactions with cell cycle and differentiation 
+13   TNFSF11  GO:BP            GO:0051466             positive regulation of corticotropin-releasing hormone secretion
+14   TNFSF11     HP            HP:0004499                                  Chronic rhinitis due to narrow nasal airway
+15   TNFSF11     TF             TF:M05659                                          Factor: ZNF879; motif: NGGTTTATAAKM
+...
 ```
 ## Example 3 - create and add other feature filter to default list of basic feature selection methods
 ```r
@@ -271,10 +289,9 @@ feature.number = 100
 - ***x*** tabular input data, numeric type, where columns are features, and the rows are observations;
 - ***y*** decision variable as a binary vector, y length equals the total number of observations;
 - ***params*** list of hyperparameters for a new FS method, if such are required, and in their absence, the params argument of the above-mentioned
-  functions should be omitted;
-3. function should return a data frame that consists of two columns : name (names of relevant biomarkers) and score (validity metric
-variables for an individual FS method, e.g. p-value for U-test); 
-Example:
+  function should be omitted;
+3. function should return a data frame that includes two columns: ***name*** (names of relevant biomarkers) and ***score*** (value of variable importance metric, e.g. p-value for U-test); 
+**Code example:**
 ```r
 fs.relieff <- function(x, y, params = list(feature.number = 100)){
   result <- fs.relief(x, y)
