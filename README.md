@@ -163,13 +163,10 @@ EnsembleFS allows user to set some parameter values, such as:
 - train-test-split the data: ***k = 3***.
 
 #### Runing end-to-end EnsembleFS for ensemble feature selection and classification model construction 
-Number of top features: N = 5, 10, 15, 20, ..., 50, 75, 100
-
-Model validation technique: 3-fold cross-validation repeated 10 times
-
-Selected feature filters: U-test, MCFS, MRMR, and MDFS-1D.
-
-The cut off value of the Spearman correlation coefficient: 0.75
+- number of top features: N = 5, 10, 15, 20, ..., 50, 75, 100;
+- model validation technique: 3-fold cross-validation repeated 10 times;
+- selected feature filters: U-test, MCFS, MRMR, and MDFS-1D;
+- the cut off value of the Spearman correlation coefficient: 0.75.
 ```r
 result <- ensembleFS(x = data,
                      y = class,
