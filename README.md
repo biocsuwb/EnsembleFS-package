@@ -243,7 +243,7 @@ $mdfs.1D
 
 ```
 
-#### Getting information about biomarkers from nine biological databases
+#### Getting information about biomarkers from the nine biological databases (GO, KEGG, React, WP, TF, MIRNA, HPA, CORUM, and HPO)
 
 - combination of a set of biomarkers: ***union***
 ```r
