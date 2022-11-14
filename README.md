@@ -54,7 +54,6 @@ data$class <- NULL
 - U-test and MDFS-1D, and MDFS-2D parameter, ***multitest correction: adjust = c("holm", "hochberg", "hommel", "bonferroni", "BH", "BY", "fdr", "none")***;
 - U-test and MDFS-1D, and MDFS-2D parameter, significance level: ***alpha = 0.05***;
 - MDFS-2D parameter: ***use.cuda = FALSE*** 
-- whether to use CUDA acceleration (must be compiled with CUDA) for MDFS-2D method
 - MCFS parameter, cut-off method: ***cutoff.method = c("permutations", "criticalAngle", "kmeans")***;
 - correlation coefficient: ***level.cor = 0.75***;
 - validation methods: ***method.cv = c('kfoldcv','rsampling')***;
