@@ -38,9 +38,8 @@ highest difference in the gene expression level between tumor and normal tissues
 devtools::install_github("biocsuwb/EnsembleFS-package")
 ```
 ## Notes: 
-To install EnsembleFS package in your R environment make sure you have Java installed (rJava R package).
-
-To accelerate processing by using a CUDA GPU the EnsembleFS package must be compiled with CUDA (set the MDFS-2D parameter: use.cuda = TRUE) 
+- to install EnsembleFS package in your R environment make sure you have Java installed (rJava R package);
+- to accelerate processing by using a CUDA GPU the EnsembleFS package must be compiled with CUDA (set the MDFS-2D parameter: use.cuda = TRUE). 
 
 ## Example 1 - individual feature selection
 
