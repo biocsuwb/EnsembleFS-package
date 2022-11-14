@@ -110,8 +110,8 @@ print(list.selected.var[[1]][1:10,])
 464    FGF2 3.127923e-22 6.237079e-19
 538   IL3RA 5.110742e-22 1.018571e-18
 636    EMP2 7.996179e-22 1.592839e-18
-1952  TRPV2 3.432695e-21 6.834496e-18
-
+1952  TRPV2 3.432695e-21 6.834496e-18 
+...
 ```
 
 #### Building and testing ML models on top N = 100 features with the individual FS algorithm (eg. MDFS-1D); 30 models in total.
@@ -145,7 +145,8 @@ data$class <- NULL
 
 #### Showing the list of available feature selection methods
 ```r
-list.methods()
+print(list.methods())
+"fs.mcfs"  "fs.mdfs.1D"  "fs.mdfs.2D"  "fs.mrmr"  "fs.utest"  
 ```
 
 #### Model configuration parameters
@@ -160,9 +161,9 @@ EnsembleFS allows user to set some parameter values, such as:
 - number of repetitions: ***niter = 5***;
 - train-test-split the data: ***k = 3***.
 
-#### Runing end-to-end EnsembleFS for ensemble feature selection and classification model construction 
+#### Building and testing ML models on top N features with each of selected feature filters (eg. U-test, MCFS, MRMR, and MDFS-1D); 
 - number of top features: ***N = 5, 10, 15, 20, ..., 50, 75, 100;***
-- model validation technique: ***3-fold cross-validation repeated 10 times;***
+- model validation technique: ***3-fold cross-validation repeated 5 times;***
 - selected feature filters: ***U-test, MCFS, MRMR, and MDFS-1D;***
 - the cut off value of the Spearman correlation coefficient: ***0.75.***
 ```r
@@ -186,17 +187,60 @@ graph.result(result$stability, "stability")
 ```
 ![Fig.4](https://github.com/biocsuwb/Images/blob/main/ASM&ACC.png?raw=true)
 Fig.4 The average values for accurancy (ACC) vs N top features (5, 10, 15, 20, ..., 50, 75, 100) for various features filters and the ASM similarity measure between m = 15 feature subsets vs N top features.
-#### Showing m-list of top biomarkers for each of filter FS methods
+#### Showing m-list of top biomarkers for each of feature filters (m = 3 x 5 in this case)
 ```r
-result$selected.feature
+print(result$selected.feature)
+
+$fs.utest[[1]]
+             name       Pvalue adjustPvalue
+1            EMP2 1.440258e-17 2.880515e-14
+88        ONECUT1 2.889262e-14 5.527158e-11
+89       BAIAP2L2 3.195846e-14 6.110458e-11
+99          CILP2 5.888033e-14 1.119904e-10
+108         FOLR3 1.097770e-13 2.078079e-10
+115          PVT1 1.317063e-13 2.486614e-10
+120      MGC42105 1.607918e-13 3.026102e-10
+123         LYPD1 1.689979e-13 3.173781e-10
+125           XDH 1.866637e-13 3.501812e-10  
+...
 ```
 
 #### Showing the combined list of top biomarkers.
-How many times a biomarker has occurred in m feature subsets: ***level.freq = 7***
-
-Number of top N biomarkers for each of filter FS methods: ***number.gene = 100***
+- how many times a biomarker has occurred in m feature subsets: ***level.freq = 15***
+- number of top N biomarkers for each of feature filters: ***number.gene = 100***
 ```r
-gene.top <- get.top.gene(list.imp.var.cv = result$selected.feature, level.freq = 7, number.gene = 100)
+gene.top <- get.top.gene(list.imp.var.cv = result$selected.feature, level.freq = 15, number.gene = 100)
+print(gene.top)
+
+$utest
+ [1] C1orf69   C2orf15   CHMP4C    L2HGDH    MCCC2     MGC42105  NET1      ONECUT1   S1PR5     SEZ6      SIX4      SLC2A3   
+[13] TMEM62    TNFSF11   XDH       ZDHHC9    ABCC3     ALG6      CD2AP     GJA9      GTPBP5    IGFL2     LOC81691  ZNF107   
+[25] BAIAP2L2  CCDC54    DCPS      FAM155B   KRT86     PRNP      PROC      TOM1L1    TTC39C    ZC3HAV1L  ABHD5     APH1B    
+[37] CILP2     DHFR      GJA1      HOXA5     KIAA0406  NETO1     ONECUT2   RARRES2   ADAM28    KIR3DL1   LYPD1     NRXN1    
+[49] PTGFRN    RAE1      UNC5CL    AOX1      C1orf126  C1orf198  C7orf16   CP        FOLR3     RALGPS2   SEMA3B    C11orf67 
+[61] FAM105A   FAM66C    FUNDC1    IL11RA    LOC148709 PTK6      RMST      RUSC2     SLC2A5    TLE4      DNM3      ERBB2    
+[73] FRK       KLHL4     LPHN3     MMP13     NUDT5     PPARG     SEPHS2    SLC24A3   TCTEX1D1  ZNF786    BMP5      C19orf52 
+[85] C8orf85   GPER      LOC387646 NELF      SCN8A     SLC25A25  SPP2      UST       ZNF643   
+
+$mcfs
+[1] EMP2 GPT2
+
+$mrmr
+[1] RS1    GPT2   B3GNT3
+
+$mdfs.1D
+ [1] C2orf15      MCCC2        MGC42105     NET1         ONECUT1      ONECUT2      TMEM62       TOM1L1       XDH         
+[10] ABCC3        C1orf126     SEZ6         SLC2A3       TNFSF11      BAIAP2L2     CD2AP        CHMP4C       CILP2       
+[19] DCPS         FAM155B      IGFL2        KIAA0406     LOC81691     ZC3HAV1L     ALG6         APH1B        CCDC54      
+[28] HOXA5        KRT86        L2HGDH       NUDT5        PROC         SCN8A        SLC12A8      TTC39C       UNC5CL      
+[37] UST          ZDHHC9       ADAM28       C1orf69      DHFR         DNM3         GJA1         KIR3DL1      LOC148709   
+[46] LYPD1        PTK6         SIX4         TSPYL5       ALPL         CP           FOLR3        GTPBP5       RALGPS2     
+[55] S1PR5        SEMA3B       TLE4         C11orf9      C1orf198     CCDC43       HIST1H2BE    LOC387646    PRNP        
+[64] RAE1         ZNF107       ABHD5        ERBB2        FAM105A      GJA9         GRIP1        IL11RA       LGALS3BP    
+[73] MAL          NELF         PLAC8        PTGFRN       QPRT         BMP5         C11orf67     C8orf85      CLCN4       
+[82] KATNA1       KBTBD12      LOC100125556 NRXN1        RARRES2      SLC24A3      SPP2         UBFD1        ZNF643      
+[91] ZNF786
+
 ```
 
 #### Getting information about biomarkers from nine biological databases
@@ -204,28 +248,29 @@ gene.top <- get.top.gene(list.imp.var.cv = result$selected.feature, level.freq =
 Combination of a set of biomarkers: ***union***
 ```r
 info.gene <- get.info.top.gene(gene.top, condition.methods = 'union')
+print(info.gene)
 ```
-## Example 3 - create and add their own feature filters to default list of basic feature filters 
+## Example 3 - create and add other feature filter to default list of basic feature selection methods
 ```r
 data <- read.csv2('exampleData.csv')
 class <- data$class
 data$class <- NULL
 ```
-####   Installing the required package
+####   Installing the required packages 
 ```r
 install.packages('mt')
 library(mt)
 ```
-####  Creating new feature filter eg. ReliefF ([Kononenko 1994](https://link.springer.com/chapter/10.1007/3-540-57868-4_57))
+####  Creating a new feature filter eg. ReliefF ([Kononenko 1994](https://link.springer.com/chapter/10.1007/3-540-57868-4_57))
 ```r
 feature.number = 100
 ```
 #### Rules for adding a new FS method to the benchmark procedure:
-1. the function name of the new FS method should have the prefix 'fs.';
+1. the function name of the new FS method must have the prefix 'fs.';
 2. the created function should take as input arguments:
-- x tabular input, numeric type, where columns are variables, and the lines are observations;
-- y decision variable as a binary vector of length equal to a number observation;
-- params is a list of hyperparameters of the new FS method added, if such are required, and in their absence, the params argument of the above-mentioned
+- ***x*** tabular input data, numeric type, where columns are features, and the rows are observations;
+- ***y*** decision variable as a binary vector, y length equals the total number of observations;
+- ***params*** list of hyperparameters for a new FS method, if such are required, and in their absence, the params argument of the above-mentioned
   functions should be omitted;
 3. function should return a data frame that consists of two columns : name (names of relevant biomarkers) and score (validity metric
 variables for an individual FS method, e.g. p-value for U-test); 
