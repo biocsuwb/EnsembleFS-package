@@ -315,8 +315,10 @@ result2 <- ensembleFS(x = data,
                      asm = c("fs.utest", 'fs.mrmr' , 'fs.mcfs' , 'fs.mdfs.1D' ,'fs.relieff'),
                      model = c("fs.utest",  'fs.mrmr',  'fs.mcfs' , 'fs.mdfs.1D' ,'fs.relieff'))
  ```
- #### Visualizing the model results
+#### Visualizing the model results
 ```r
-graph.result2(result2$model, "acc")
+graph.result(result2$model, "acc")
+graph.result(result2$stability, "stability")
 ```
-![ensembleFS_relieff_auc](https://user-images.githubusercontent.com/36896714/201480835-8af6ba21-10a0-45ef-86c2-353711520d4b.png)
+![Fig.4](https://github.com/biocsuwb/Images/blob/main/ACC&ASM.png?raw=true)
+Fig.4 The average values for accurancy (ACC) vs N top features (5, 10, 15, 20, ..., 50, 75, 100) for various features filters and the ASM similarity measure between m = 15 feature subsets vs N top features.
