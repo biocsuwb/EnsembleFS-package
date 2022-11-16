@@ -167,14 +167,14 @@ EnsembleFS allows user to set some parameter values, such as:
 - U-test and MDFS parameter: ***adjust = "holm"***;
 - MRMR parameter: ***feature.number = 150;***;
 - MCFS parameter: ***cutoff.method = "kmeans"***;
-- model validation technique: ***rsampling, test set 30%, repeated 5 times;***
+- model validation technique: ***rsampling, test set 30%, repeated 10 times;***
 - the cut off value of the Spearman correlation coefficient: ***0.75;***
 ```r
 result <- ensembleFS(x = data,
                      y = class,
                      methods = c("fs.utest", "fs.mcfs", "fs.mrmr", "fs.mdfs.1D"),
                      method.cv = "rsampling",
-                     params.cv = list(test.size = 0.3, niter = 5),
+                     params.cv = list(test.size = 0.3, niter = 10),
                      level.cor = 0.75,
                      params = list(adjust = "holm", cutoff.method = "kmeans",feature.number = 150, alpha = 0.05),
                      asm = c("fs.utest", "fs.mcfs", "fs.mrmr", "fs.mdfs.1D"),
@@ -189,8 +189,8 @@ graph.result(result$stability, "stability")
 # graph.result(result$model, "mcc")
 ```
 ![Fig.4](https://github.com/biocsuwb/Images/blob/main/ASM&ACC.png?raw=true)
-Fig.4 The average values for accurancy (ACC) vs N top features (5, 10, 15, 20, ..., 50, 75, 100) for various features filters and the ASM similarity measure between m = 5 feature subsets vs N top features.
-#### Showing m-list of top biomarkers for each of feature filters (m = 5 in this case)
+Fig.4 The average values for accurancy (ACC) vs N top features (5, 10, 15, 20, ..., 50, 75, 100) for various features filters and the ASM similarity measure between m = 10 feature subsets vs N top features.
+#### Showing m-list of top biomarkers for each of feature filters (m = 10 in this case)
 ```r
 print(result$selected.feature)
 
@@ -210,9 +210,9 @@ $fs.utest[[1]]
 
 #### Showing the combined list of top biomarkers.
 - number of top N biomarkers for each of feature filters: ***number.gene = 100***
-- how many times a biomarker has occurred in m feature subsets: ***level.freq = 3***
+- how many times a biomarker has occurred in m feature subsets: ***level.freq = 5***
 ```r
-gene.top <- get.top.gene(list.imp.var.cv = result$selected.feature, level.freq = 3, number.gene = 100)
+gene.top <- get.top.gene(list.imp.var.cv = result$selected.feature, level.freq = 5, number.gene = 100)
 print(gene.top)
 
 $utest
