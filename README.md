@@ -79,7 +79,7 @@ var.mcfs <- fs.mcfs(x = data, y = class,  params = list(cutoff.method = "kmeans"
 ```
 #### Feature selection MRMR
 ```r
-var.mrmr <- fs.mrmr(x = data, y = class,  params = list(feature.number = 100))
+var.mrmr <- fs.mrmr(x = data, y = class,  params = list(feature.number = 10))
 ```
 
 #### Creating the cross-validation index array  (3-fold cross-validation repeated 10 times)
@@ -138,7 +138,7 @@ print(asm)
 
 #### Loading data
 ```r
-data <- read.csv2('exampleData.csv')
+data <- read.csv2('exampleData_TCGA_LUAD_2000.csv')
 class <- data$class
 data$class <- NULL
 ```
@@ -162,14 +162,13 @@ EnsembleFS allows user to set some parameter values, such as:
 - train-test-split the data: ***k = 3*** for stratified k-fold cross-validation and ***test.size = 0.3*** for random sampling.
 
 
-#### Building and testing ML models on top N features with each of selected feature filters (eg. U-test, MCFS, MRMR, and MDFS-1D); 
+#### Building and testing ML models on top N features (N = 5, 10, 15, 20, 30, 40, 50, 75, 100) with each of selected feature filters
 - selected feature filters: ***methods = c("fs.utest", "fs.mcfs", "fs.mrmr", "fs.mdfs.1D")***;
-- U-test and MDFS parameter, multitest correction: ***adjust = "holm"***;
-- MRMR parameter, number of significant features: ***feature.number = 150;***;
-- MCFS parameter, cut-off method: ***cutoff.method = "kmeans"***;
+- U-test and MDFS parameter: ***adjust = "holm"***;
+- MRMR parameter: ***feature.number = 150;***;
+- MCFS parameter: ***cutoff.method = "kmeans"***;
 - model validation technique: ***rsampling, test set 30%, repeated 5 times;***
 - the cut off value of the Spearman correlation coefficient: ***0.75;***
-- number of top features: ***N = 5, 10, 15, 20, ..., 50, 75, 100.***
 ```r
 result <- ensembleFS(x = data,
                      y = class,
@@ -306,8 +305,13 @@ fs.relieff <- function(x, y, params = list(feature.number = 100)){
   return(var.imp)
 }
 ```
-#### Run end-to-end EnsembleFS for ensemble feature selection and comparison of feature filters 
-Feature filters: U-test, MCFS, MRMR, MDFS-1D, and ReliefF.
+#### Run end-to-end EnsembleFS for ensemble feature selection and comparison of feature filters
+- selected feature filters: ***methods = c("fs.utest", "fs.mcfs", "fs.mrmr", "fs.mdfs.1D", "fs.relieff")***;
+- U-test and MDFS parameter: ***adjust = "fdr"***;
+- MRMR parameter: ***feature.number = 150;***;
+- MCFS parameter: ***cutoff.method = "kmeans"***;
+- model validation technique: ***3-fold cross-validation, repeated 5 times;***
+- the cut off value of the Spearman correlation coefficient: ***0.75;***
 ```r
 result2 <- ensembleFS(x = data,
                      y = class,
