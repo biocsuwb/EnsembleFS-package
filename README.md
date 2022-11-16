@@ -311,24 +311,42 @@ print(result$model)
 - combination of a set of biomarkers: ***union***
 ```r
 info.gene <- get.info.top.gene(gene.top, condition.methods = 'union')
-print(info.gene)
-
-        term source               term.ID                                                                    term.name
-1     L2HGDH  GO:MF            GO:0047545                                    2-hydroxyglutarate dehydrogenase activity
-2     L2HGDH     HP            HP:0040147                                                 L-2-hydroxyglutaric acidemia
-3     L2HGDH   REAC     REAC:R-HSA-880009                     Interconversion of 2-oxoglutarate and 2-hydroxyglutarate
-4     L2HGDH     WP             WP:WP4519                               Cerebral organic acidurias, including diseases
-5      MCCC2  CORUM            CORUM:7190                                             3-methylcrotonyl-CoA carboxylase
-6      MCCC2  GO:CC            GO:0002169                      3-methylcrotonyl-CoA carboxylase complex, mitochondrial
-7      MCCC2  GO:CC            GO:1905202                                      methylcrotonoyl-CoA carboxylase complex
-8      MCCC2  GO:MF            GO:0004485                                     methylcrotonoyl-CoA carboxylase activity
-9      MCCC2     WP             WP:WP5031                                            Biotin metabolism, including IMDs
-10   ONECUT1  CORUM             CORUM:746                                                      C/EBPalpha-HNF6 complex
-11   ONECUT1   KEGG            KEGG:04950                                         Maturity onset diabetes of the young
-12      SIX4     WP             WP:WP3595          mir-124 predicted interactions with cell cycle and differentiation 
-13   TNFSF11  GO:BP            GO:0051466             positive regulation of corticotropin-releasing hormone secretion
-14   TNFSF11     HP            HP:0004499                                  Chronic rhinitis due to narrow nasal airway
-15   TNFSF11     TF             TF:M05659                                          Factor: ZNF879; motif: NGGTTTATAAKM
+info.gene
+         term source               term.ID                                                                                                                                      term.name
+1       ADCY8  GO:MF            GO:0008294          calcium- and calmodulin-responsive adenylate cyclase activity
+2       ADRB2  CORUM            CORUM:3830          ADRB2 homodimer complex
+3       ADRB2  CORUM             CORUM:668          BKCA-beta2AR-AKAP79 signaling complex
+4       ADRB2  CORUM             CORUM:672          BKCA-beta2AR complex
+5       ADRB2  CORUM             CORUM:687          CFTR-NHERF-beta(2)AR signaling complex
+6       ADRB2  GO:MF            GO:0004941          beta2-adrenergic receptor activity
+7     ANGPTL7  GO:BP            GO:0036331          avascular cornea development in camera-type eye
+8     ANGPTL7  GO:BP            GO:1901346          negative regulation of vasculature development involved in avascular cornea development in camera-type eye
+9         CAT  GO:BP            GO:0061691          detoxification of hydrogen peroxide
+10        CAT  GO:BP            GO:0061692          cellular detoxification of hydrogen peroxide
+11        CAT  GO:CC            GO:0062151          catalase complex
+12        CAT     HP            HP:0012517          Reduced catalase level
+13        CAT     HP            HP:0040113          Old-aged sensorineural hearing impairment
+14       CAV1  CORUM            CORUM:2462          Caveolin-1 homodimer complex
+15       CAV1  CORUM            CORUM:5714          NOS3-CAV1 complex
+16       CAV1  CORUM             CORUM:550          NOS3-CAV1-NOSTRIN complex
+17       CAV1  CORUM            CORUM:5862          CAV1-VDAC1-ESR1 complex
+18       CAV1  GO:BP            GO:1900085          negative regulation of peptidyl-tyrosine autophosphorylation
+19       CAV1  GO:BP            GO:1903609          negative regulation of inward rectifier potassium channel activity
+20       CAV1  GO:CC            GO:0002095          caveolar macromolecular signaling complex
+21       CAV1  GO:MF            GO:0070320          inward rectifier potassium channel inhibitor activity
+22       CAV1     HP            HP:0005320          Lack of facial subcutaneous fat
+23     CHRNA2  CORUM            CORUM:6440          CHRNA2-CHRNB4 complex
+24     CYP1A2  GO:BP            GO:0009403          toxin biosynthetic process
+25     CYP1A2   KEGG            KEGG:00232          Caffeine metabolism
+26     CYP1A2   REAC     REAC:R-HSA-211957          Aromatic amines can be N-hydroxylated or N-dealkylated by CYP1A2
+27     CYP1A2   REAC    REAC:R-HSA-9018681          Biosynthesis of protectins
+28     CYP1A2     TF             TF:M06228          Factor: ZNF543; motif: KGGWATRTGGGA
+29     CYP1A2     WP             WP:WP2646          Lidocaine metabolism
+30     CYP1A2     WP             WP:WP3633          Caffeine and theobromine metabolism
+31     CYP1A2     WP              WP:WP694          Arylamine metabolism
+32     CYP1A2     WP             WP:WP2542          Sulindac metabolic pathway
+33     CYP1A2     WP              WP:WP699          Aflatoxin B1 metabolism
+34      EPAS1  CORUM            CORUM:7274          ARNTL-EPAS1 complex
 ... etc.
 ```
 
