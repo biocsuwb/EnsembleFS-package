@@ -28,8 +28,8 @@ Fig.2 The scheme of construction of the combined set of N-top relevant features.
 Fig.3 The scheme for biological information collection and integration about biomarkers.
 
 ## Example data sets
-The RNA-sequencing data of tumor-adjacent normal tissues of lung adenocarcinoma cancer patients from The Cancer Genome Atlas database ([TCGA](https://www.cancer.gov/tcga)) was used. The preprocessing of data involved standard steps for RNA-Seq data. The log2 transformation was performed. Features with zero and near-zero (1%) variance across patients were removed. After the preprocessing procedure the primary dataset contains 574 samples (59 normal and 515 tumor) described with 20172 differentially expressed genes (DEGs). This dataset includes highly correlated features and the number of cancer samples is roughly ten times more than normal samples. For testing purposes, the number of molecular markers was limited to random 2000 DEGs ([exampleData.csv](https://github.com/biocsuwb/EnsembleFS-package/tree/main/data)) and 5000 DEGs ranked by
-highest difference in the gene expression level between tumor and normal tissues ([exampleData_5000.csv](https://github.com/biocsuwb/EnsembleFS-package/tree/main/data)). 
+The RNA-sequencing data of tumor-adjacent normal tissues of lung adenocarcinoma cancer patients from The Cancer Genome Atlas database ([TCGA](https://www.cancer.gov/tcga)) was used. The preprocessing of data involved standard steps for RNA-Seq data. The log2 transformation was performed. Features with zero and near-zero (1%) variance across patients were removed. After the preprocessing procedure the primary dataset contains 574 samples (59 normal and 515 tumor) described with 20172 differentially expressed genes (DEGs). This dataset includes highly correlated features and the number of cancer samples is roughly ten times more than normal samples. For testing purposes, the number of molecular markers was limited to 2000 DEGs ranked by
+highest difference in the gene expression level between tumor and normal tissues ([exampleData_TCGA_LUAD_2000.csv](https://github.com/biocsuwb/EnsembleFS-package/tree/main/data)). 
 
 ## Install the development version from GitHub:
 
@@ -45,20 +45,21 @@ devtools::install_github("biocsuwb/EnsembleFS-package")
 
 #### Loading data
 ```r
-data <- read.csv2('exampleData.csv')
+data <- read.csv2('exampleData_TCGA_LUAD_2000.csv')
 class <- data$class
 data$class <- NULL
 ```
 
-#### Model configuration parameters
-- U-test and MDFS-1D, and MDFS-2D parameter, ***multitest correction: adjust = c("holm", "hochberg", "hommel", "bonferroni", "BH", "BY", "fdr", "none")***;
+#### Model (optional) configuration parameters
+- U-test and MDFS-1D, and MDFS-2D parameter, multitest correction:  ***adjust = c("holm", "hochberg", "hommel", "bonferroni", "BH", "BY", "fdr", "none")***;
 - U-test and MDFS-1D, and MDFS-2D parameter, significance level: ***alpha = 0.05***;
-- MDFS-2D parameter: ***use.cuda = FALSE*** 
-- MCFS parameter, cut-off method: ***cutoff.method = c("permutations", "criticalAngle", "kmeans")***;
-- correlation coefficient: ***level.cor = 0.75***;
+- MDFS-2D parameter, CPU/GPU architecture: ***use.cuda = FALSE*** 
+- MRMR parameter, number of significant features: ***feature.number = 10***;
+- MCFS parameter, cut-off method: ***cutoff.method = c("permutations", "criticalAngle", "kmeans", "mean", "contrast")***;
+- correlation coefficient: ***level.cor = 1***;
 - validation methods: ***method.cv = c('kfoldcv','rsampling')***;
-- number of repetitions: ***niter = 5***;
-- train-test-split the data: ***k = 3***.
+- number of repetitions: ***niter = 10***;
+- train-test-split the data: ***k = 3*** for stratified k-fold cross-validation and ***test.size = 0.3*** for random sampling.
 
 
 #### Feature selection U-test
@@ -87,9 +88,9 @@ var.mrmr <- fs.mrmr(x = data, y = class,  params = list(feature.number = 100))
 list.index.cross <- cross.val(x = data,
                               y = class,
                               method = 'kfoldcv',
-                              params.cv = list(niter = 10, k = 3)
+                              params.cv = list(k = 3, niter = 10)
 ```                              
-#### Feature selection in a cross-validation scenario for individual FS method (eg. MDFS-1D)
+#### Feature selection in a cross-validation scenario for individual FS method eg. MDFS-1D
 ```r
 list.selected.var <- feature.selection.cv(x = data,
                                           y = class,
@@ -114,7 +115,7 @@ print(list.selected.var[[1]][1:10,])
 ... etc.
 ```
 
-#### Building and testing ML models on top N = 100 features with the individual FS algorithm (eg. MDFS-1D); 30 models in total.
+#### Building and testing ML models on top 100 features with the individual FS algorithm; 30 models in total.
 ```r
 model.result <- build.model.crossval(x = data,
                                      y = class,
@@ -127,7 +128,7 @@ print(model.result[[1]])
  Accuracy       AUC       MCC 
 0.9807692 0.9736842 0.9589080 
 ```
-#### Computing ASM value for top 100 features
+#### Computing ASM value with 30 sets of top 100 features
 ```r
 asm <- stabilty.selection(list.selected.var, list.index.cross,  nvar = 100)
 # show ASM value 
@@ -149,31 +150,35 @@ print(list.methods())
 "fs.mcfs"  "fs.mdfs.1D"  "fs.mdfs.2D"  "fs.mrmr"  "fs.utest"  
 ```
 
-#### Model configuration parameters
+#### Model (optional) configuration parameters
 EnsembleFS allows user to set some parameter values, such as:
 - feature selection methods: ***methods = c("fs.utest", "fs.mcfs", "fs.mrmr", "fs.mdfs.1D", "fs.mdfs.2D")***;
-- U-test and MDFS parameter, ***multitest correction: adjust = c("holm", "hochberg", "hommel", "bonferroni", "BH", "BY", "fdr", "none")***;
+- U-test and MDFS parameter, multitest correction: ***adjust = c("holm", "hochberg", "hommel", "bonferroni", "BH", "BY", "fdr", "none")***;
 - U-test and MDFS parameter, significance level: ***alpha = 0.05***;
 - MRMR parameter, number of significant features: ***feature.number = 100***;
-- MCFS parameter, cut-off method: ***cutoff.method = c("permutations", "criticalAngle", "kmeans")***;
+- MCFS parameter, cut-off method: ***cutoff.method = c("permutations", "criticalAngle", "kmeans", "mean", "contrast")***;
 - correlation coefficient: ***level.cor = 1***;
 - validation methods: ***method.cv = c('kfoldcv','rsampling')***;
-- number of repetitions: ***niter = 5***;
-- train-test-split the data: ***k = 3***.
+- number of repetitions: ***niter = 10***;
+- train-test-split the data: ***k = 3*** for stratified k-fold cross-validation and ***test.size = 0.3*** for random sampling.
+
 
 #### Building and testing ML models on top N features with each of selected feature filters (eg. U-test, MCFS, MRMR, and MDFS-1D); 
-- number of top features: ***N = 5, 10, 15, 20, ..., 50, 75, 100;***
-- model validation technique: ***3-fold cross-validation repeated 5 times;***
-- selected feature filters: ***U-test, MCFS, MRMR, and MDFS-1D;***
-- the cut off value of the Spearman correlation coefficient: ***0.75.***
+- selected feature filters: ***methods = c("fs.utest", "fs.mcfs", "fs.mrmr", "fs.mdfs.1D")***;
+- U-test and MDFS parameter, multitest correction: ***adjust = "holm"***;
+- MRMR parameter, number of significant features: ***feature.number = 150;***;
+- MCFS parameter, cut-off method: ***cutoff.method = "kmeans"***;
+- model validation technique: ***rsampling, test set 30%, repeated 5 times;***
+- the cut off value of the Spearman correlation coefficient: ***0.75;***
+- number of top features: ***N = 5, 10, 15, 20, ..., 50, 75, 100.***
 ```r
 result <- ensembleFS(x = data,
                      y = class,
                      methods = c("fs.utest", "fs.mcfs", "fs.mrmr", "fs.mdfs.1D"),
-                     method.cv = "kfoldcv",
-                     params.cv = list(k = 3, niter = 5),
+                     method.cv = "rsampling",
+                     params.cv = list(test.size = 0.3, niter = 5),
                      level.cor = 0.75,
-                     params = list(adjust = "holm", cutoff.method = "kmeans", feature.number = 100, alpha = 0.05),
+                     params = list(adjust = "holm", cutoff.method = "kmeans",feature.number = 150, alpha = 0.05),
                      asm = c("fs.utest", "fs.mcfs", "fs.mrmr", "fs.mdfs.1D"),
                      model = c("fs.utest", "fs.mcfs", "fs.mrmr", "fs.mdfs.1D"))
  ```
@@ -186,8 +191,8 @@ graph.result(result$stability, "stability")
 # graph.result(result$model, "mcc")
 ```
 ![Fig.4](https://github.com/biocsuwb/Images/blob/main/ASM&ACC.png?raw=true)
-Fig.4 The average values for accurancy (ACC) vs N top features (5, 10, 15, 20, ..., 50, 75, 100) for various features filters and the ASM similarity measure between m = 15 feature subsets vs N top features.
-#### Showing m-list of top biomarkers for each of feature filters (m = 3 x 5 in this case)
+Fig.4 The average values for accurancy (ACC) vs N top features (5, 10, 15, 20, ..., 50, 75, 100) for various features filters and the ASM similarity measure between m = 5 feature subsets vs N top features.
+#### Showing m-list of top biomarkers for each of feature filters (m = 5 in this case)
 ```r
 print(result$selected.feature)
 
@@ -207,9 +212,9 @@ $fs.utest[[1]]
 
 #### Showing the combined list of top biomarkers.
 - number of top N biomarkers for each of feature filters: ***number.gene = 100***
-- how many times a biomarker has occurred in m feature subsets: ***level.freq = 7***
+- how many times a biomarker has occurred in m feature subsets: ***level.freq = 3***
 ```r
-gene.top <- get.top.gene(list.imp.var.cv = result$selected.feature, level.freq = 7, number.gene = 100)
+gene.top <- get.top.gene(list.imp.var.cv = result$selected.feature, level.freq = 3, number.gene = 100)
 print(gene.top)
 
 $utest
