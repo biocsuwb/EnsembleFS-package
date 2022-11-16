@@ -114,7 +114,7 @@ print(list.selected.var[[1]][1:10,])
 ... etc.
 ```
 
-#### Building and testing ML models on top 100 features with the individual FS algorithm; 30 models in total.
+#### Building and testing ML models on top 100 features with the MDFS-1D method; 30 models in total.
 ```r
 model.result <- build.model.crossval(x = data,
                                      y = class,
