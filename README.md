@@ -404,8 +404,8 @@ result2 <- ensembleFS(x = data,
  ```
 #### Visualizing the model results
 ```r
-graph.result(result2$model, "acc")
+graph.result(result2$model, "mcc")
 graph.result(result2$stability, "stability")
 ```
-![Fig.4](https://github.com/biocsuwb/Images/blob/main/ACC&ASM.png?raw=true)
-Fig.4 The average values for accurancy (ACC) vs N top features (5, 10, 15, 20, ..., 50, 75, 100) for various features filters and the ASM similarity measure between m = 15 feature subsets vs N top features.
+![Fig.4](https://github.com/biocsuwb/Images/blob/main/MCC&ASM.png?raw=true)
+Fig.4 The average values of the Matthews correlation coefficient (MCC) vs N top features (5, 10, 15, 20, ..., 50, 75, 100) for various features filters and the ASM similarity measure between m = 15 feature subsets vs N top features.
