@@ -25,11 +25,10 @@ Fig.1 The scheme of ensemble feature selection and supervised classification.
 ![Fig.2](https://github.com/biocsuwb/Images/blob/main/Scheme2.png?raw=true)
 Fig.2 The scheme of construction of the combined set of N-top relevant features.
 ![Fig.3](https://github.com/biocsuwb/Images/blob/main/Scheme3.png?raw=true)
-Fig.3 The scheme for biological information collection and integration about biomarkers.
+Fig.3 The scheme for collection and integration of biological information about biomarkers.
 
 ## Example data sets
-The RNA-sequencing data of tumor-adjacent normal tissues of lung adenocarcinoma cancer patients from The Cancer Genome Atlas database ([TCGA](https://www.cancer.gov/tcga)) was used. The preprocessing of data involved standard steps for RNA-Seq data. The log2 transformation was performed. Features with zero and near-zero (1%) variance across patients were removed. After the preprocessing procedure the primary dataset contains 574 samples (59 normal and 515 tumor) described with 20172 differentially expressed genes (DEGs). This dataset includes highly correlated features and the number of cancer samples is roughly ten times more than normal samples. For testing purposes, the number of molecular markers was limited to 2000 DEGs ranked by
-highest difference in the gene expression level between tumor and normal tissues ([exampleData_TCGA_LUAD_2000.csv](https://github.com/biocsuwb/EnsembleFS-package/tree/main/data)). 
+The RNA-sequencing data of tumor-adjacent normal tissues of lung adenocarcinoma cancer patients from The Cancer Genome Atlas database ([TCGA](https://www.cancer.gov/tcga)) was used. The preprocessing of data involved standard steps for RNA-Seq data. The log2 transformation was performed. Features with zero and near-zero (1%) variance across patients were removed. After the preprocessing procedure, the primary dataset contains 574 samples (59 normal and 515 tumors) described with 20172 differentially expressed genes (DEGs). This dataset includes highly correlated features, and the number of cancer samples is roughly ten times more than normal samples. For testing purposes, the number of molecular markers was limited to 2000 DEGs ranked by the highest difference in the gene expression level between tumor and normal tissues ([exampleData_TCGA_LUAD_2000.csv](https://github.com/biocsuwb/EnsembleFS-package/tree/main/data)). 
 
 ## Install the development version from GitHub:
 
@@ -38,8 +37,8 @@ highest difference in the gene expression level between tumor and normal tissues
 devtools::install_github("biocsuwb/EnsembleFS-package")
 ```
 ## Notes: 
-- ***to install EnsembleFS package in your R environment make sure you have Java installed (rJava R package);***
-- ***to accelerate processing by using a CUDA GPU the EnsembleFS package must be compiled with CUDA (set the MDFS-2D parameter: use.cuda = TRUE).*** 
+- ***to install the EnsembleFS package in your R environment, make sure you have Java installed (rJava R package);***
+- ***to accelerate processing by using a CUDA GPU, the EnsembleFS package must be compiled with CUDA (set the MDFS-2D parameter: use.cuda = TRUE).*** 
 
 ## Example 1 - individual feature selection
 
@@ -150,7 +149,7 @@ print(list.methods())
 ```
 
 #### Model (optional) configuration parameters
-EnsembleFS allows user to set some parameter values, such as:
+EnsembleFS allows the user to set some parameter values, such as:
 - feature selection methods: ***methods = c("fs.utest", "fs.mcfs", "fs.mrmr", "fs.mdfs.1D", "fs.mdfs.2D")***;
 - U-test and MDFS parameter, multitest correction: ***adjust = c("holm", "hochberg", "hommel", "bonferroni", "BH", "BY", "fdr", "none")***;
 - U-test and MDFS parameter, significance level: ***alpha = 0.05***;
@@ -162,7 +161,7 @@ EnsembleFS allows user to set some parameter values, such as:
 - train-test-split the data: ***k = 3*** for stratified k-fold cross-validation and ***test.size = 0.3*** for random sampling.
 
 
-#### Building and testing ML models on top N features (N = 5, 10, 15, 20, 30, 40, 50, 75, 100) with each of selected feature filters
+#### Building and testing ML models on top N features (N = 5, 10, 15, 20, 30, 40, 50, 75, 100) with each of the selected feature filters
 - selected feature filters: ***methods = c("fs.utest", "fs.mcfs", "fs.mrmr", "fs.mdfs.1D")***;
 - U-test and MDFS parameter: ***adjust = "holm"***;
 - MRMR parameter: ***feature.number = 150;***;
@@ -367,9 +366,9 @@ library(mt)
 #### Rules for adding a new FS method to the benchmark procedure:
 1. the function name of the new FS method must have the prefix 'fs.';
 2. the created function should take as input arguments:
-- ***x*** tabular input data, numeric type, where columns are features, and the rows are observations;
+- ***x*** tabular input data, a numeric type, where columns are features, and the rows are observations;
 - ***y*** decision variable as a binary vector, y length equals the total number of observations;
-- ***params*** list of hyperparameters for a new FS method, if such are required, and in their absence, the params argument of the above-mentioned
+- ***params*** list of hyperparameters for a new FS method if such is required, and in their absence, the params argument of the above-mentioned
   function should be omitted: ***params = list(feature.number = 100)***
 3. function should return a data frame that includes two columns: ***name*** (names of relevant biomarkers) and ***score*** (value of variable importance metric, e.g. p-value for U-test); 
 **Code example:**
@@ -391,7 +390,7 @@ fs.relieff <- function(x, y, params = list(feature.number = 100)){
 - MRMR parameter: ***feature.number = 150;***;
 - MCFS parameter: ***cutoff.method = "kmeans"***;
 - model validation technique: ***3-fold cross-validation, repeated 5 times;***
-- the cut off value of the Spearman correlation coefficient: ***0.75;***
+- the cut-off value of the Spearman correlation coefficient: ***0.75;***
 ```r
 result2 <- ensembleFS(x = data,
                      y = class,
