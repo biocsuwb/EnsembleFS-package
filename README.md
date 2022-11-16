@@ -56,7 +56,6 @@ data$class <- NULL
 - MDFS-2D parameter, CPU/GPU architecture: ***use.cuda = FALSE*** 
 - MRMR parameter, number of significant features: ***feature.number = 10***;
 - MCFS parameter, cut-off method: ***cutoff.method = c("permutations", "criticalAngle", "kmeans", "mean", "contrast")***;
-- correlation coefficient: ***level.cor = 1***;
 - validation methods: ***method.cv = c('kfoldcv','rsampling')***;
 - number of repetitions: ***niter = 10***;
 - train-test-split the data: ***k = 3*** for stratified k-fold cross-validation and ***test.size = 0.3*** for random sampling.
