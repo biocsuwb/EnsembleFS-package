@@ -17,7 +17,6 @@ and also clinical data (numeric formats);
 - establish the selected parameters for predictive models, such as the number of top N informative features;
 - remove redundant features by building the Spearman correlation matrix that identifies highly correlated features;
 - product plots to visualize the model results;
-- create detailed raport with feature selection and modeling results;
 - find information about selected top molecular markers (gene ontology, pathways, tissue specificity, miRNA targets, regulatory motif, protein complexes, disease phenotypes) in nine biological databases (GO, KEGG, React, WP, TF, MIRNA, HPA, CORUM, and HPO).
 
 ![Fig.1](https://github.com/biocsuwb/Images/blob/main/Scheme1.png?raw=true)
