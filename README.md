@@ -95,6 +95,7 @@ list.selected.var <- feature.selection.cv(x = data,
                                           method = 'fs.mdfs.1D',
                                           list.index.cross = list.index.cross,
                                           params = list(adjust = 'holm', alpha = 0.05)
+                                          )
  
 # show 10 top features from the first list of most informative features (list 1 of 30)
 print(list.selected.var[[1]][1:10,])
