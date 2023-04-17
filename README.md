@@ -178,7 +178,8 @@ result <- ensembleFS(x = data,
                      level.cor = 0.75,
                      params = list(adjust = "holm", cutoff.method = "kmeans",feature.number = 150, alpha = 0.05),
                      asm = c("fs.utest", "fs.mcfs", "fs.mrmr", "fs.mdfs.1D"),
-                     model = c("fs.utest", "fs.mcfs", "fs.mrmr", "fs.mdfs.1D"))
+                     model = c("fs.utest", "fs.mcfs", "fs.mrmr", "fs.mdfs.1D")
+                     )
  ```
                      
 #### Visualizing the model results
