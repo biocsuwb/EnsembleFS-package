@@ -86,6 +86,7 @@ list.index.cross <- cross.val(x = data,
                               y = class,
                               method = 'kfoldcv',
                               params.cv = list(k = 3, niter = 10)
+                              )
 ```                              
 #### Feature selection in a cross-validation scenario for individual FS method eg. MDFS-1D
 ```r
