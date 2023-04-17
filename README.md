@@ -44,7 +44,7 @@ devtools::install_github("biocsuwb/EnsembleFS-package")
 #### Loading data
 ```r
 data <- read.csv2('exampleData_TCGA_LUAD_2000.csv')
-class <- data$class
+decisions <- data$class
 data$class <- NULL
 ```
 
@@ -61,29 +61,29 @@ data$class <- NULL
 
 #### Feature selection U-test
 ```r
-var.utest <- fs.utest(x = data, y = class, params = list(adjust = "holm", alpha = 0.05))
+var.utest <- fs.utest(x = data, y = decisions, params = list(adjust = "holm", alpha = 0.05))
 ```
 #### Feature selection MDFS-1D
 ```r
-var.mdfs1D <- fs.mdfs.1D(x = data, y = class, params = list(adjust = "holm", alpha = 0.05))
+var.mdfs1D <- fs.mdfs.1D(x = data, y = decisions, params = list(adjust = "holm", alpha = 0.05))
 ```
 #### Feature selection MDFS-2D
 ```r
-var.mdfs2D <- fs.mdfs.2D(x = data, y = class, params = list(adjust = "holm", alpha = 0.05, use.cuda = FALSE))
+var.mdfs2D <- fs.mdfs.2D(x = data, y = decisions, params = list(adjust = "holm", alpha = 0.05, use.cuda = FALSE))
 ```
 #### Feature selection MCFS
 ```r
-var.mcfs <- fs.mcfs(x = data, y = class,  params = list(cutoff.method = "kmeans"))
+var.mcfs <- fs.mcfs(x = data, y = decisions,  params = list(cutoff.method = "kmeans"))
 ```
 #### Feature selection MRMR
 ```r
-var.mrmr <- fs.mrmr(x = data, y = class,  params = list(feature.number = 10))
+var.mrmr <- fs.mrmr(x = data, y = decisions,  params = list(feature.number = 10))
 ```
 
 #### Creating the cross-validation index array  (3-fold cross-validation repeated 10 times)
 ```r
 list.index.cross <- cross.val(x = data,
-                              y = class,
+                              y = decisions,
                               method = 'kfoldcv',
                               params.cv = list(k = 3, niter = 10)
                               )
@@ -91,7 +91,7 @@ list.index.cross <- cross.val(x = data,
 #### Feature selection in a cross-validation scenario for individual FS method eg. MDFS-1D
 ```r
 list.selected.var <- feature.selection.cv(x = data,
-                                          y = class,
+                                          y = decisions,
                                           method = 'fs.mdfs.1D',
                                           list.index.cross = list.index.cross,
                                           params = list(adjust = 'holm', alpha = 0.05)
@@ -116,7 +116,7 @@ print(list.selected.var[[1]][1:10,])
 #### Building and testing ML models on top 100 features with the MDFS-1D method; 30 models in total.
 ```r
 model.result <- build.model.crossval(x = data,
-                                     y = class,
+                                     y = decisions,
                                      list.selected.var = list.selected.var,
                                      list.index.cross = list.index.cross,
                                      nvar = 100)
@@ -138,7 +138,7 @@ print(asm)
 #### Loading data
 ```r
 data <- read.csv2('exampleData_TCGA_LUAD_2000.csv')
-class <- data$class
+decisions <- data$class
 data$class <- NULL
 ```
 
@@ -170,7 +170,7 @@ EnsembleFS allows the user to set some parameter values, such as:
 - the cut off value of the Spearman correlation coefficient: ***0.75;***
 ```r
 result <- ensembleFS(x = data,
-                     y = class,
+                     y = decisions,
                      methods = c("fs.utest", "fs.mcfs", "fs.mrmr", "fs.mdfs.1D"),
                      method.cv = "rsampling",
                      params.cv = list(test.size = 0.3, niter = 10),
@@ -353,7 +353,7 @@ info.gene
 ## Example 3 - creating and adding a new feature filter to default list of basic FS methods
 ```r
 data <- read.csv2('exampleData.csv')
-class <- data$class
+decisions <- data$class
 data$class <- NULL
 ```
 ####   Installing the required packages 
@@ -393,7 +393,7 @@ fs.relieff <- function(x, y, params = list(feature.number = 100)){
 - the cut-off value of the Spearman correlation coefficient: ***0.75;***
 ```r
 result2 <- ensembleFS(x = data,
-                     y = class,
+                     y = decisions,
                      methods = c("fs.utest", 'fs.mrmr', 'fs.mcfs' , 'fs.mdfs.1D' ,'fs.relieff'),
                      method.cv = "kfoldcv",
                      params.cv = list(k = 3, niter = 5),
