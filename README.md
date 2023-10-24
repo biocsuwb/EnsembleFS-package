@@ -1,16 +1,16 @@
-# EnsembleFS: Ensemble feature selection methods for analysis of molecular data
+# EnsembleFS: Ensemble feature selection methods for the analysis of molecular omics data
 ## Description
-EnsembleFS is a R package for single feature selection (FS) and ensemble feature selection of molecular data or clinical data (numeric data formats).
+EnsembleFS is an R package for single feature selection (FS) and ensemble feature selection of molecular data or clinical data (numeric data formats).
 This tool is based on several feature filters, such as the test Manna-Whitney'a (U-test), the Monte Carlo Feature Selection (MCFS) ([Dramiński & Koronacki 2018](https://www.jstatsoft.org/article/view/v085i12)), the MultiDimensional Feature Selection (two variants: MDFS-1D and MDFS-2D) ([Mnich & Rudnicki 2020](https://www.sciencedirect.com/science/article/abs/pii/S0020025520302048)), and the Minimum Redundancy Maximum Relevance (MRMR) 
 ([Ding 2005](https://pubmed.ncbi.nlm.nih.gov/15852500/)) for discovering the most important biomarkers and using machine learning algorithms (ML) to evaluate the quality of feature sets. Predictive models are built using the Random Forest algorithm ([Breiman 2001](https://link.springer.com/article/10.1023/A:1010933404324)). It can be applied to two-class problems.
 
 Moreover, EnsembleFS supports users in the analysis and interpretation of molecular data. The information about each of the top biomarkers is extracted from diverse biological databases, namely the Gene Ontology ([GO](https://pubmed.ncbi.nlm.nih.gov/33290552/)), the Kyoto Encyclopedia of Genes and Genomes ([KEGG](https://pubmed.ncbi.nlm.nih.gov/18477636/)), the Reactome ([React](https://pubmed.ncbi.nlm.nih.gov/32907876/)), the WikiPathways ([WP](https://pubmed.ncbi.nlm.nih.gov/33211851/)), the Transfac ([TF](https://pubmed.ncbi.nlm.nih.gov/8594589/)), the miRTarBase ([MIRNA](https://academic.oup.com/nar/article/48/D1/D148/5606625)), the Human Protein Atlas ([HPA](https://pubmed.ncbi.nlm.nih.gov/25613900/)), the [CORUM](https://pubmed.ncbi.nlm.nih.gov/30357367/), and the Human Phenotype Ontology ([HPO](https://pubmed.ncbi.nlm.nih.gov/33264411/)).
-The proposed tool accepts molecular data that includes different types of gene identifiers, such as Ensembl, NCBI Entrez gene ID, Refseq, Illumina, and Uniprot.
+The proposed tool accepts molecular data that includes different gene identifiers, such as Ensembl, NCBI Entrez gene ID, Refseq, Illumina, and Uniprot.
 
 EnsembleFS allows the user to:
 - filter the most informative features by using up to five FS methods (U-test, MCFS, MRMR, MDFS-1D, and MDFS-2D) from molecular data generated from high-throughput molecular biology experiments
 and also clinical data (numeric formats);
-- create and add their own feature filters to the default list of basic feature filters (U-test, MCFS, MRMR, MDFS-1D, and MDFS-2D) for more complex FS task;
+- create and add their own feature filters to the default list of basic feature filters (U-test, MCFS, MRMR, MDFS-1D, and MDFS-2D) for more complex FS tasks;
 - build Random Forest classifiers using selected top N features (Fig.1); 
 - evaluate the stability of feature subsets (the Lustgarten adjusted stability measure ([ASM](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2815476/)) ) and the performance of predictive models (the area under receiver operator curve  (AUC), accuracy (ACC), and the Matthews correlation coefficient(MCC);
 - compare the predictive performance of models and the stability of selected feature sets for selected FS algorithms; 
@@ -22,12 +22,12 @@ and also clinical data (numeric formats);
 ![Fig.1](https://github.com/biocsuwb/Images/blob/main/Scheme1.png?raw=true)
 Fig.1 The scheme of ensemble feature selection and supervised classification.
 ![Fig.2](https://github.com/biocsuwb/Images/blob/main/Scheme2.png?raw=true)
-Fig.2 The scheme of construction of the combined set of N-top relevant features.
+Fig.2 The construction scheme of the combined set of N-top relevant features.
 ![Fig.3](https://github.com/biocsuwb/Images/blob/main/Scheme3.png?raw=true)
 Fig.3 The scheme for collection and integration of biological information about biomarkers.
 
 ## Example data sets
-The RNA-sequencing data of tumor-adjacent normal tissues of lung adenocarcinoma cancer patients from The Cancer Genome Atlas database ([TCGA](https://www.cancer.gov/tcga)) was used. The preprocessing of data involved standard steps for RNA-Seq data. The log2 transformation was performed. Features with zero and near-zero (1%) variance across patients were removed. After the preprocessing procedure, the primary dataset contains 574 samples (59 normal and 515 tumors) described with 20172 differentially expressed genes (DEGs). This dataset includes highly correlated features, and the number of cancer samples is roughly ten times more than normal samples. For testing purposes, the number of molecular markers was limited to 2000 DEGs ranked by the highest difference in the gene expression level between tumor and normal tissues ([exampleData_TCGA_LUAD_2000.csv](https://github.com/biocsuwb/EnsembleFS-package/tree/main/data)). 
+The RNA-sequencing data of tumor-adjacent normal tissues of lung adenocarcinoma cancer patients from The Cancer Genome Atlas database ([TCGA](https://www.cancer.gov/tcga)) was used. The preprocessing of data involved standard steps for RNA-Seq data. The log2 transformation was performed. Features with zero and near-zero (1%) variance across patients were removed. After preprocessing, the primary dataset contains 574 samples (59 normal and 515 tumors) described with 20172 differentially expressed genes (DEGs). This dataset includes highly correlated features, and the number of cancer samples is roughly ten times more than normal samples. For testing purposes, the number of molecular markers was limited to 2000 DEGs ranked by the highest difference in the gene expression level between tumor and normal tissues ([exampleData_TCGA_LUAD_2000.csv](https://github.com/biocsuwb/EnsembleFS-package/tree/main/data)). 
 
 ## Install the development version from GitHub:
 
@@ -352,7 +352,7 @@ info.gene
 ```
 
 
-## Example 3 - creating and adding a new feature filter to default list of basic FS methods
+## Example 3 - creating and adding a new feature filter to the default list of basic FS methods
 ```r
 data <- read.csv2('exampleData.csv')
 decisions <- data$class
