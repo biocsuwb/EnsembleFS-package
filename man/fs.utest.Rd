@@ -22,7 +22,7 @@ Test U Manna-Whitneya (U-test) for feature selection
 }
 \details{
 In case of FDR control it is recommended to use Benjamini-Hochberg-Yekutieli
-p-value adjustment or SGoF
+p-value adjustment
 }
 \examples{
 

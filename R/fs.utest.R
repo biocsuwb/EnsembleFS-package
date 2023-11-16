@@ -2,7 +2,7 @@
 #'
 #' @details
 #' In case of FDR control it is recommended to use Benjamini-Hochberg-Yekutieli
-#'  p-value adjustment or SGoF
+#' p-value adjustment
 #'
 #' @param x input data where columns are variables and rows are observations (all numeric)
 #' @param y decision variable as a boolean vector of length equal to number of observations
