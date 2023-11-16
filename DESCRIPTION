@@ -2,7 +2,7 @@ Package: ensembleFS
 Title: Ensemble feature selection methods for analysis of molecular data
 Version: 0.0.1
 Authors@R: 
-    person(given = "Pawel", family = "Grablis", role = c("cre"), email = "palik1hrablis@gmail.com")
+    person(given = "Paweł", family = "Grablis", role = c("cre"), email = "palik1hrablis@gmail.com")
     person(given = "Aneta", family = "Polewko-Klim", role = c("aut","cre"), email = "anetapolklim@gmail.com")
 Description: What the package does (one paragraph).
 Depends:
