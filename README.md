@@ -39,6 +39,7 @@ devtools::install_github("biocsuwb/EnsembleFS-package")
 ## Example data sets
 The RNA-sequencing data of tumor-adjacent normal tissues of lung adenocarcinoma cancer patients from The Cancer Genome Atlas database ([TCGA](https://www.cancer.gov/tcga)) was used. The preprocessing of data involved standard steps for RNA-Seq data. The log2 transformation was performed. Features with zero and near-zero (1%) variance across patients were removed. After preprocessing, the primary dataset contains 574 samples (59 normal and 515 tumors) described with 20172 differentially expressed genes (DEGs). This dataset includes highly correlated features, and the number of cancer samples is roughly ten times more than normal samples. For testing purposes, the number of molecular markers was limited to 2000 DEGs ranked by the highest difference in the gene expression level between tumor and normal tissues ([exampleData_TCGA_LUAD_2000.csv](https://github.com/biocsuwb/EnsembleFS-package/tree/main/data)). 
 
+The clinical data of selected 1393 brest cancer patients from Molecular Taxonomy of Breast Cancer International Consortium (METABRIC) project ([Pereira et. al 2016](https://www.jstatsoft.org/article/view/v085i12](https://www.nature.com/articles/ncomms11479)))
 
 ## Example 1 - individual feature selection
 
@@ -416,3 +417,176 @@ graph.result(result2$stability, "stability")
 ```
 ![Fig.4](https://github.com/biocsuwb/Images/blob/main/MCC&ASM.png?raw=true)
 Fig.4 The average values of the Matthews correlation coefficient (MCC) vs N top features (5, 10, 15, 20, ..., 50, 75, 100) for various features filters and the ASM similarity measure between m = 15 feature subsets vs N top features.
+
+## Example 4 - ensemble feature selection of clinical data
+
+#### Loading data
+```r
+data <- read.csv2('exampleData_METABRIC_clinical.csv')
+decisions <- data$class
+data$class <- NULL
+```
+
+#### Showing the list of available feature selection methods
+```r
+print(list.methods())
+"fs.mcfs"  "fs.mdfs.1D"  "fs.mdfs.2D"  "fs.mrmr"  "fs.utest"  
+```
+
+#### Model (optional) configuration parameters
+EnsembleFS allows the user to set some parameter values, such as:
+- feature selection methods: ***methods = c("fs.utest", "fs.mcfs", "fs.mrmr", "fs.mdfs.1D", "fs.mdfs.2D")***;
+- U-test and MDFS parameter, multitest correction: ***adjust = c("holm", "hochberg", "hommel", "bonferroni", "BH", "BY", "fdr", "none")***;
+- U-test and MDFS parameter, significance level: ***alpha = 0.05***;
+- MRMR parameter, number of significant features: ***feature.number = 100***;
+- MCFS parameter, cut-off method: ***cutoff.method = c("permutations", "criticalAngle", "kmeans", "mean", "contrast")***;
+- correlation coefficient: ***level.cor = 1***;
+- validation methods: ***method.cv = c('kfoldcv','rsampling')***;
+- number of repetitions: ***niter = 10***;
+- train-test-split the data: ***k = 3*** for stratified k-fold cross-validation and ***test.size = 0.3*** for random sampling.
+
+
+#### Building and testing ML models on top N features (N = 5, 10, 15, 20, 30, 40, 50, 75, 100) with each of the selected feature filters
+- selected feature filters: ***methods = c("fs.utest", "fs.mcfs", "fs.mrmr", "fs.mdfs.1D")***;
+- U-test and MDFS parameter: ***adjust = "holm"***;
+- MRMR parameter: ***feature.number = 150;***;
+- MCFS parameter: ***cutoff.method = "kmeans"***;
+- model validation technique: ***rsampling, test set 30%, repeated 10 times;***
+- the cut off value of the Spearman correlation coefficient: ***0.75;***
+```r
+result <- ensembleFS(x = data,
+                     y = decisions,
+                     methods = c("fs.utest", "fs.mcfs", "fs.mrmr", "fs.mdfs.1D"),
+                     method.cv = "rsampling",
+                     params.cv = list(test.size = 0.3, niter = 10),
+                     level.cor = 0.75,
+                     params = list(adjust = "holm", cutoff.method = "kmeans",feature.number = 150, alpha = 0.05),
+                     asm = c("fs.utest", "fs.mcfs", "fs.mrmr", "fs.mdfs.1D"),
+                     model = c("fs.utest", "fs.mcfs", "fs.mrmr", "fs.mdfs.1D")
+                     )
+ ```
+                     
+#### Visualizing the model results
+```r
+graph.result(result$model, "acc")
+graph.result(result$stability, "stability")
+# graph.result(result$model, "auc")
+# graph.result(result$model, "mcc")
+```
+![Fig.4](https://github.com/biocsuwb/Images/blob/main/ACC&ASM.png?raw=true)
+Fig.4 The average values for accurancy (ACC) vs N top features (5, 10, 15, 20, ..., 50, 75, 100) for various features filters and the ASM similarity measure between m = 10 feature subsets vs N top features.
+#### Showing m-list of top biomarkers for each of feature filters (m = 10 in this case)
+```r
+print(result$selected.feature)
+
+$fs.utest[[1]]
+           name       Pvalue adjustPvalue
+1         OR6K3 8.581769e-32 1.716354e-28
+2        CELA2B 1.483157e-29 2.964831e-26
+3         CHRM2 1.862059e-28 3.720393e-25
+4         STX11 7.275286e-28 1.452875e-24
+5          EMP2 9.019200e-28 1.800232e-24
+6      C13orf36 9.737433e-28 1.942618e-24
+7         TNNC1 9.968668e-28 1.987752e-24
+8          AGER 1.040613e-27 2.073941e-24
+9          FHL1 1.166631e-27 2.323929e-24
+10         SDPR 1.508215e-27 3.002855e-24
+12         WWC2 1.666373e-27 3.314415e-24
+14       CHRNA2 1.768252e-27 3.513517e-24
+15         SGCG 1.771934e-27 3.519061e-24
+17  PALM2.AKAP2 1.789309e-27 3.551778e-24
+... etc.
+```
+
+#### Showing the combined list of top biomarkers.
+- number of top N biomarkers for each of feature filters: ***number.gene = 100***
+- how many times a biomarker has occurred in m feature subsets: ***level.freq = 5***
+```r
+gene.top <- get.top.gene(list.imp.var.cv = result$selected.feature, level.freq = 5, number.gene = 100)
+print(gene.top)
+
+$utest
+  [1] ADCY8       ADRB2       ANGPTL7     C10orf67    C13orf36    C9orf140    CAT         CAV1        CCDC85A    
+ [10] CELA2B      CGNL1       CHRM2       CHRNA2      CYP1A2      EFNA3       EMP2        EPAS1       FAM189A2   
+ [19] FAM46B      GCOM1       GOLM1       GPT2        GYPE        KAL1        MGAT3       NCKAP5      NECAB1     
+ [28] ODAM        OTC         OTUD1       OVCH2       PALM2.AKAP2 PDLIM2      PRKCE       PTPN21      PTPRQ      
+ [37] PYCR1       RCC1        RTKN2       SCUBE1      SGEF        SH3GL3      SLC25A10    SLC39A8     STX11      
+ [46] TACC1       TNNC1       UPK3B       WNT3A       WWC2        ARHGAP31    C14orf132   C20orf202   CD5L       
+ [55] DPYSL2      FAM83A      KCNT2       LIMS2       OR6K3       SGCG        TMEM184A    AGER        C10orf116  
+ [64] CCDC141     DOCK4       EFNA4       FABP4       FGF10       GPM6A       LOC401093   PAFAH1B3    PAICS      
+ [73] RNF144B     SDPR        STX1A       STXBP6      ACADL       AMOTL1      ANGPT4      C16orf59    C19orf59   
+ [82] FGF11       FHL1        MEX3A       OCIAD2      OVCH1       PECAM1      PHACTR1     SASH1       SPAG4      
+ [91] ADM2        ADRA1A      ETV4        GRK5        KIAA1324L   PPP1R14B    PRKG2       SPOCK2      AGBL1      
+[100] DENND3      LOC158376   MYOC        THBD        TNS1       
+
+$mcfs
+ [1] ADRB2       C10orf67    C14orf132   CAT         CBLC        EMP2        ETV4        FAM83A      GYPE       
+[10] PYCR1       SGCG        SH3GL3      STX11       STX1A       WWC2        CLIC5       EFNA3       FABP4      
+[19] GOLM1       GPM6A       PALM2.AKAP2 PDLIM2      SLC25A10    TNNC1       CAV1        EFNA4       FAM46B     
+[28] TMEM184A    ACADL       SDPR        SLC39A8     C16orf59    KCNT2       LIMS2       ODAM        PTPRQ      
+[37] LOC401093   SFTPC       TGFBR2     
+
+$mrmr
+  [1] ADCY8       ADM2        ALAS2       ANGPT4      ANGPTL7     ATP10B      B3GNT3      C10orf67    C13orf36   
+ [10] C2orf71     CD101       CD5L        CELA2B      CHRM2       CHRNA2      COL10A1     CYP1A2      EFNA4      
+ [19] EMP2        EPAS1       ETV4        FAM83A      FERMT1      FGF10       FUT2        GOLM1       GPT2       
+ [28] HTR3C       KIF26B      LGR4        LOC158376   MYO7A       MYOC        OR6K3       OTC         OTUD1      
+ [37] OTX1        OVCH1       OVCH2       PALM2.AKAP2 PLEKHN1     PPP1R15A    PTPN21      PYCR1       RASAL1     
+ [46] RCC1        RS1         RTKN2       SGCG        SGEF        SH3GL3      SPTBN2      STX11       TMEM184A   
+ [55] TMPRSS4     WWC2        C20orf202   CACNA1S     CAV1        CYP3A7      FABP4       FGF11       IGSF9      
+ [64] KCNA4       NCKAP5      SLC4A1      SPOCK2      WNT3A       C16orf59    CMTM2       E2F8        GP9        
+ [73] HS6ST2      OCIAD2      ODAM        SPAG4       SPP1        COLEC10     EPN3        MEX3A       OR2W3      
+ [82] PECAM1      PPAP2C      PRKG2       PTPN5       PTPRQ       SEMA3G      WFS1        CLEC4M      CTHRC1     
+ [91] EFNA3       FAM46B      GYPE        KCNT2       PRKCE       RASIP1      TGM1        C13orf15    MND1       
+[100] SLC39A8     SLC6A4      TUBB3      
+
+$mdfs.1D
+ [1] RTKN2     SGEF      STX1A     C8orf84   DPYSL2    GPT2      LOC401093 MEX3A     PIP5K1B   PPP1R14B  PRKG2    
+[12] ADM2      ANKRD29   C6orf155  CAT       CAV1      CCDC141   CELSR3    CYP1A2    ESAM      FAM46B    FAM83A   
+[23] KAL1      LIN7A     PLA2G4F   PTPRQ     RADIL     RCC1      RNF144B   SLC39A8   TNNC1     TUBB3     ADRB1    
+[34] AMOTL1    ANXA3     B3GNT3    C10orf116 C10orf67  CCDC85A   DNAH14    EMP2      ETV4      FABP4     GCOM1    
+[45] HSD17B6   IGSF10    KCNT2     KL        NCKAP5    NECAB1    NKAPL     NMUR1     OTUD1     PAFAH1B3  PLEKHN1  
+[56] PRKCE     PYCR1     SEMA5A    STXBP6    TACC1     TFR2      WFS1     
+```
+
+#### Showing the predictive performance of the random forest model
+```r
+print(result$model)
+     N  mean.acc  mean.auc  mean.mcc      sd.acc     sd.auc     sd.mcc  method
+1    5 0.9847001 0.9476866 0.9118262 0.011247365 0.04758166 0.05924979   utest
+2   10 0.9899995 0.9618989 0.9408039 0.004710309 0.03878885 0.03258368   utest
+3   15 0.9926742 0.9739264 0.9581730 0.003655541 0.02114019 0.02050122   utest
+4   20 0.9926742 0.9739104 0.9589725 0.003655541 0.02112748 0.01785854   utest
+5   30 0.9926144 0.9738867 0.9578773 0.003885302 0.02171403 0.02105812   utest
+6   40 0.9926144 0.9738867 0.9578773 0.003885302 0.02171403 0.02105812   utest
+7   50 0.9926742 0.9739104 0.9589725 0.003655541 0.02112748 0.01785854   utest
+8   75 0.9926742 0.9739104 0.9589725 0.003655541 0.02112748 0.01785854   utest
+9  100 0.9926742 0.9739104 0.9589725 0.003655541 0.02112748 0.01785854   utest
+10   5 0.9926910 0.9692675 0.9558952 0.006565496 0.03992986 0.04390362    mcfs
+11  10 0.9919811 0.9665294 0.9538377 0.005186949 0.03098983 0.03094842    mcfs
+12  15 0.9926144 0.9709342 0.9588457 0.004946283 0.02515812 0.02533537    mcfs
+13  20 0.9926144 0.9709342 0.9588457 0.004946283 0.02515812 0.02533537    mcfs
+14  30 0.9939729 0.9746406 0.9653022 0.003727046 0.02195584 0.02148852    mcfs
+15  40 0.9933236 0.9742675 0.9627090 0.004333648 0.02157585 0.02211227    mcfs
+16  50 0.9939729 0.9746406 0.9653022 0.003727046 0.02195584 0.02148852    mcfs
+17  75 0.9939729 0.9746406 0.9653022 0.003727046 0.02195584 0.02148852    mcfs
+18 100 0.9933236 0.9742675 0.9627090 0.004333648 0.02157585 0.02211227    mcfs
+19   5 0.9865872 0.9428229 0.9225840 0.009476662 0.04228822 0.05398912    mrmr
+20  10 0.9905535 0.9603092 0.9464660 0.006657340 0.03148771 0.03645462    mrmr
+21  15 0.9906906 0.9662615 0.9470864 0.005460468 0.02668610 0.03061786    mrmr
+22  20 0.9920076 0.9707854 0.9553583 0.004102557 0.02408033 0.02009801    mrmr
+23  30 0.9939729 0.9746406 0.9653022 0.003727046 0.02195584 0.02148852    mrmr
+24  40 0.9939729 0.9746406 0.9653022 0.003727046 0.02195584 0.02148852    mrmr
+25  50 0.9939729 0.9746406 0.9653022 0.003727046 0.02195584 0.02148852    mrmr
+26  75 0.9933236 0.9742675 0.9627090 0.004333648 0.02157585 0.02211227    mrmr
+27 100 0.9933236 0.9742675 0.9627090 0.004333648 0.02157585 0.02211227    mrmr
+28   5 0.9887040 0.9599451 0.9308505 0.005317968 0.03666072 0.03844549 mdfs.1D
+29  10 0.9906830 0.9700560 0.9466745 0.005505444 0.02799906 0.03005919 mdfs.1D
+30  15 0.9913536 0.9723194 0.9501081 0.004386496 0.02890808 0.02507787 mdfs.1D
+31  20 0.9933280 0.9761623 0.9616924 0.005341063 0.03030464 0.03140701 mdfs.1D
+32  30 0.9926786 0.9736783 0.9575776 0.004807890 0.02944285 0.02862076 mdfs.1D
+33  40 0.9933409 0.9778450 0.9623404 0.004334037 0.02264081 0.02245097 mdfs.1D
+34  50 0.9926742 0.9717835 0.9585942 0.003655541 0.02008900 0.01819328 mdfs.1D
+35  75 0.9926144 0.9738867 0.9578773 0.003885302 0.02171403 0.02105812 mdfs.1D
+36 100 0.9932637 0.9742438 0.9616138 0.004538666 0.02215096 0.02495123 mdfs.1D
+```
