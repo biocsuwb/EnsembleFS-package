@@ -46,9 +46,9 @@ The RNA-sequencing data of tumor-adjacent normal tissues of lung adenocarcinoma 
 ```r
 library (readr)
 urlfile="https://github.com/biocsuwb/EnsembleFS-package/blob/main/data/exampleData_TCGA_LUAD_2000.csv"
-
 data = read_csv(url(urlfile))
 # data <- read.csv2('exampleData_TCGA_LUAD_2000.csv')
+
 decisions <- data$class
 data$class <- NULL
 ```
