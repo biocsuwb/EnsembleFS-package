@@ -49,7 +49,6 @@ download.file("https://raw.githubusercontent.com/biocsuwb/EnsembleFS-package/mai
               destfile = "exampleData_TCGA_LUAD_2000.csv", method = "curl")
 
 data <- read.csv2('exampleData_TCGA_LUAD_2000.csv')
-
 decisions <- data$class
 data$class <- NULL
 ```
@@ -447,13 +446,38 @@ result <- ensembleFS(x = data,
                      model = c("fs.utest", "fs.mcfs", "fs.mrmr", "fs.mdfs.1D")
                      )
 
-#### Showing the combined list of 10-top features.
-- number of top N biomarkers for each of feature filters: ***number.gene = 10***
-- how many times a biomarker has occurred in m feature subsets: ***level.freq = 5***
+#### Showing the list of top features.
+- maximal number of top N biomarkers for each of individual feature filters: ***number.gene = 10***
+- how many times a biomarker has minimal occurred in m feature subsets: ***level.freq = 15***
 ```r
 feature.top <- get.top.gene(list.imp.var.cv = result$selected.feature, level.freq = 5, number.gene = 10)
 print(feature.top)
 
-... etc.
+result <- ensembleFS(x = data,
+                     y = decisions,
+                     methods = c("fs.utest", "fs.mcfs", "fs.mdfs.1D"),
+                     method.cv = "kfoldcv",
+                     params.cv = list(k = 3, niter = 10),
+                     level.cor = 0.75,
+                     params = list(adjust = "holm", cutoff.method = "kmeans", alpha = 0.05),
+                     asm = c("fs.utest", "fs.mcfs", "fs.mdfs.1D"),
+                     model = c("fs.utest", "fs.mcfs", "fs.mdfs.1D")
+)
+
+feature.top <- get.top.gene(list.imp.var.cv = result$selected.feature, level.freq = 15, number.gene = 10)
+print(feature.top)
+
+$utest
+[1] AGE_AT_DIAGNOSIS   BREAST_SURGERY    GRADE         NPI             TUMOR_SIZE      
+[6] TUMOR_STAGE        HER2_STATUS       COHORT        ONCOTREE_CODE   
+
+
+$mcfs
+[1] AGE_AT_DIAGNOSIS   NPI    TUMOR_SIZE     BREAST_SURGERY   COHORT          
+
+$mdfs.1D
+[1] AGE_AT_DIAGNOSIS   NPI              TUMOR_SIZE       TUMOR_STAGE       COHORT          
+[6] GRADE              BREAST_SURGERY   THREEGENE        CLAUDIN_SUBTYPE 
+
 ```
 
