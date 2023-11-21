@@ -29,7 +29,7 @@ Fig.3 The scheme for collection and integration of biological information about 
 ## Install the development version from GitHub:
 
 ```r
-# install.packages("devtools")
+install.packages("devtools")
 devtools::install_github("biocsuwb/EnsembleFS-package")
 ```
 ## Notes: 
@@ -67,6 +67,7 @@ data$class <- NULL
 
 #### Feature selection U-test
 ```r
+library (ensembleFS)
 var.utest <- fs.utest(x = data, y = decisions, params = list(adjust = "holm", alpha = 0.05))
 ```
 #### Feature selection MDFS-1D
@@ -422,7 +423,8 @@ Fig.4 The average values of the Matthews correlation coefficient (MCC) vs N top 
 
 #### Loading data
 ```r
-data <- read.csv2('exampleData_METABRIC_clinical.csv')
+data <- read.csv2(https://raw.githubusercontent.com/biocsuwb/EnsembleFS-package/main/data/exampleData_METABRIC_clinical.csv')
+# data <- read.csv2('exampleData_METABRIC_clinical.csv')
 decisions <- data$class
 data$class <- NULL
 ```
@@ -437,18 +439,21 @@ data$class <- NULL
 result <- ensembleFS(x = data,
                      y = decisions,
                      methods = c("fs.utest", "fs.mcfs", "fs.mrmr", "fs.mdfs.1D"),
-                     method.cv = "rsampling",
-                     params.cv = list(test.size = 0.3, niter = 10),
+                     method.cv = "kfoldcv",
+                     params.cv = list(k = 3, niter = 10),
                      level.cor = 0.75,
-                     params = list(adjust = "holm", cutoff.method = "kmeans",feature.number = 150, alpha = 0.05),
+                     params = list(adjust = "holm", cutoff.method = "kmeans", feature.number = 10, alpha = 0.05),
                      asm = c("fs.utest", "fs.mcfs", "fs.mrmr", "fs.mdfs.1D"),
                      model = c("fs.utest", "fs.mcfs", "fs.mrmr", "fs.mdfs.1D")
                      )
 
-#### Showing the combined list of N-top biomarkers.
+#### Showing the combined list of 10-top features.
 - number of top N biomarkers for each of feature filters: ***number.gene = 10***
 - how many times a biomarker has occurred in m feature subsets: ***level.freq = 5***
 ```r
-gene.top <- get.top.gene(list.imp.var.cv = result$selected.feature, level.freq = 5, number.gene = 10)
-print(gene.top)
+feature.top <- get.top.gene(list.imp.var.cv = result$selected.feature, level.freq = 5, number.gene = 10)
+print(feature.top)
+
+... etc.
+```
 
