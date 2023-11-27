@@ -27,13 +27,13 @@ Fig.2 The construction scheme of the combined set of N-top relevant features.
 Fig.3 The scheme for collection and integration of biological information about biomarkers.
 
 ## Install the development version from GitHub:
-
+Aby zainstalować ten pakiet, sklonuj repozytorium i zainstaluj za pomocą pip:
 ```r
 install.packages("devtools")
 devtools::install_github("biocsuwb/EnsembleFS-package")
 ```
 ## Notes: 
-- ***to install the EnsembleFS package in your R environment, make sure you have Java installed (rJava R package);***
+- ***to install the EnsembleFS package in your R environment, make sure that you have Java installed (rJava R package);***
 - ***to accelerate processing by using a CUDA GPU, the EnsembleFS package must be compiled with CUDA (set the MDFS-2D parameter: use.cuda = TRUE).*** 
 
 ## Example data sets
