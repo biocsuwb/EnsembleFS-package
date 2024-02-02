@@ -27,11 +27,11 @@ Fig.2 The construction scheme of the combined set of N-top relevant features.
 Fig.3 The scheme for collection and integration of biological information about biomarkers.
 
 
-## Functional modules of EnsembleFS R package (Table)
+## Functional modules of EnsembleFS R package 
+Table of main functions
 [Functional modules of EnsembleFS R package.pdf](https://github.com/biocsuwb/Images/blob/9b5d8bb15d0a0b2e0cc6ec730cdb14e7ecd99314/Functional%20modules%20of%20EnsembleFS%20R%20package.pdf)
 
 ## Install the development version from GitHub:
-Aby zainstalować ten pakiet, sklonuj repozytorium i zainstaluj za pomocą pip:
 ```r
 install.packages("devtools")
 devtools::install_github("biocsuwb/EnsembleFS-package")
