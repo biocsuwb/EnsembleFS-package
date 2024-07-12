@@ -38,6 +38,7 @@ devtools::install_github("biocsuwb/EnsembleFS-package")
 ```
 ## Notes: 
 - ***to install the EnsembleFS package in your R environment, make sure that you have Java installed (rJava R package);***
+  ([https://www.java.com/en/download/manual.jsp](https://www.java.com/en/download/manual.jsp))
 - ***to accelerate processing by using a CUDA GPU, the EnsembleFS package must be compiled with CUDA (set the MDFS-2D parameter: use.cuda = TRUE).*** 
 
 ## Example data sets
