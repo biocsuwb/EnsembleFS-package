@@ -1,4 +1,6 @@
 # EnsembleFS: Ensemble feature selection methods for the analysis of molecular omics data
+## Citing EnsembleFS in publications and presentations
+Polewko-Klim, A., Grablis, P., Rudnicki, W. (2024). EnsembleFS: an R Toolkit and a Web-Based Tool for a Filter Ensemble Feature Selection of Molecular Omics Data. In: Franco, L., de Mulatier, C., Paszynski, M., Krzhizhanovskaya, V.V., Dongarra, J.J., Sloot, P.M.A. (eds) Computational Science – ICCS 2024. ICCS 2024. Lecture Notes in Computer Science, vol 14835. Springer, Cham. https://doi.org/10.1007/978-3-031-63772-8_7
 ## Description
 EnsembleFS is an R package for single feature selection (FS) and ensemble feature selection of molecular data or clinical data (numeric data formats).
 This tool is based on several feature filters, such as the test Manna-Whitney'a (U-test), the Monte Carlo Feature Selection (MCFS) ([Dramiński & Koronacki 2018](https://www.jstatsoft.org/article/view/v085i12)), the MultiDimensional Feature Selection (two variants: MDFS-1D and MDFS-2D) ([Mnich & Rudnicki 2020](https://www.sciencedirect.com/science/article/abs/pii/S0020025520302048)), and the Minimum Redundancy Maximum Relevance (MRMR) 
