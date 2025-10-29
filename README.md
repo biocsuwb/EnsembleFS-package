@@ -60,6 +60,11 @@ The clinical data of 1394 breast cancer patients from Molecular Taxonomy of Brea
 download.file("https://raw.githubusercontent.com/biocsuwb/EnsembleFS-package/main/data/exampleData_TCGA_LUAD_2000.csv", 
               destfile = "exampleData_TCGA_LUAD_2000.csv", method = "curl")
 
+or
+
+download.file("https://raw.githubusercontent.com/biocsuwb/EnsembleFS-package/main/data/exampleData_TCGA_LUAD_2000.csv", 
+              destfile = "exampleData_TCGA_LUAD_2000.csv", method = "libcurl")
+
 data <- read.csv2('exampleData_TCGA_LUAD_2000.csv')
 decisions <- data$class
 data$class <- NULL
